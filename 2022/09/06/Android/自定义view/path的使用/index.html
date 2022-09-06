@@ -1,0 +1,758 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Path类使用[TOC] 一、简介 Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径，用于描述顺序和区域。 使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。  使用过程中如有异常请关闭硬件加速 。  创建： 1val path &#x3D; Path()  二、设置路径主要有moveTo、 setLastPoint、 lineTo 和 close lineTo&#x2F;rL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Path类使用">
+<meta property="og:url" content="http://example.com/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="Path类使用[TOC] 一、简介 Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径，用于描述顺序和区域。 使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。  使用过程中如有异常请关闭硬件加速 。  创建： 1val path &#x3D; Path()  二、设置路径主要有moveTo、 setLastPoint、 lineTo 和 close lineTo&#x2F;rL">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_moveTo.png">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_shapes.png">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_addpath.png">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_op.png">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_besaier.png">
+<meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
+<meta property="article:modified_time" content="2022-09-06T02:52:14.096Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="自定义View">
+<meta property="article:tag" content="Path">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:/Users/Administrator/Desktop/android_customview_path_moveTo.png">
+  
+  
+  
+  <title>Path类使用 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":88,"cursorChar":"kobe","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Path类使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-06 09:36" pubdate>
+          2022年9月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Path类使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Path类使用"><a href="#Path类使用" class="headerlink" title="Path类使用"></a>Path类使用</h1><p>[TOC]</p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><ul>
+<li>Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径，用于描述顺序和区域。</li>
+<li>使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。 </li>
+<li>使用过程中如有异常请关闭硬件加速 。</li>
+</ul>
+<p>创建：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> path = Path()<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、设置路径"><a href="#二、设置路径" class="headerlink" title="二、设置路径"></a>二、设置路径</h2><p>主要有moveTo、 setLastPoint、 lineTo 和 close</p>
+<h3 id="lineTo-x2F-rLineTo"><a href="#lineTo-x2F-rLineTo" class="headerlink" title="lineTo&#x2F;rLineTo"></a>lineTo&#x2F;rLineTo</h3><p>从当前点到目标点的线段路径。若没有指定当前点，则默认为（0,0）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x 目的点的x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> y 目的点的y坐标</span><br><span class="hljs-comment"> */</span><br> <span class="hljs-keyword">public</span> void lineTo(float x, float y) <br></code></pre></td></tr></table></figure>
+
+<p>lineTo指绝对坐标，即屏幕的位置。rLineTo是相对于上一个点的相对坐标。</p>
+<h3 id="moveTo-x2F-setLastPoint"><a href="#moveTo-x2F-setLastPoint" class="headerlink" title="moveTo &#x2F;setLastPoint"></a>moveTo &#x2F;setLastPoint</h3><p>这两个方法都是指定下次操作的起点位置。不同的是moveTo不会影响之前的操作，直接在指定的起点位置进行下次操作。	而setLastPoint是将上次最后的点移动到新的起点位置进行下次操作吗，会影响之前的操作。代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> path1 = Path()<br>path1.moveTo(<span class="hljs-number">0f</span>, <span class="hljs-number">200f</span>)<br>path1.rLineTo(<span class="hljs-number">200f</span>, <span class="hljs-number">100f</span>)<br>path1.rMoveTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>path1.rLineTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>canvas?.drawPath(path1, paint)<br>canvas?.drawTextOnPath(<span class="hljs-string">&quot;moveTo()&quot;</span>, path1, <span class="hljs-number">10f</span>, -<span class="hljs-number">20f</span>, textPaint)<br><br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.moveTo(<span class="hljs-number">0f</span>, <span class="hljs-number">400f</span>)<br>path2.rLineTo(<span class="hljs-number">200f</span>, <span class="hljs-number">100f</span>)<br>path2.setLastPoint(<span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>)<br>path2.rLineTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>canvas?.drawPath(path2, paint)<br>canvas?.drawTextOnPath(<span class="hljs-string">&quot;setLastPoint()&quot;</span>, path2, <span class="hljs-number">10f</span>, -<span class="hljs-number">20f</span>, textPaint)<br></code></pre></td></tr></table></figure>
+
+<p>运行效果图：</p>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_path_moveTo.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="close"><a href="#close" class="headerlink" title="close"></a>close</h3><p>将当前最后一点和第一个 点连接起来形成封闭图形。 </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">public</span> void close()<br></code></pre></td></tr></table></figure>
+
+<h3 id="reset-x2F-rewind"><a href="#reset-x2F-rewind" class="headerlink" title="reset()&#x2F;rewind"></a>reset()&#x2F;rewind</h3><p>重置路径<code>path</code>，区别：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>是否保留FillType设置</th>
+<th>是否保留原有数据结构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Path.reset（）</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>Path.rewind（）</td>
+<td>否</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<ol>
+<li><code>FillType</code>影响显示效果；<code>数据结构</code>影响重建速度</li>
+<li>一般使用  <code>Path.reset（）</code></li>
+</ol>
+<h2 id="三、添加路径"><a href="#三、添加路径" class="headerlink" title="三、添加路径"></a>三、添加路径</h2><h3 id="基本图形"><a href="#基本图形" class="headerlink" title="基本图形"></a>基本图形</h3><p>可以方便的通过path来描述 一些基本图形，如圆、椭圆、矩形等</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">300f</span>, <span class="hljs-number">700f</span>)<br>        <span class="hljs-keyword">val</span> path0 = Path()<br>        path0.addCircle(<span class="hljs-number">200f</span>, <span class="hljs-number">0f</span>, <span class="hljs-number">150f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path0, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addCircle()&quot;</span>, <span class="hljs-number">0f</span>, -<span class="hljs-number">160f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path1 = Path()<br>        path1.addRect(<span class="hljs-number">50f</span>, <span class="hljs-number">250f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">350f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path1, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addRect()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">240f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path2 = Path()<br>        path2.addRoundRect(<span class="hljs-number">50f</span>,<span class="hljs-number">450f</span>,<span class="hljs-number">350f</span>,<span class="hljs-number">550f</span>,<br>            floatArrayOf(<span class="hljs-number">100f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">450f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>),<br>            Path.Direction.CW<br>        )<br>        canvas?.drawPath(path2, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addRoundRect()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">440f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path3 = Path()<br>        path3.addOval(<span class="hljs-number">50f</span>, <span class="hljs-number">650f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">850f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path3, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addOval()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">640f</span>, textPaint)<br></code></pre></td></tr></table></figure>
+
+<p>运行效果图：</p>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_path_shapes.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>Path.Direction</code>代表图形的方向，为枚举类型：</p>
+<ul>
+<li>CW：clockwise，顺时针</li>
+<li>CCW：counter-clockwise，逆时针</li>
+</ul>
+<p><strong>其中图形的方向很重要，会影响图形的渲染结果。</strong></p>
+<h3 id="addPath"><a href="#addPath" class="headerlink" title="addPath"></a>addPath</h3><p>即将两个path组合成一个。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">public</span> void addPath(<span class="hljs-meta">@NonNull</span> Path src)<br><span class="hljs-keyword">public</span> void addPath(<span class="hljs-meta">@NonNull</span> Path src, float dx, float dy) <br><span class="hljs-keyword">public</span> void addPath(<span class="hljs-meta">@NonNull</span> Path src, <span class="hljs-meta">@NonNull</span> Matrix matrix)<br></code></pre></td></tr></table></figure>
+
+<p>第一个方法是直接将src组合在一起；</p>
+<p>第二个方法是将src在x&#x2F;y方向上分别位移dx,dy后再组合在一起；</p>
+<p>第三个方法是添加到当前path之前先进行matrix变换；</p>
+<p>代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">300f</span>, <span class="hljs-number">700f</span>)<br><span class="hljs-keyword">val</span> path0 = Path()<br>path0.addCircle(<span class="hljs-number">200f</span>, <span class="hljs-number">0f</span>, <span class="hljs-number">150f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.addRect(<span class="hljs-number">50f</span>, <span class="hljs-number">250f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">350f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.addRoundRect(<span class="hljs-number">50f</span>,<span class="hljs-number">450f</span>,<span class="hljs-number">350f</span>,<span class="hljs-number">550f</span>,<br>    floatArrayOf(<span class="hljs-number">100f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">450f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>),<br>    Path.Direction.CW<br>)<br><br><span class="hljs-keyword">val</span> path3 = Path()<br>path3.addOval(<span class="hljs-number">50f</span>, <span class="hljs-number">650f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">850f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path = Path()<br>path.addPath(path0)<br>path.addPath(path1, -<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>) <span class="hljs-comment">//path1右移100</span><br>path.addPath(path2, <span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)   <span class="hljs-comment">//path2左移100</span><br>path.addPath(path3)<br>canvas?.drawPath(path, paint)<br></code></pre></td></tr></table></figure>
+
+<p>效果图：</p>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_path_addpath.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="四、判断路径属性"><a href="#四、判断路径属性" class="headerlink" title="四、判断路径属性"></a>四、判断路径属性</h2><h3 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty()"></a>isEmpty()</h3><p>判断path中是否包含内容</p>
+<h3 id="isRect-RectF-rect"><a href="#isRect-RectF-rect" class="headerlink" title="isRect (RectF rect)"></a>isRect (RectF rect)</h3><p>判断path是否是一个矩形</p>
+<h3 id="set-Path-src"><a href="#set-Path-src" class="headerlink" title="set (Path src)"></a>set (Path src)</h3><p>将新的路径替代现有路径</p>
+<h3 id="offset-float-dx-float-dy-x2F-offset-float-dx-float-dy-Path-dst"><a href="#offset-float-dx-float-dy-x2F-offset-float-dx-float-dy-Path-dst" class="headerlink" title="offset (float dx, float dy)&#x2F;offset (float dx, float dy, Path dst)"></a>offset (float dx, float dy)&#x2F;offset (float dx, float dy, Path dst)</h3><p>平移路径，参数x,y：平移位置；dst不为空将当前path平移后的状态存入dst中，不会影响当前path，dst为空(null)平移将作用于当前path，相当于第一种方法。</p>
+<h2 id="五、路径填充颜色"><a href="#五、路径填充颜色" class="headerlink" title="五、路径填充颜色"></a>五、路径填充颜色</h2><p>共有四种填充模式：</p>
+<table>
+<thead>
+<tr>
+<th>填充模式</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EVEN_ODD</td>
+<td>奇偶规则</td>
+</tr>
+<tr>
+<td>INVERSE_EVEN_ODD</td>
+<td>反奇偶规则</td>
+</tr>
+<tr>
+<td>WINDING</td>
+<td>非零环绕数规则</td>
+</tr>
+<tr>
+<td>INVERSE_WINDING</td>
+<td>反非零环绕数规则</td>
+</tr>
+</tbody></table>
+<p>具体使用请自行查询。</p>
+<h2 id="六、op操作"><a href="#六、op操作" class="headerlink" title="六、op操作"></a>六、op操作</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//对 path1 和 path2 执行布尔运算，运算方式由第二个参数指定</span><br><span class="hljs-keyword">public</span> boolean op(<span class="hljs-meta">@NonNull</span> Path path, <span class="hljs-meta">@NonNull</span> Op op)<br><span class="hljs-comment">//对 path1 和 path2 执行布尔运算，运算方式由第三个参数指定,运算结果存入到path3中</span><br><span class="hljs-keyword">public</span> boolean op(<span class="hljs-meta">@NonNull</span> Path path1, <span class="hljs-meta">@NonNull</span> Path path2, <span class="hljs-meta">@NonNull</span> Op op)<br></code></pre></td></tr></table></figure>
+
+<p>Op参数为枚举：</p>
+<ul>
+<li>DIFFERENCE：减去Path2后Path1区域剩下的部分</li>
+<li>INTERSECT：保留Path2 和 Path1 共同的部分</li>
+<li>UNION：保留Path1 和 Path 2</li>
+<li>XOR：保留Path1 和 Path2 去除共同的部分</li>
+<li>REVERSE_DIFFERENCE：减去Path1后Path2区域剩下的部分</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">400f</span>, <span class="hljs-number">700f</span>)<br>paint.style = Paint.Style.FILL<br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.addCircle(x-<span class="hljs-number">75</span>,y,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.addCircle(x+<span class="hljs-number">75</span>,y,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path1.op(path2, Path.Op.DIFFERENCE)<br>canvas?.drawPath(path1,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.DIFFERENCE&quot;</span>,x-<span class="hljs-number">100</span>,y-<span class="hljs-number">110</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path3 = Path()<br>path3.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">300</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path4 = Path()<br>path4.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">300</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path3.op(path4, Path.Op.INTERSECT)<br>canvas?.drawPath(path3,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.INTERSECT&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">190</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path5 = Path()<br>path5.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">600</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path6 = Path()<br>path6.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">600</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path5.op(path6, Path.Op.UNION)<br>canvas?.drawPath(path5,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.UNION&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">490</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path7 = Path()<br>path7.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">900</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path8 = Path()<br>path8.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">900</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path7.op(path8, Path.Op.XOR)<br>canvas?.drawPath(path7,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.XOR&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">790</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path9 = Path()<br>path9.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">1200</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path10 = Path()<br>path10.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">1200</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path9.op(path10, Path.Op.REVERSE_DIFFERENCE)<br>canvas?.drawPath(path9,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.REVERSE_DIFFERENCE&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">1090</span>,textPaint)<br></code></pre></td></tr></table></figure>
+
+<p>效果图：</p>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_path_op.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="七、贝塞尔曲线"><a href="#七、贝塞尔曲线" class="headerlink" title="七、贝塞尔曲线"></a>七、贝塞尔曲线</h2><p>这里只简单介绍贝塞尔曲线的画法，详细介绍参考 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/55c721887568https://www.jianshu.com/p/55c721887568https://www.jianshu.com/p/55c721887568">这里</a>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// 绘制二阶贝塞尔曲线</span><br><span class="hljs-comment">//  (x1,y1)为控制点，(x2,y2)为终点</span><br>quadTo(float x1, float y1, float x2, float y2)<br><span class="hljs-comment">//  (x1,y1)为控制点距离起点的偏移量，(x2,y2)为终点距离起点的偏移量</span><br>rQuadTo(float x1, float y1, float x2, float y2)<br><br><span class="hljs-comment">// 绘制三阶贝塞尔曲线</span><br><span class="hljs-comment">// (x1,y1),(x2,y2)为控制点，(x3,y3)为终点</span><br>cubicTo(float x1, float y1, float x2, float y2, float x3, float y3)<br><span class="hljs-comment">// (x1,y1)，(x2,y2)为控制点距离起点的偏移量，(x3,y3)为终点距离起点的偏移量</span><br>rCubicTo(float x1, float y1, float x2, float y2, float x3, float y3)<br></code></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(width / <span class="hljs-number">2f</span>, height / <span class="hljs-number">2f</span>)<br><span class="hljs-keyword">val</span> path = Path()<br>path.moveTo(x - <span class="hljs-number">200f</span>, y)<br>path.quadTo(x, y - <span class="hljs-number">100f</span>, x + <span class="hljs-number">200</span>, y)<br>canvas?.drawPath(path, paint)<br>canvas?.drawText(<span class="hljs-string">&quot;二阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y-<span class="hljs-number">200f</span>, textPaint)<br><br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.moveTo(x - <span class="hljs-number">200f</span>, y+<span class="hljs-number">400f</span>)<br>path1.cubicTo(x, y + <span class="hljs-number">800f</span>, x+<span class="hljs-number">300f</span>,y+<span class="hljs-number">200f</span>,x + <span class="hljs-number">500</span>, y+<span class="hljs-number">400f</span>)<br>canvas?.drawPath(path1, paint)<br>canvas?.drawText(<span class="hljs-string">&quot;三阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y+<span class="hljs-number">400f</span>, textPaint) canvas?.translate(width / <span class="hljs-number">2f</span>, height / <span class="hljs-number">2f</span>)<br>        <span class="hljs-keyword">val</span> path = Path()<br>        path.moveTo(x - <span class="hljs-number">200f</span>, y)<br>        path.quadTo(x, y - <span class="hljs-number">100f</span>, x + <span class="hljs-number">200</span>, y)<br>        canvas?.drawPath(path, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;二阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y-<span class="hljs-number">200f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path1 = Path()<br>        path1.moveTo(x - <span class="hljs-number">200f</span>, y+<span class="hljs-number">400f</span>)<br>        path1.cubicTo(x, y + <span class="hljs-number">800f</span>, x+<span class="hljs-number">300f</span>,y+<span class="hljs-number">200f</span>,x + <span class="hljs-number">500</span>, y+<span class="hljs-number">400f</span>)<br>        canvas?.drawPath(path1, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;三阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y+<span class="hljs-number">400f</span>, textPaint)<br></code></pre></td></tr></table></figure>
+
+<p>效果图：</p>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_path_besaier.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="八、附录"><a href="#八、附录" class="headerlink" title="八、附录"></a>八、附录</h2><h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiangzhihong8/article/details/78278931/">xiangzhihong8 Android开发之Path详解</a> </li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennai1101/article/details/87721101">假装你是大灰狼  Android Path类</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2c19abde958c">Carson带你学Android：自定义View Path类全面解析</a></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/" class="category-chain-item">自定义View</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
+      
+        <a href="/tags/Path/">#Path</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Path类使用</div>
+      <div>http://example.com/2022/09/06/Android/自定义view/path的使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Canvas类使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用">
+                        <span class="hidden-mobile">Paint类使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

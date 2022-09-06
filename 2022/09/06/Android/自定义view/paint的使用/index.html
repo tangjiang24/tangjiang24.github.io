@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Paint类使用[TOC] 一、简介Paint类，即画笔。在绘制View的过程中，可以定义颜色、透明度、线条样式、图案样式等。直接实例化即可获取： 123val textPaint &#x3D; Paint().apply &amp;#123;        &#x2F;&#x2F;....属性设置       &amp;#125;  二、常用属性主要可以实现 画笔的 颜色、透明度、文本 样式等  设置画笔颜色1234&#x2F;** * @param">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paint类使用">
+<meta property="og:url" content="http://example.com/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="Paint类使用[TOC] 一、简介Paint类，即画笔。在绘制View的过程中，可以定义颜色、透明度、线条样式、图案样式等。直接实例化即可获取： 123val textPaint &#x3D; Paint().apply &amp;#123;        &#x2F;&#x2F;....属性设置       &amp;#125;  二、常用属性主要可以实现 画笔的 颜色、透明度、文本 样式等  设置画笔颜色1234&#x2F;** * @param">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_paint_style.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_strokeJoin.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_strokeCap.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_pathEffect.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_gradient.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_blurMaskfilter.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_text.png">
+<meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
+<meta property="article:modified_time" content="2022-09-06T02:52:14.068Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="自定义View">
+<meta property="article:tag" content="Paint">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:/Users/Administrator/Desktop/android_customview_paint_style.png">
+  
+  
+  
+  <title>Paint类使用 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":88,"cursorChar":"kobe","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Paint类使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-06 09:36" pubdate>
+          2022年9月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Paint类使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Paint类使用"><a href="#Paint类使用" class="headerlink" title="Paint类使用"></a>Paint类使用</h1><p>[TOC]</p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Paint类，即画笔。在绘制View的过程中，可以定义颜色、透明度、线条样式、图案样式等。直接实例化即可获取：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> textPaint = Paint().apply &#123;<br>        <span class="hljs-comment">//....属性设置</span><br>       &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、常用属性"><a href="#二、常用属性" class="headerlink" title="二、常用属性"></a>二、常用属性</h2><p>主要可以实现 画笔的 颜色、透明度、文本 样式等 </p>
+<h3 id="设置画笔颜色"><a href="#设置画笔颜色" class="headerlink" title="设置画笔颜色"></a>设置画笔颜色</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> color颜色值 如：Color.RED</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setColor(<span class="hljs-meta">@ColorInt</span> int color)<br></code></pre></td></tr></table></figure>
+
+<h3 id="设置画笔宽度"><a href="#设置画笔宽度" class="headerlink" title="设置画笔宽度"></a>设置画笔宽度</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> width 画笔宽度   单位：px</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setStrokeWidth(float width)	<br></code></pre></td></tr></table></figure>
+<p>在画笔宽度为 0 的情况下，使用 drawLine 或者使用描边模式(STROKE)也可以绘制出内容。只是绘制出的内容始终是 1 像素，不受画布缩放的影响。该模式被称为hairline mode (发际线模式)。</p>
+<p>如果你设置了画笔宽度为 1 像素，那么如果画布放大到 2 倍，1 像素会变成 2 像素。但如果是 0 像素，那么不论画布如何缩放，绘制出来的宽度依旧为 1 像素。</p>
+<h3 id="抗齿距"><a href="#抗齿距" class="headerlink" title="抗齿距"></a>抗齿距</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> aa   true为开启抗锯齿功能</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setAntiAlias(boolean aa)   <br></code></pre></td></tr></table></figure>
+
+<h3 id="画笔透明度"><a href="#画笔透明度" class="headerlink" title="画笔透明度"></a>画笔透明度</h3><p>取值 范围 0—255 ，0是完全透明，255是完全不透明</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> a   [0..255]</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setAlpha(int a)	<br></code></pre></td></tr></table></figure>
+
+<h3 id="ARGB"><a href="#ARGB" class="headerlink" title="ARGB"></a>ARGB</h3><p>取值 范围 都是 0—255 。第一个参数为透明度</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> a  透明度 [0..255]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> r  红色 [0..255]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> g  绿色 [0..255]</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> b  蓝色 [0..255]</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setARGB(int a, int r, int g, int b)<br></code></pre></td></tr></table></figure>
+
+<h3 id="画笔风格"><a href="#画笔风格" class="headerlink" title="画笔风格"></a>画笔风格</h3><p>画笔风格设置，参数为枚举类型。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> style  枚举，有三种取值</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setStyle(Style style)<br></code></pre></td></tr></table></figure>
+
+<p>style有三种枚举：</p>
+<ul>
+<li>Style.FILL，实心</li>
+<li>Style.FILL_AND_STROKE，同时显示实心和空心</li>
+<li>Style.STROKE，空心</li>
+</ul>
+<p><img src="C:\Users\Administrator\Desktop\android_customview_paint_style.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="三、线条样式"><a href="#三、线条样式" class="headerlink" title="三、线条样式"></a>三、线条样式</h2><h3 id="strokeCap-线帽"><a href="#strokeCap-线帽" class="headerlink" title="strokeCap 线帽"></a>strokeCap 线帽</h3><p>设置线帽的样式，参数为枚举类型。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> cap  </span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setStrokeCap(Cap cap)<br></code></pre></td></tr></table></figure>
+
+<p>Cap有三种：</p>
+<ul>
+<li>Paint.Cap.BUTT：无</li>
+<li>Paint.Cap.SQUARE：方形</li>
+<li>Paint.Cap.ROUND： 半圆形</li>
+</ul>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_strokeJoin.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>注意</strong>： Paint.Cap.ROUND、Paint.Cap.SQUARE 会在线长度的基础上首尾添加一个通过 setStrokeWidth 设置的宽度,可以看到 ROUND 和 SQUARE 样式的明显长一点。</p>
+<h3 id="strokeJoin-线帽"><a href="#strokeJoin-线帽" class="headerlink" title="strokeJoin 线帽"></a>strokeJoin 线帽</h3><p>设置线条连接处样式，参数为枚举类型。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> join  </span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setStrokeJoin(Join join)<br></code></pre></td></tr></table></figure>
+
+<p>Join有三种：</p>
+<ul>
+<li>Paint.Join.MITER： 直角的样式</li>
+<li>Paint.Join.ROUND：圆弧</li>
+<li>Paint.Join.BEVEL：在直角样式上切了一个小三角形</li>
+</ul>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_strokeCap.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="strokeMiter"><a href="#strokeMiter" class="headerlink" title="strokeMiter"></a>strokeMiter</h3><p>这个方法是对于 setStrokeJoin() 的一个补充，它用于设置 MITER 型拐角的延长线的最大值 。即 MITER(尖角) 模式下小于该角度的线段连接方式会自动转换为 BEVEL(平角) 模式。 </p>
+<ul>
+<li>默认值是 4，对应的是一个大约 29° 的锐角 。</li>
+<li>值越大，则可以保证越小的角度显示出来尖角。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> miter  </span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setStrokeMiter(float miter)<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、PathEffect"><a href="#四、PathEffect" class="headerlink" title="四、PathEffect"></a>四、PathEffect</h2><p>为path设置样式。基本使用伪代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">paint.pathEffect = PathEffect() <br>canvas?.drawPath(path, paint)<br></code></pre></td></tr></table></figure>
+
+<p>其中PathEffect有众多子类，实际使用根据需要选择对应子类即可。主要子类介绍如下：</p>
+<h3 id="CornerPathEffect"><a href="#CornerPathEffect" class="headerlink" title="CornerPathEffect"></a>CornerPathEffect</h3><p>使得所有拐角变为圆角：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> radius  拐角处的半径</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> CornerPathEffect(float radius)<br></code></pre></td></tr></table></figure>
+
+<h3 id="DashPathEffect"><a href="#DashPathEffect" class="headerlink" title="DashPathEffect"></a>DashPathEffect</h3><p>设置线条为虚线，适用于 STROKE 或 FILL_AND_STROKE 样式 。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> intervals  必须为偶数，用于控制显示和隐藏的长度,按照显示长度--隐藏长度--显示长度--隐藏长度来					顺序显示</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> phase  相位。即偏移量，开始位置沿着路径偏移的举例</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> DashPathEffect(float intervals[], float phase)<br></code></pre></td></tr></table></figure>
+
+<h3 id="PathDashPathEffect"><a href="#PathDashPathEffect" class="headerlink" title="PathDashPathEffect"></a>PathDashPathEffect</h3><p>使用一个path图形沿着新的path路径绘制。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> shape  用来绘制的 Path	</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> advance  是两个相邻的 shape 段之间的间隔，不过注意，这个间隔是两个 shape 段的起点的间隔，而					不是前一个的终点和后一个的起点的距离；</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> phase  相位。即偏移量，开始位置沿着路径偏移的举例</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> style  指定拐弯改变的时候 shape 的转换方式</span><br><span class="hljs-comment"> 				  TRANSLATE：位移</span><br><span class="hljs-comment"> 				  ROTATE：旋转</span><br><span class="hljs-comment">				  MORPH：变体</span><br><span class="hljs-comment"> */</span><br>PathDashPathEffect(Path shape, float advance, float phase, Style style)<br></code></pre></td></tr></table></figure>
+
+<h3 id="DiscretePathEffect"><a href="#DiscretePathEffect" class="headerlink" title="DiscretePathEffect"></a>DiscretePathEffect</h3><p>设置线条随机偏移 将原来路径分隔很多段 segmentLength 长的线段，然后将每条线段随机偏移 deviation 的位置，deviation 越大，抖动幅度越大</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> segmentLength  分段长度</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> deviation  偏移距离</span><br><span class="hljs-comment"> */</span><br>DiscretePathEffect(float segmentLength, float deviation)<br></code></pre></td></tr></table></figure>
+
+<h3 id="SumPathEffect"><a href="#SumPathEffect" class="headerlink" title="SumPathEffect"></a>SumPathEffect</h3><p>同时对直线执行两种模式 。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**![android_customview_paint_pathEffect](C:\Users\Administrator\Desktop\android_customview_paint_pathEffect.png)</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> first  第一种pathEffect</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> second 第二种pathEffect</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> SumPathEffect(PathEffect first, PathEffect second)<br></code></pre></td></tr></table></figure>
+
+<h3 id="ComposePathEffect"><a href="#ComposePathEffect" class="headerlink" title="ComposePathEffect"></a>ComposePathEffect</h3><p>先对目标 Path 使用一个 PathEffect，然后再对这个改变后的 Path 使用另一个 PathEffect。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> outerpe  第一种pathEffect</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> innerpe 第二种pathEffect</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> ComposePathEffect(PathEffect outerpe, PathEffect innerpe)<br></code></pre></td></tr></table></figure>
+
+<h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p>部分效果如图：</p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_pathEffect.png" srcset="/img/loading.gif" lazyload></p>
+<p>其中动态改变phase属性可以实现虚线的流动效果，关键代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">var</span> phase = <span class="hljs-number">0f</span><br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">pathEffect</span><span class="hljs-params">(canvas: <span class="hljs-type">Canvas</span>?)</span></span> &#123;<br>    phase += <span class="hljs-number">5</span><br>    <span class="hljs-keyword">val</span> x = <span class="hljs-number">350f</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="五、Shader渐变"><a href="#五、Shader渐变" class="headerlink" title="五、Shader渐变"></a>五、Shader渐变</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">public</span> Shader setShader(Shader shader)<br></code></pre></td></tr></table></figure>
+
+<p>其中Shader有5个子类：</p>
+<ul>
+<li>线性渐变：LinearGradient </li>
+<li>径向渐变：RadialGradient </li>
+<li>扫描渐变：SweepGradient </li>
+<li>位图渐变：BitmapShader </li>
+<li>混合渐变：ComposeShader</li>
+</ul>
+<p>其中线性渐变、径向渐变和扫描渐变属于颜色渐变，其渐变种类分为三种，我们 以A,B 代编两种颜色 ：</p>
+<ul>
+<li>ABAB 型：A、B 两种颜色重复变化，通过 TileMode 类的 REPEAT 常量来表示；</li>
+<li>ABBA 型：A、B两种颜色镜像变化，通过 TileMode 类的 MIRROR 常量来表示；</li>
+<li>AABB 型：A、B 两种颜色只出现一次，通过 TileMode类的 CLAMP 常量来表示；</li>
+</ul>
+<h3 id="LinearGradient"><a href="#LinearGradient" class="headerlink" title="LinearGradient"></a>LinearGradient</h3><p>从A点到B点，颜色从X到Y进行线性渐变：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x0 起始点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> y0 起始点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x1 结束点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> y1 结束点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> color0 起始颜色</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> color1 结束颜色</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> tile 渐变种类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> LinearGradient(float x0, float y0, float x1, float y1,<br>        <span class="hljs-meta">@ColorInt</span> int color0, <span class="hljs-meta">@ColorInt</span> int color1,<br>        <span class="hljs-meta">@NonNull</span> TileMode tile)<br></code></pre></td></tr></table></figure>
+
+<p>支持多种颜色的渐变：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x0 起始点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> y0 起始点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x1 结束点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> y1 结束点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> colors 颜色数组 如：RED YELLOW  BLUE</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> positions 颜色对应的位置数组,如[0f,0.4f,1f]，表示开始为RED,0.4位置为YELLOW,末尾为BLUEE</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> tile 渐变种类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> LinearGradient(float x0, float y0, float x1, float y1, <span class="hljs-meta">@NonNull</span> <span class="hljs-meta">@ColorInt</span> int[] colors,<br>            <span class="hljs-meta">@Nullable</span> float[] positions, <span class="hljs-meta">@NonNull</span> TileMode tile)<br></code></pre></td></tr></table></figure>
+
+<h3 id="RadialGradient"><a href="#RadialGradient" class="headerlink" title="RadialGradient"></a>RadialGradient</h3><p>径向渐变是以指定的点为中心，向四周以渐变颜色进行圆周扩散:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> centerX 中心点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> centerY 中心点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> radius 渐变半径</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> centerColor 起始颜色</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> edgeColor 结束颜色</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> tile 渐变种类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> RadialGradient(float centerX, float centerY, float radius,<br>        <span class="hljs-meta">@ColorInt</span> int centerColor, <span class="hljs-meta">@ColorInt</span> int edgeColor, <span class="hljs-meta">@NonNull</span> TileMode tileMode)<br></code></pre></td></tr></table></figure>
+
+<p>和线性渐变一样，支持两种或多种颜色:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> centerX 中心点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> centerY 中心点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> radius 渐变半径</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> colors 颜色数组</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> stops 颜色对应的位置</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> tile 渐变种类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> RadialGradient(float centerX, float centerY, float radius,<br>        <span class="hljs-meta">@NonNull</span> <span class="hljs-meta">@ColorInt</span> int[] colors, <span class="hljs-meta">@Nullable</span> float[] stops,<br>        <span class="hljs-meta">@NonNull</span> TileMode tileMode)<br></code></pre></td></tr></table></figure>
+
+<h3 id="SweepGradient"><a href="#SweepGradient" class="headerlink" title="SweepGradient"></a>SweepGradient</h3><p>扫面渐变，不断围绕圆心扫描。 </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> cx 中心点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> cy 中心点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> color0 起始颜色</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> color1 结束颜色</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> SweepGradient(float cx, float cy, <span class="hljs-meta">@ColorInt</span> int color0, <span class="hljs-meta">@ColorInt</span> int color1) <br></code></pre></td></tr></table></figure>
+
+<p>支持多种颜色：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> cx 中心点x坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> cy 中心点y坐标</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> colors 颜色数组</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> positions 颜色对应的位置</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> SweepGradient(float cx, float cy, <span class="hljs-meta">@NonNull</span> <span class="hljs-meta">@ColorInt</span> int[] colors,<br>        <span class="hljs-meta">@Nullable</span> float[] positions)<br></code></pre></td></tr></table></figure>
+
+<h3 id="BitmapShader"><a href="#BitmapShader" class="headerlink" title="BitmapShader"></a>BitmapShader</h3><p>就是绘制的图形中将指定的位图作为背景。如果图形比位图小，则通过渐变模式进行平铺。 </p>
+<p>这里不详解！</p>
+<h3 id="ComposeShader"><a href="#ComposeShader" class="headerlink" title="ComposeShader"></a>ComposeShader</h3><p>混合渐变是将两种不同的渐变通过位图运算后得到 。</p>
+<p>这里不详解！</p>
+<h3 id="颜色渐变效果图："><a href="#颜色渐变效果图：" class="headerlink" title="颜色渐变效果图："></a>颜色渐变效果图：</h3><p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_gradient.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="六、色彩优化"><a href="#六、色彩优化" class="headerlink" title="六、色彩优化"></a>六、色彩优化</h2><h3 id="图像抖动Dither"><a href="#图像抖动Dither" class="headerlink" title="图像抖动Dither"></a>图像抖动Dither</h3><p>图像抖动处理，设置后图像更加清晰</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> dither   true为开启</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setDither(boolean dither)<br></code></pre></td></tr></table></figure>
+
+<h3 id="线性过滤-Filter"><a href="#线性过滤-Filter" class="headerlink" title="线性过滤 Filter"></a>线性过滤 Filter</h3><p>让结果图像显得更加平滑 </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> filter   true为开启</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void setFilterBitmap(boolean filter)<br></code></pre></td></tr></table></figure>
+
+<h2 id="七、MaskFilter"><a href="#七、MaskFilter" class="headerlink" title="七、MaskFilter"></a>七、MaskFilter</h2><p>在绘制层上方的附加效果，用来对图像进行一定的处理，需要关闭<code>View</code>的硬件加速功能  。MaskFilter有两种。</p>
+<ul>
+<li>模糊效果的 <code>MaskFilter</code> </li>
+<li>浮雕效果的<code>EmbossMaskFilter</code></li>
+</ul>
+<p>使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> maskfilter   </span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> MaskFilter setMaskFilter(MaskFilter maskfilter)<br></code></pre></td></tr></table></figure>
+
+<h3 id="BlurMaskFilter"><a href="#BlurMaskFilter" class="headerlink" title="BlurMaskFilter"></a>BlurMaskFilter</h3><p>模糊遮罩滤镜 ：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> radius 模糊半径</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> style 模式</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> BlurMaskFilter(float radius, Blur style) <br></code></pre></td></tr></table></figure>
+
+<p>style有四种选择模式，区别如下图：</p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_blurMaskfilter.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="EmbossMaskFilter"><a href="#EmbossMaskFilter" class="headerlink" title="EmbossMaskFilter"></a>EmbossMaskFilter</h3><p>可以实现浮雕效果。这里不详解。</p>
+<h2 id="八、文本效果"><a href="#八、文本效果" class="headerlink" title="八、文本效果"></a>八、文本效果</h2><ul>
+<li>setTextSize(int)，设置字体大小</li>
+<li>setFakeBoldText(boolean)，设置文本仿粗体</li>
+<li>setUnderlineText(boolean)，设置文字的下划线</li>
+<li>setTextSkewX(float)，设置斜体字，值为负右倾值为正左倾</li>
+<li>setStrikeThruText(boolean)，设置文本删除线</li>
+<li>setTextScaleX(float)，文本沿X轴水平缩放，默认值为1</li>
+<li>setLetterSpacing(float)，设置行的间距</li>
+<li>setShadowLayer(float radius, float dx, float dy, int shadowColor)，设置阴影效果，radius为阴影角度，dx和dy为阴影在x轴和y轴上的距离，color为阴影的颜色</li>
+<li>setTypeface(Typeface)，设置文本字体样式</li>
+<li>setTextAlign(Paint.Align)，设置字体方向</li>
+</ul>
+<p>效果图如下：</p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/android/android_customview_paint_text.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="九、附录"><a href="#九、附录" class="headerlink" title="九、附录"></a>九、附录</h2><h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27061049/article/details/102574020">放大的EZ  Android Paint 详细讲解</a> </li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennai1101/article/details/87883141">假装你是大灰狼  Android Paint类</a></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/" class="category-chain-item">自定义View</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
+      
+        <a href="/tags/Paint/">#Paint</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Paint类使用</div>
+      <div>http://example.com/2022/09/06/Android/自定义view/paint的使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Path类使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性">
+                        <span class="hidden-mobile">自定义属性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

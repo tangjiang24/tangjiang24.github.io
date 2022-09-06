@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="自定义属性一、基本使用流程 自定义 CustomAttrsView 类；  编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素； 1234567891011121314151617181920212223242526&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;&lt;r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义属性">
+<meta property="og:url" content="http://example.com/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="自定义属性一、基本使用流程 自定义 CustomAttrsView 类；  编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素； 1234567891011121314151617181920212223242526&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;&lt;r">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
+<meta property="article:modified_time" content="2022-09-06T02:52:14.158Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="自定义View">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>自定义属性 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":88,"cursorChar":"kobe","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="自定义属性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-06 09:36" pubdate>
+          2022年9月6日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">自定义属性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h1><h2 id="一、基本使用流程"><a href="#一、基本使用流程" class="headerlink" title="一、基本使用流程"></a>一、基本使用流程</h2><ol>
+<li><p>自定义 CustomAttrsView 类；</p>
+</li>
+<li><p>编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;<br>&lt;resources&gt;<br>    &lt;declare-styleable name=<span class="hljs-string">&quot;CustomAttrsView&quot;</span>&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;name&quot;</span> format=<span class="hljs-string">&quot;string|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;text&quot;</span> format=<span class="hljs-string">&quot;string|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;android:textSize&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;skinColor&quot;</span> format=<span class="hljs-string">&quot;color|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;isMVP&quot;</span> format=<span class="hljs-string">&quot;boolean&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;kobeheight&quot;</span> format=<span class="hljs-string">&quot;float|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;weight&quot;</span> format=<span class="hljs-string">&quot;float|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;radius&quot;</span> format=<span class="hljs-string">&quot;dimension|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;maxPoints&quot;</span> format=<span class="hljs-string">&quot;integer|reference&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;freeThrowPercent&quot;</span> format=<span class="hljs-string">&quot;fraction&quot;</span>&gt;&lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;team&quot;</span> format=<span class="hljs-string">&quot;enum&quot;</span>&gt;<br>            &lt;<span class="hljs-keyword">enum</span> name=<span class="hljs-string">&quot;lakers&quot;</span> value=<span class="hljs-string">&quot;0&quot;</span>/&gt;<br>            &lt;<span class="hljs-keyword">enum</span> name=<span class="hljs-string">&quot;Sixers&quot;</span> value=<span class="hljs-string">&quot;1&quot;</span>/&gt;<br>            &lt;<span class="hljs-keyword">enum</span> name=<span class="hljs-string">&quot;nets&quot;</span> value=<span class="hljs-string">&quot;2&quot;</span>/&gt;<br>            &lt;<span class="hljs-keyword">enum</span> name=<span class="hljs-string">&quot;rockets&quot;</span> value=<span class="hljs-string">&quot;3&quot;</span>/&gt;<br>        &lt;/attr&gt;<br>        &lt;attr name=<span class="hljs-string">&quot;point&quot;</span> format=<span class="hljs-string">&quot;flags&quot;</span>&gt;<br>            &lt;flag name=<span class="hljs-string">&quot;shoot&quot;</span> value=<span class="hljs-string">&quot;0&quot;</span>/&gt;<br>            &lt;flag name=<span class="hljs-string">&quot;freethrow&quot;</span> value=<span class="hljs-string">&quot;1&quot;</span>/&gt;<br>            &lt;flag name=<span class="hljs-string">&quot;dunk&quot;</span> value=<span class="hljs-string">&quot;2&quot;</span>/&gt;<br>        &lt;/attr&gt;<br>    &lt;/declare-styleable&gt;<br>&lt;/resources&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>xml中引入自定义view，并使用自定义的属性</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">xmlns:tj=<span class="hljs-string">&quot;http://schemas.android.com/apk/res-auto&quot;</span> <br><br>&lt;com.yellowhat.study.customview.CustomAttrsView<br>        tj:name=<span class="hljs-string">&quot;kobe&quot;</span><br>        tj:skinColor=<span class="hljs-string">&quot;#000000&quot;</span><br>        tj:isMVP=<span class="hljs-string">&quot;true&quot;</span><br>        tj:kobeheight=<span class="hljs-string">&quot;203&quot;</span><br>        tj:weight=<span class="hljs-string">&quot;198&quot;</span><br>        tj:radius=<span class="hljs-string">&quot;@dimen/dp_10&quot;</span><br>        tj:maxPoints=<span class="hljs-string">&quot;81&quot;</span><br>        tj:freeThrowPercent=<span class="hljs-string">&quot;8.24%&quot;</span><br>        tj:team=<span class="hljs-string">&quot;lakers&quot;</span><br>        tj:text=<span class="hljs-string">&quot;55&quot;</span><br>        android:textSize=<span class="hljs-string">&quot;20sp&quot;</span><br>        tj:point=<span class="hljs-string">&quot;dunk|shoot|freethrow&quot;</span><br>        android:layout_width=<span class="hljs-string">&quot;wrap_content&quot;</span><br>        android:layout_height=<span class="hljs-string">&quot;wrap_content&quot;</span><br>        app:layout_constraintEnd_toEndOf=<span class="hljs-string">&quot;parent&quot;</span><br>        app:layout_constraintStart_toStartOf=<span class="hljs-string">&quot;parent&quot;</span><br>        app:layout_constraintTop_toTopOf=<span class="hljs-string">&quot;parent&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在CustomAttrsView中通过TypeArray获取各个属性；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomAttrsView</span> <span class="hljs-meta">@JvmOverloads</span> <span class="hljs-keyword">constructor</span>(<br>    context: Context,<br>    attributeSet: AttributeSet? = <span class="hljs-literal">null</span>,<br>    defStyleAttr: <span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span><br>) : AppCompatTextView(context, attributeSet, defStyleAttr) &#123;<br>    <span class="hljs-keyword">init</span> &#123;<br>        <span class="hljs-keyword">val</span> typeArray = context.obtainStyledAttributes(attributeSet, R.styleable.CustomAttrsView)<br>        <span class="hljs-keyword">val</span> name = typeArray.getString(R.styleable.CustomAttrsView_name)<br>        <span class="hljs-keyword">val</span> skinColor = typeArray.getColor(R.styleable.CustomAttrsView_skinColor, Color.RED)<br>        <span class="hljs-keyword">val</span> isMvp = typeArray.getBoolean(R.styleable.CustomAttrsView_isMVP, <span class="hljs-literal">true</span>)<br>        <span class="hljs-keyword">val</span> height = typeArray.getFloat(R.styleable.CustomAttrsView_kobeheight, <span class="hljs-number">195.2f</span>)<br>        <span class="hljs-keyword">val</span> weight = typeArray.getFloat(R.styleable.CustomAttrsView_weight, <span class="hljs-number">100.0f</span>)<br>        <span class="hljs-keyword">val</span> circleRadius = typeArray.getDimension(R.styleable.CustomAttrsView_radius, <span class="hljs-number">20.0f</span>)<br>        <span class="hljs-keyword">val</span> maxPoints = typeArray.getInt(R.styleable.CustomAttrsView_maxPoints, <span class="hljs-number">25</span>)<br>        <span class="hljs-keyword">val</span> freethowPercent =<br>            typeArray.getFraction(R.styleable.CustomAttrsView_freeThrowPercent, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">50f</span>)<br>        <span class="hljs-keyword">val</span> team = typeArray.getInt(R.styleable.CustomAttrsView_team, <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">val</span> point = typeArray.getInt(R.styleable.CustomAttrsView_point, <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">val</span> text = typeArray.getString(R.styleable.CustomAttrsView_text)<br>        <span class="hljs-keyword">val</span> textSize = typeArray.getDimension(R.styleable.CustomAttrsView_android_textSize,<span class="hljs-number">22f</span>)<br>        Log.e(<br>            <span class="hljs-string">&quot;tj24&quot;</span>,<br>            <span class="hljs-string">&quot;name = <span class="hljs-subst">$&#123;name&#125;</span>\n skinColor = <span class="hljs-subst">$&#123;skinColor&#125;</span>\n isMvp = <span class="hljs-subst">$&#123;isMvp&#125;</span>\n height = <span class="hljs-subst">$&#123;height&#125;</span>\n weight = <span class="hljs-subst">$&#123;weight&#125;</span>\n circleRadius = <span class="hljs-subst">$&#123;circleRadius&#125;</span>\n maxPoints = <span class="hljs-subst">$&#123;maxPoints&#125;</span>\n freethowPercent = <span class="hljs-subst">$&#123;freethowPercent&#125;</span>\n team = <span class="hljs-subst">$&#123;team&#125;</span>\n point = <span class="hljs-subst">$&#123;point&#125;</span>\n text = <span class="hljs-subst">$&#123;text&#125;</span>\n&quot;</span> +<br>                    <span class="hljs-string">&quot; textSize = <span class="hljs-subst">$&#123;textSize&#125;</span>&quot;</span><br>        )<br>        typeArray.recycle()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>log输出如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java">08-09 <span class="hljs-number">14</span>:<span class="hljs-number">51</span>:<span class="hljs-number">14.694</span> <span class="hljs-number">27403</span>-<span class="hljs-number">27403</span>/com.yellowhat.study E/tj24: name = <span class="hljs-type">kobe</span><br>     <span class="hljs-variable">skinColor</span> <span class="hljs-operator">=</span> -<span class="hljs-number">16777216</span><br>     isMvp = <span class="hljs-type">true</span><br>     <span class="hljs-variable">height</span> <span class="hljs-operator">=</span> <span class="hljs-number">203.0</span><br>     weight = <span class="hljs-number">198.0</span><br>     circleRadius = <span class="hljs-number">10.0</span><br>     maxPoints = <span class="hljs-number">81</span><br>     freethowPercent = <span class="hljs-number">0.082399964</span><br>     team = <span class="hljs-number">0</span><br>     point = <span class="hljs-number">3</span><br>     text = <span class="hljs-number">55</span><br>     textSize = <span class="hljs-number">20.0</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="二、属性值的类型format"><a href="#二、属性值的类型format" class="headerlink" title="二、属性值的类型format"></a>二、属性值的类型format</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>reference</td>
+<td>参考某一资源ID</td>
+<td></td>
+</tr>
+<tr>
+<td>color</td>
+<td>颜色值</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>布尔</td>
+<td></td>
+</tr>
+<tr>
+<td>dimension</td>
+<td>尺寸</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>浮点</td>
+<td></td>
+</tr>
+<tr>
+<td>integer</td>
+<td>整形</td>
+<td></td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>fraction</td>
+<td>百分比</td>
+<td></td>
+</tr>
+<tr>
+<td>enum</td>
+<td>枚举</td>
+<td>值为int</td>
+</tr>
+<tr>
+<td>flag</td>
+<td>位或运算</td>
+<td>值为int</td>
+</tr>
+</tbody></table>
+<h2 id="三、注意事项："><a href="#三、注意事项：" class="headerlink" title="三、注意事项："></a>三、注意事项：</h2><ul>
+<li><strong>styleable 的 name 建议和自定义view 类名保持一致，不然xml中代码不会自动提示！</strong></li>
+<li><strong>xml中使用自定义属性注意命名空间，如上面 text属性有tj:text 和android:text之分；</strong></li>
+<li><strong>attr name 可以直接使用系统已定义的属性，但不能有format，如上面 textSize 属性；</strong></li>
+<li><strong>enum和 flag 的属性，value只能为int。 enum只可选一个，flag可以位运算多个。</strong></li>
+<li><strong>format可混合使用，如  format&#x3D;”float|reference”</strong></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/" class="category-chain-item">自定义View</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>自定义属性</div>
+      <div>http://example.com/2022/09/06/Android/自定义view/自定义属性/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Paint类使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/adb%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%A4%A7%E5%85%A8/" title="adb指令操作">
+                        <span class="hidden-mobile">adb指令操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
