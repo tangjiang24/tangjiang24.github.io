@@ -23,20 +23,22 @@
 <meta property="og:site_name" content="煤炭黄帽">
 <meta property="og:description" content="Path类使用[TOC] 一、简介 Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径，用于描述顺序和区域。 使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。  使用过程中如有异常请关闭硬件加速 。  创建： 1val path &#x3D; Path()  二、设置路径主要有moveTo、 setLastPoint、 lineTo 和 close lineTo&#x2F;rL">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_moveTo.png">
-<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_shapes.png">
-<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_addpath.png">
-<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_op.png">
-<meta property="og:image" content="c:/Users/Administrator/Desktop/android_customview_path_besaier.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_moveTo.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_shapes.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_addpath.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_op.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_besaier.png">
 <meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
-<meta property="article:modified_time" content="2022-09-06T02:52:14.096Z">
+<meta property="article:modified_time" content="2022-09-17T07:45:05.000Z">
 <meta property="article:author" content="煤炭黄帽">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="自定义View">
 <meta property="article:tag" content="Path">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="c:/Users/Administrator/Desktop/android_customview_path_moveTo.png">
+<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_moveTo.png">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>Path类使用 - 煤炭黄帽</title>
@@ -77,7 +79,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":88,"cursorChar":"kobe","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -198,19 +200,24 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Path类使用"></span>
+            <span id="subtitle">Path类使用</span>
           
         </div>
 
         
           
   <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
     
     
       <span class="post-meta">
@@ -238,12 +245,20 @@
         
         
         
-          51 分钟
+          77 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -268,6 +283,291 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
+        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+        aria-expanded="false"
+      >
+        errors
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
+           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylib"
+        id="heading-0032f5a392d2bb530cd635362ad873c4" role="tab" data-toggle="collapse" href="#collapse-0032f5a392d2bb530cd635362ad873c4"
+        aria-expanded="false"
+      >
+        mylib
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-0032f5a392d2bb530cd635362ad873c4"
+           role="tabpanel" aria-labelledby="heading-0032f5a392d2bb530cd635362ad873c4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="true"
+      >
+        自定义View
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="true"
+      >
+        自定义View
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -299,7 +599,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> path1 = Path()<br>path1.moveTo(<span class="hljs-number">0f</span>, <span class="hljs-number">200f</span>)<br>path1.rLineTo(<span class="hljs-number">200f</span>, <span class="hljs-number">100f</span>)<br>path1.rMoveTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>path1.rLineTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>canvas?.drawPath(path1, paint)<br>canvas?.drawTextOnPath(<span class="hljs-string">&quot;moveTo()&quot;</span>, path1, <span class="hljs-number">10f</span>, -<span class="hljs-number">20f</span>, textPaint)<br><br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.moveTo(<span class="hljs-number">0f</span>, <span class="hljs-number">400f</span>)<br>path2.rLineTo(<span class="hljs-number">200f</span>, <span class="hljs-number">100f</span>)<br>path2.setLastPoint(<span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>)<br>path2.rLineTo(<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)<br>canvas?.drawPath(path2, paint)<br>canvas?.drawTextOnPath(<span class="hljs-string">&quot;setLastPoint()&quot;</span>, path2, <span class="hljs-number">10f</span>, -<span class="hljs-number">20f</span>, textPaint)<br></code></pre></td></tr></table></figure>
 
 <p>运行效果图：</p>
-<p><img src="C:\Users\Administrator\Desktop\android_customview_path_moveTo.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_moveTo.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="close"><a href="#close" class="headerlink" title="close"></a>close</h3><p>将当前最后一点和第一个 点连接起来形成封闭图形。 </p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">public</span> void close()<br></code></pre></td></tr></table></figure>
 
@@ -331,7 +631,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">300f</span>, <span class="hljs-number">700f</span>)<br>        <span class="hljs-keyword">val</span> path0 = Path()<br>        path0.addCircle(<span class="hljs-number">200f</span>, <span class="hljs-number">0f</span>, <span class="hljs-number">150f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path0, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addCircle()&quot;</span>, <span class="hljs-number">0f</span>, -<span class="hljs-number">160f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path1 = Path()<br>        path1.addRect(<span class="hljs-number">50f</span>, <span class="hljs-number">250f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">350f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path1, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addRect()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">240f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path2 = Path()<br>        path2.addRoundRect(<span class="hljs-number">50f</span>,<span class="hljs-number">450f</span>,<span class="hljs-number">350f</span>,<span class="hljs-number">550f</span>,<br>            floatArrayOf(<span class="hljs-number">100f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">450f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>),<br>            Path.Direction.CW<br>        )<br>        canvas?.drawPath(path2, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addRoundRect()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">440f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path3 = Path()<br>        path3.addOval(<span class="hljs-number">50f</span>, <span class="hljs-number">650f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">850f</span>, Path.Direction.CW)<br>        canvas?.drawPath(path3, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;addOval()&quot;</span>, <span class="hljs-number">100f</span>, <span class="hljs-number">640f</span>, textPaint)<br></code></pre></td></tr></table></figure>
 
 <p>运行效果图：</p>
-<p><img src="C:\Users\Administrator\Desktop\android_customview_path_shapes.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_shapes.png" srcset="/img/loading.gif" lazyload></p>
 <p><code>Path.Direction</code>代表图形的方向，为枚举类型：</p>
 <ul>
 <li>CW：clockwise，顺时针</li>
@@ -348,7 +648,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">300f</span>, <span class="hljs-number">700f</span>)<br><span class="hljs-keyword">val</span> path0 = Path()<br>path0.addCircle(<span class="hljs-number">200f</span>, <span class="hljs-number">0f</span>, <span class="hljs-number">150f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.addRect(<span class="hljs-number">50f</span>, <span class="hljs-number">250f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">350f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.addRoundRect(<span class="hljs-number">50f</span>,<span class="hljs-number">450f</span>,<span class="hljs-number">350f</span>,<span class="hljs-number">550f</span>,<br>    floatArrayOf(<span class="hljs-number">100f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">450f</span>, <span class="hljs-number">500f</span>, <span class="hljs-number">300f</span>, <span class="hljs-number">500f</span>),<br>    Path.Direction.CW<br>)<br><br><span class="hljs-keyword">val</span> path3 = Path()<br>path3.addOval(<span class="hljs-number">50f</span>, <span class="hljs-number">650f</span>, <span class="hljs-number">350f</span>, <span class="hljs-number">850f</span>, Path.Direction.CW)<br><br><span class="hljs-keyword">val</span> path = Path()<br>path.addPath(path0)<br>path.addPath(path1, -<span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>) <span class="hljs-comment">//path1右移100</span><br>path.addPath(path2, <span class="hljs-number">100f</span>, <span class="hljs-number">0f</span>)   <span class="hljs-comment">//path2左移100</span><br>path.addPath(path3)<br>canvas?.drawPath(path, paint)<br></code></pre></td></tr></table></figure>
 
 <p>效果图：</p>
-<p><img src="C:\Users\Administrator\Desktop\android_customview_path_addpath.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_addpath.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="四、判断路径属性"><a href="#四、判断路径属性" class="headerlink" title="四、判断路径属性"></a>四、判断路径属性</h2><h3 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty()"></a>isEmpty()</h3><p>判断path中是否包含内容</p>
 <h3 id="isRect-RectF-rect"><a href="#isRect-RectF-rect" class="headerlink" title="isRect (RectF rect)"></a>isRect (RectF rect)</h3><p>判断path是否是一个矩形</p>
 <h3 id="set-Path-src"><a href="#set-Path-src" class="headerlink" title="set (Path src)"></a>set (Path src)</h3><p>将新的路径替代现有路径</p>
@@ -393,7 +693,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(<span class="hljs-number">400f</span>, <span class="hljs-number">700f</span>)<br>paint.style = Paint.Style.FILL<br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.addCircle(x-<span class="hljs-number">75</span>,y,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path2 = Path()<br>path2.addCircle(x+<span class="hljs-number">75</span>,y,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path1.op(path2, Path.Op.DIFFERENCE)<br>canvas?.drawPath(path1,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.DIFFERENCE&quot;</span>,x-<span class="hljs-number">100</span>,y-<span class="hljs-number">110</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path3 = Path()<br>path3.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">300</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path4 = Path()<br>path4.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">300</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path3.op(path4, Path.Op.INTERSECT)<br>canvas?.drawPath(path3,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.INTERSECT&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">190</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path5 = Path()<br>path5.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">600</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path6 = Path()<br>path6.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">600</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path5.op(path6, Path.Op.UNION)<br>canvas?.drawPath(path5,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.UNION&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">490</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path7 = Path()<br>path7.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">900</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path8 = Path()<br>path8.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">900</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path7.op(path8, Path.Op.XOR)<br>canvas?.drawPath(path7,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.XOR&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">790</span>,textPaint)<br><br><span class="hljs-keyword">val</span> path9 = Path()<br>path9.addCircle(x-<span class="hljs-number">75</span>,y+<span class="hljs-number">1200</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br><span class="hljs-keyword">val</span> path10 = Path()<br>path10.addCircle(x+<span class="hljs-number">75</span>,y+<span class="hljs-number">1200</span>,<span class="hljs-number">100f</span>,Path.Direction.CW)<br>path9.op(path10, Path.Op.REVERSE_DIFFERENCE)<br>canvas?.drawPath(path9,paint)<br>canvas?.drawText(<span class="hljs-string">&quot;Op.REVERSE_DIFFERENCE&quot;</span>,x-<span class="hljs-number">100</span>,y+<span class="hljs-number">1090</span>,textPaint)<br></code></pre></td></tr></table></figure>
 
 <p>效果图：</p>
-<p><img src="C:\Users\Administrator\Desktop\android_customview_path_op.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_op.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="七、贝塞尔曲线"><a href="#七、贝塞尔曲线" class="headerlink" title="七、贝塞尔曲线"></a>七、贝塞尔曲线</h2><p>这里只简单介绍贝塞尔曲线的画法，详细介绍参考 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/55c721887568https://www.jianshu.com/p/55c721887568https://www.jianshu.com/p/55c721887568">这里</a>：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// 绘制二阶贝塞尔曲线</span><br><span class="hljs-comment">//  (x1,y1)为控制点，(x2,y2)为终点</span><br>quadTo(float x1, float y1, float x2, float y2)<br><span class="hljs-comment">//  (x1,y1)为控制点距离起点的偏移量，(x2,y2)为终点距离起点的偏移量</span><br>rQuadTo(float x1, float y1, float x2, float y2)<br><br><span class="hljs-comment">// 绘制三阶贝塞尔曲线</span><br><span class="hljs-comment">// (x1,y1),(x2,y2)为控制点，(x3,y3)为终点</span><br>cubicTo(float x1, float y1, float x2, float y2, float x3, float y3)<br><span class="hljs-comment">// (x1,y1)，(x2,y2)为控制点距离起点的偏移量，(x3,y3)为终点距离起点的偏移量</span><br>rCubicTo(float x1, float y1, float x2, float y2, float x3, float y3)<br></code></pre></td></tr></table></figure>
 
@@ -401,7 +701,7 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">canvas?.translate(width / <span class="hljs-number">2f</span>, height / <span class="hljs-number">2f</span>)<br><span class="hljs-keyword">val</span> path = Path()<br>path.moveTo(x - <span class="hljs-number">200f</span>, y)<br>path.quadTo(x, y - <span class="hljs-number">100f</span>, x + <span class="hljs-number">200</span>, y)<br>canvas?.drawPath(path, paint)<br>canvas?.drawText(<span class="hljs-string">&quot;二阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y-<span class="hljs-number">200f</span>, textPaint)<br><br><span class="hljs-keyword">val</span> path1 = Path()<br>path1.moveTo(x - <span class="hljs-number">200f</span>, y+<span class="hljs-number">400f</span>)<br>path1.cubicTo(x, y + <span class="hljs-number">800f</span>, x+<span class="hljs-number">300f</span>,y+<span class="hljs-number">200f</span>,x + <span class="hljs-number">500</span>, y+<span class="hljs-number">400f</span>)<br>canvas?.drawPath(path1, paint)<br>canvas?.drawText(<span class="hljs-string">&quot;三阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y+<span class="hljs-number">400f</span>, textPaint) canvas?.translate(width / <span class="hljs-number">2f</span>, height / <span class="hljs-number">2f</span>)<br>        <span class="hljs-keyword">val</span> path = Path()<br>        path.moveTo(x - <span class="hljs-number">200f</span>, y)<br>        path.quadTo(x, y - <span class="hljs-number">100f</span>, x + <span class="hljs-number">200</span>, y)<br>        canvas?.drawPath(path, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;二阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y-<span class="hljs-number">200f</span>, textPaint)<br><br>        <span class="hljs-keyword">val</span> path1 = Path()<br>        path1.moveTo(x - <span class="hljs-number">200f</span>, y+<span class="hljs-number">400f</span>)<br>        path1.cubicTo(x, y + <span class="hljs-number">800f</span>, x+<span class="hljs-number">300f</span>,y+<span class="hljs-number">200f</span>,x + <span class="hljs-number">500</span>, y+<span class="hljs-number">400f</span>)<br>        canvas?.drawPath(path1, paint)<br>        canvas?.drawText(<span class="hljs-string">&quot;三阶贝塞尔&quot;</span>, x-<span class="hljs-number">200</span>, y+<span class="hljs-number">400f</span>, textPaint)<br></code></pre></td></tr></table></figure>
 
 <p>效果图：</p>
-<p><img src="C:\Users\Administrator\Desktop\android_customview_path_besaier.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_customview_path_besaier.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="八、附录"><a href="#八、附录" class="headerlink" title="八、附录"></a>八、附录</h2><h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiangzhihong8/article/details/78278931/">xiangzhihong8 Android开发之Path详解</a> </li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/chennai1101/article/details/87721101">假装你是大灰狼  Android Path类</a></li>
@@ -480,6 +780,11 @@
         </div>
       
       
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年9月17日</div>
+        </div>
+      
       <div class="license-meta-item">
         <div>许可协议</div>
         <div>
@@ -506,9 +811,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用">
+                      <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Canvas类使用</span>
+                        <span class="hidden-mobile">Android动画</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -516,8 +821,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用">
-                        <span class="hidden-mobile">Paint类使用</span>
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性">
+                        <span class="hidden-mobile">自定义属性</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -528,6 +833,12 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -647,21 +958,6 @@
 <script  src="/js/plugins.js" ></script>
 
 
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
 
 
 
@@ -739,6 +1035,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

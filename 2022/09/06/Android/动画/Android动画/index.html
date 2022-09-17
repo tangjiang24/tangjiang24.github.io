@@ -23,17 +23,17 @@
 <meta property="og:site_name" content="煤炭黄帽">
 <meta property="og:description" content="Android动画概述本文是对Android动画知识的总结：  动画的分类、基本使用及使用场景； 回顾差值器及估值器； 注意事项；   动画分类Android动画可以分三种：View动画、帧动画、属性动画，其中帧动画也属于View动画的一种，只是和其他相比表现形式不同。 View动画TranslateAnimation使view在水平或者竖直方向上平移。xml设置如下：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/Android%E5%8A%A8%E7%94%BB.png">
-<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/pic/interpolator.jpg">
-<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/img/test.png">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_投篮.webp.jpg">
 <meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
-<meta property="article:modified_time" content="2022-09-06T08:41:38.416Z">
+<meta property="article:modified_time" content="2022-09-17T07:45:05.000Z">
 <meta property="article:author" content="煤炭黄帽">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="动画">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/pic/Android%E5%8A%A8%E7%94%BB.png">
+<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_投篮.webp.jpg">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>Android动画 - 煤炭黄帽</title>
@@ -74,7 +74,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":88,"cursorChar":"kobe","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -195,19 +195,24 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_%E5%92%AC%E7%90%83%E8%A1%A3.webp.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Android动画"></span>
+            <span id="subtitle">Android动画</span>
           
         </div>
 
         
           
   <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
     
     
       <span class="post-meta">
@@ -235,12 +240,20 @@
         
         
         
-          54 分钟
+          81 分钟
         
       </span>
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -265,6 +278,264 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
+        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+        aria-expanded="false"
+      >
+        errors
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
+           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylib"
+        id="heading-0032f5a392d2bb530cd635362ad873c4" role="tab" data-toggle="collapse" href="#collapse-0032f5a392d2bb530cd635362ad873c4"
+        aria-expanded="false"
+      >
+        mylib
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-0032f5a392d2bb530cd635362ad873c4"
+           role="tabpanel" aria-labelledby="heading-0032f5a392d2bb530cd635362ad873c4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="true"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="false"
+      >
+        自定义View
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="true"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -284,7 +555,7 @@
 <li>回顾差值器及估值器；</li>
 <li>注意事项；</li>
 </ul>
-<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/Android%E5%8A%A8%E7%94%BB.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_animation_xmind.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="动画分类"><a href="#动画分类" class="headerlink" title="动画分类"></a>动画分类</h2><p>Android动画可以分三种：View动画、帧动画、属性动画，其中帧动画也属于View动画的一种，只是和其他相比表现形式不同。</p>
 <h3 id="View动画"><a href="#View动画" class="headerlink" title="View动画"></a>View动画</h3><h4 id="TranslateAnimation"><a href="#TranslateAnimation" class="headerlink" title="TranslateAnimation"></a>TranslateAnimation</h4><p>使view在水平或者竖直方向上平移。xml设置如下：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;translate<br>    android:fromXDelta=<span class="hljs-string">&quot;0&quot;</span>   <span class="hljs-comment">//x的起始偏移量</span><br>    android:fromYDelta=<span class="hljs-string">&quot;0&quot;</span>	<span class="hljs-comment">//y的起始偏移量</span><br>    android:toXDelta=<span class="hljs-string">&quot;100&quot;</span>		<span class="hljs-comment">//x的结束偏移量</span><br>    android:toYDelta=<span class="hljs-string">&quot;100&quot;</span> /&gt;	<span class="hljs-comment">//y的结束偏移量</span><br></code></pre></td></tr></table></figure>
@@ -392,8 +663,8 @@
 <li>.cancle 取消</li>
 </ul>
 <h4 id="Interpolator-x2F-TypeEvaluator"><a href="#Interpolator-x2F-TypeEvaluator" class="headerlink" title="Interpolator&#x2F;TypeEvaluator"></a>Interpolator&#x2F;TypeEvaluator</h4><p>差值器和估值器用于实现非匀速运动的动画，系统自带有许多基本够用，如果要自定义，则差值器需要实现Interpolator或者TimeInterpolator,估值器需要实现TypeEvaluator。</p>
-<p>常用插值器有：</p>
-<p><img src="https://gitee.com/tj24/tj24/raw/master/pic/interpolator.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>常用插值器有：0</p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/android_animation_interpolator.jpg" srcset="/img/loading.gif" lazyload></p>
 <h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><ul>
 <li>属性动画可以用xml实现和代码两种方式实现，建议用代码（简单）；</li>
 <li>原理为不断改变属性值而实现；</li>
@@ -406,7 +677,6 @@
 <li>不要使用px，要尽量使用dp，因为不同设备会有不同的效果；</li>
 <li>建议开启硬件加速，提高动画的流畅性；</li>
 </ul>
-<p><img src="https://gitee.com/tj24/tj24/raw/master/img/test.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -478,6 +748,11 @@
         </div>
       
       
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年9月17日</div>
+        </div>
+      
       <div class="license-meta-item">
         <div>许可协议</div>
         <div>
@@ -504,9 +779,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo/" title="hexo">
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">hexo</span>
+                        <span class="hidden-mobile">Paint类使用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -514,8 +789,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用">
-                        <span class="hidden-mobile">Canvas类使用</span>
+                      <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用">
+                        <span class="hidden-mobile">Path类使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -526,6 +801,12 @@
             </div>
 
             
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -645,21 +926,6 @@
 <script  src="/js/plugins.js" ></script>
 
 
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
 
 
 
@@ -737,6 +1003,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
