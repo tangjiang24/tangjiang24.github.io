@@ -1,0 +1,1084 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Android换肤框架–YHReskin前言最近研究了Android 换肤功能的实现，结合自身情况，最后在XSkinLoader的基础上做了些修改。下面简单介绍使用方法。 引用1implementation project(path: &amp;#x27;:assembly:YHReskin&amp;#x27;)  xml属性换肤通过对xml文件解析，对xml中支持换肤的属性进行资源替换。首先需要在activit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android换肤框架--YHReskin">
+<meta property="og:url" content="http://example.com/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="Android换肤框架–YHReskin前言最近研究了Android 换肤功能的实现，结合自身情况，最后在XSkinLoader的基础上做了些修改。下面简单介绍使用方法。 引用1implementation project(path: &amp;#x27;:assembly:YHReskin&amp;#x27;)  xml属性换肤通过对xml文件解析，对xml中支持换肤的属性进行资源替换。首先需要在activit">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-02T13:28:25.000Z">
+<meta property="article:modified_time" content="2022-11-02T13:28:25.000Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="skin">
+<meta property="article:tag" content="Android换肤">
+<meta property="article:tag" content="换肤">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Android换肤框架--YHReskin - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Android换肤框架--YHReskin</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-02 21:28" pubdate>
+          2022年11月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(11)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
+        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+        aria-expanded="false"
+      >
+        errors
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
+           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/errorlist/InstantiationException%20could%20not%20find%20Fragment%20constructor/" title="InstantiationException--could not find Fragment constructor"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData仅第一次回调</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="false"
+      >
+        jetpack
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="startUp"
+        id="heading-c8459a7b18beea3a04d7018062734385" role="tab" data-toggle="collapse" href="#collapse-c8459a7b18beea3a04d7018062734385"
+        aria-expanded="false"
+      >
+        startUp
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-c8459a7b18beea3a04d7018062734385"
+           role="tabpanel" aria-labelledby="heading-c8459a7b18beea3a04d7018062734385">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/Jetpack%20startUp/" title="Jetpack StartUp"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Jetpack StartUp</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylib"
+        id="heading-0032f5a392d2bb530cd635362ad873c4" role="tab" data-toggle="collapse" href="#collapse-0032f5a392d2bb530cd635362ad873c4"
+        aria-expanded="false"
+      >
+        mylib
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-0032f5a392d2bb530cd635362ad873c4"
+           role="tabpanel" aria-labelledby="heading-0032f5a392d2bb530cd635362ad873c4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylibs"
+        id="heading-10763dff943142505f19b1dfc2a6f234" role="tab" data-toggle="collapse" href="#collapse-10763dff943142505f19b1dfc2a6f234"
+        aria-expanded="true"
+      >
+        mylibs
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-10763dff943142505f19b1dfc2a6f234"
+           role="tabpanel" aria-labelledby="heading-10763dff943142505f19b1dfc2a6f234">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="false"
+      >
+        自定义View
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylibs"
+        id="heading-10763dff943142505f19b1dfc2a6f234" role="tab" data-toggle="collapse" href="#collapse-10763dff943142505f19b1dfc2a6f234"
+        aria-expanded="true"
+      >
+        mylibs
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-10763dff943142505f19b1dfc2a6f234"
+           role="tabpanel" aria-labelledby="heading-10763dff943142505f19b1dfc2a6f234">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Android换肤框架--YHReskin</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Android换肤框架–YHReskin"><a href="#Android换肤框架–YHReskin" class="headerlink" title="Android换肤框架–YHReskin"></a>Android换肤框架–YHReskin</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近研究了Android 换肤功能的实现，结合自身情况，最后在<a href="**https://github.com/WindySha/XSkinLoader**">XSkinLoader</a>的基础上做了些修改。下面简单介绍使用方法。</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation project(<span class="hljs-attr">path:</span> <span class="hljs-string">&#x27;:assembly:YHReskin&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="xml属性换肤"><a href="#xml属性换肤" class="headerlink" title="xml属性换肤"></a>xml属性换肤</h2><p>通过对xml文件解析，对xml中支持换肤的属性进行资源替换。首先需要在<code>activity</code>的<code>onCreate()</code>中设置<code>factory</code>,并根据需要设置是否启用标签过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ReskinTestActivity</span> : AppCompatActivity() &#123;<br>    override fun <span class="hljs-title function_">onCreate</span><span class="hljs-params">(savedInstanceState: Bundle?)</span> &#123;<br>        SkinInflaterFactory.setFactory(<span class="hljs-built_in">this</span>)<br>        <span class="hljs-comment">//设置是否启用换肤标记，默认false不启用</span><br>        SkinManager.get().setXmlSupportEnable(<span class="hljs-literal">true</span>)<br>        <span class="hljs-built_in">super</span>.onCreate(savedInstanceState)<br>        setContentView(R.layout.activity_reskin_test)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>目前库中支持的xml属性有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">BACKGROUND</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;background&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">DRAWABLEBOTTOM</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;drawableBottom&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">IMAGE_SRC</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;src&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TEXT_COLOR</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;textColor&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TEXT_COLOR_HINT</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;textColorHint&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">TEXT_SIZE</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;textSize&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>如果没有启用<code>换肤标记</code>，则以上xml属性会自动替换皮肤包中的资源值。当然这些属性不可能满足所有场景下的换肤，比如现在需要给如下<code>RadioButton:drawableLeft</code>属性换肤：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">RadioButton</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">&quot;@+id/rb_season&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;@dimen/base_ui_lib_dp_153&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:button</span>=<span class="hljs-string">&quot;@null&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:drawableLeft</span>=<span class="hljs-string">&quot;@drawable/recipe_lib_selector_title_underline&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>那么就需要我们对此属性进行扩展支持，具体扩展方法需要参考其它属性的实现，照猫画虎即可！</p>
+<p>如果开启了<code>xml标签过滤</code>(<code>SkinManager.get().setXmlSupportEnable(true)</code>)，则必须在xml文件中主动标记需要替换的view，对于没有标记的view将不会换肤。</p>
+<p>标记此view换肤:<code>skin:enable=&quot;true&quot;</code>，</p>
+<p>命名空间为：<code>xmlns:skin=&quot;http://schemas.android.com/android/skin&quot;</code></p>
+<p>同时可以通过<code>skin:attrs</code>进一步制定换肤的属性，如果有多个属性需要换肤，属性名用 “|”  分开：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">xmlns:skin=<span class="hljs-string">&quot;http://schemas.android.com/android/skin&quot;</span><br>...<br>&lt;TextView<br>    skin:attrs=<span class="hljs-string">&quot;background|textColor&quot;</span><br>    skin:enable=<span class="hljs-string">&quot;true&quot;</span><br>    android:text=<span class="hljs-string">&quot;only_background not style&quot;</span><br>	android:background=<span class="hljs-string">&quot;@color/myBackgroundColor&quot;</span><br>    android:textColor=<span class="hljs-string">&quot;@color/myTextColor&quot;</span><br>    android:textSize=<span class="hljs-string">&quot;@dimen/myTextDimen&quot;</span><br>    android:layout_width=<span class="hljs-string">&quot;100dp&quot;</span><br>    android:layout_height=<span class="hljs-string">&quot;100dp&quot;</span>/&gt;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码在开启了<code>换肤标记</code>后意味着这个 <code>TextView</code>支持换肤，并且仅仅有<code>background</code>和<code>textColor</code>这两个属性会换肤，其它属性不会被改变替换。</p>
+<p><strong>小结：</strong></p>
+<ul>
+<li><code>factory</code>设置和<code>换肤标记</code>开关设置必须在<code>super.onCreate(savedInstanceState)</code>之前，建议在<code>baseactivity</code>中完成；</li>
+<li><code>换肤标记</code>默认不启用，即会对xml中所有的view和属性进行换肤，优点为简单粗暴，缺点有性能问题；</li>
+<li>开启<code>换肤标记</code>后，仅仅会对标记的view的标记的属性进行换肤（未标记属性会对所有属性进行换肤处理），优点为性能开销少，但会加大工作量；</li>
+</ul>
+<h2 id="style中属性换肤"><a href="#style中属性换肤" class="headerlink" title="style中属性换肤"></a>style中属性换肤</h2><p>有时候我们会将UI样式描述在style中，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;TextStyle&quot;</span>&gt;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;background&quot;</span>&gt;</span>@drawable/btn_toggle_bg<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;textOn&quot;</span>&gt;</span>@string/capital_on<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;textOff&quot;</span>&gt;</span>@string/capital_off<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;textColor&quot;</span>&gt;</span>?attr/disabledAlpha<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>本库支持对常用<code>style</code>属性的动态换肤，目前支持的属性有：</p>
+<ul>
+<li>TextView_textColor</li>
+<li>TextView_textSize</li>
+<li>View_background</li>
+<li>ProgressBar_indeterminateDrawable</li>
+</ul>
+<p>如果不能满足需要扩展，可以参考以上属性的实现。照猫画虎！</p>
+<h2 id="代码动态设置属性的换肤支持"><a href="#代码动态设置属性的换肤支持" class="headerlink" title="代码动态设置属性的换肤支持"></a>代码动态设置属性的换肤支持</h2><p>在开发中，有时候需要对某个属性动态设值，比如根据条件对<code>textView</code>设置不同的颜色和字体大小等，类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(...)&#123;<br>	tv.setTextColr(R.color.red)<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>	tv.setTextColr(R.color.black)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这时就需要我们用库中提供的对应<code>api</code>来替换<code>textView</code>设置<code>setTextColr()</code>的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(...)&#123;<br>	 SkinManager.get().setSkinHintColor(tv,R.color.red)<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>	 SkinManager.get().setSkinHintColor(tv,R.color.black)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>类似的还支持以下动态属性换肤方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java">fun <span class="hljs-title function_">setSkinTextColor</span><span class="hljs-params">(view: TextView, <span class="hljs-meta">@ColorRes</span> resId: Int)</span> &#123;<br>   <br>&#125;<br><br>fun <span class="hljs-title function_">setSkinHintColor</span><span class="hljs-params">(view: TextView, <span class="hljs-meta">@ColorRes</span> resId: Int)</span> &#123;<br>    <br>&#125;<br><br>fun <span class="hljs-title function_">setSkinTextSize</span><span class="hljs-params">(view: TextView, <span class="hljs-meta">@DimenRes</span> resId: Int)</span> &#123;<br>   <br>&#125;<br><br>fun <span class="hljs-title function_">setSkinBackground</span><span class="hljs-params">(view: View, <span class="hljs-meta">@ColorRes</span> <span class="hljs-meta">@DrawableRes</span> resId: Int)</span> &#123;<br>    <br>&#125;<br><br>fun <span class="hljs-title function_">setSkinImageSrc</span><span class="hljs-params">(view: View, <span class="hljs-meta">@DrawableRes</span> resId: Int)</span> &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果你是<code>kotlin</code>开发，库中还提供了对应的扩展方法，调用如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv.setSkinTextColor(R.color.tv_color)<br>tv.setSkinHintColor(R.color.tv_color)<br>tv.setSkinTextSize(R.dimen.tv_size)<br>view.setSkinViewBackground(R.color.tv_color)<br>view.setSkinImageSrc(R.drawable.img)<br></code></pre></td></tr></table></figure>
+
+<h2 id="自定义View自定义属性的换肤"><a href="#自定义View自定义属性的换肤" class="headerlink" title="自定义View自定义属性的换肤"></a>自定义View自定义属性的换肤</h2><p>项目中可能包含有自定义View,并扩展了一些自定义属性。这时如果需要换肤支持，就需要自己进行扩展支持的属性，方法也很简单，类似上面介绍的xml属性换肤的扩展。</p>
+<h2 id="制作皮肤包"><a href="#制作皮肤包" class="headerlink" title="制作皮肤包"></a>制作皮肤包</h2><p>上面我们介绍了如何根据自身需要来配置库和扩展库，接下来还需要制作对应的皮肤包才能真正实现换肤效果。</p>
+<p><strong>第一步：抽取换肤资源</strong></p>
+<p>无论是通过xml换肤还是动态设置换肤属性，其核心都是替换对应的资源。因此我们首先需要把需要替换的资源梳理出来并通过资源引用的方式进行设置，千万不能直接设值。</p>
+<p>反例：<code>android:textColor=&quot;#E9BD85&quot;</code></p>
+<p>正例：<code>android:textColor=&quot;R.color.text_content_color&quot;</code></p>
+<p><strong>第二步：新建<code>Android</code>工程</strong></p>
+<p>创建一个全新的<code>Android</code>工程，只保留res资源目录，其它的目录统统删除。然后将项目中的res原封不动复制过来，保留上一步梳理出的需要换肤的资源，其余可以剔除。</p>
+<p>对这些资源的值根据设计稿修改后，这样我们就得到了一个只包含换肤资源的工程。</p>
+<p><strong>第三步：打包</strong></p>
+<p><code>build</code>此工程会得到一个apk包。我们将apk后缀名改为<code>.skin</code>，这样我们的皮肤包就制作成功了。</p>
+<h2 id="切换皮肤"><a href="#切换皮肤" class="headerlink" title="切换皮肤"></a>切换皮肤</h2><p>有了皮肤包，我们便可以实时的切换我们的皮肤显示。</p>
+<p>更换新的皮肤包：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//path为新皮肤包的路径</span><br>SkinManager.get().changeSkin(path)<br></code></pre></td></tr></table></figure>
+
+<p>恢复默认：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">SkinManager.get().resetDefaultSkin()<br></code></pre></td></tr></table></figure>
+
+<p>获取当前使用皮肤包的路径：(常常用来判断当前使用的哪个皮肤，用于设置UI显示)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//如果为空，则代表未使用皮肤包</span><br><span class="hljs-type">String</span> <span class="hljs-variable">path</span> <span class="hljs-operator">=</span> SkinManager.get().getCurrentSkinPath()<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/mylibs/" class="category-chain-item">mylibs</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/skin/">#skin</a>
+      
+        <a href="/tags/Android%E6%8D%A2%E8%82%A4/">#Android换肤</a>
+      
+        <a href="/tags/%E6%8D%A2%E8%82%A4/">#换肤</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android换肤框架--YHReskin</div>
+      <div>http://example.com/2022/11/02/mylibs/Android换肤框架--YHReskin/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/27/%E5%B7%A5%E5%85%B7/%E4%B8%8D%E9%80%8F%E6%98%8E%E5%BA%A6%E6%8D%A2%E7%AE%97/" title="不透明度换算">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">不透明度换算</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/18/Android/jetpack/Jetpack%20startUp/" title="Jetpack StartUp">
+                        <span class="hidden-mobile">Jetpack StartUp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
