@@ -16,26 +16,25 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Circular dependencies cannot exist in AnimatorSet现象一：AnimatorSet 播放，取消后，再播放 。具体代码如下： 1234567891011121314151617    private val set by lazy &amp;#123;        AnimatorSet().apply &amp;#123;            interpolat">
+    <meta name="description" content="妙用BuildConifg前言BuildConfig是android studio在编译项目时自动生成的一个类，这个类中包含了一些基本的常量信息，如包名、版本号、版本名称等信息，我们在开发过程中可以直接使用。 当然这个类也支持自定义字段，这个功能极大的方便了我们开发。 默认包含的常量新建项目，build之后会自动生成BuildConfig类，路径为：build&#x2F;generated&#x2F;source&#x2F;b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Circular dependencies cannot exist in AnimatorSet">
-<meta property="og:url" content="http://example.com/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/index.html">
+<meta property="og:title" content="妙用BuildConifg">
+<meta property="og:url" content="http://example.com/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="Circular dependencies cannot exist in AnimatorSet现象一：AnimatorSet 播放，取消后，再播放 。具体代码如下： 1234567891011121314151617    private val set by lazy &amp;#123;        AnimatorSet().apply &amp;#123;            interpolat">
+<meta property="og:description" content="妙用BuildConifg前言BuildConfig是android studio在编译项目时自动生成的一个类，这个类中包含了一些基本的常量信息，如包名、版本号、版本名称等信息，我们在开发过程中可以直接使用。 当然这个类也支持自定义字段，这个功能极大的方便了我们开发。 默认包含的常量新建项目，build之后会自动生成BuildConfig类，路径为：build&#x2F;generated&#x2F;source&#x2F;b">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-06T01:36:05.000Z">
-<meta property="article:modified_time" content="2022-09-17T07:45:05.000Z">
+<meta property="article:published_time" content="2022-12-07T13:25:05.000Z">
+<meta property="article:modified_time" content="2022-12-07T13:25:05.000Z">
 <meta property="article:author" content="煤炭黄帽">
 <meta property="article:tag" content="Android">
-<meta property="article:tag" content="errors">
-<meta property="article:tag" content="动画">
+<meta property="article:tag" content="BuildConifg">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Circular dependencies cannot exist in AnimatorSet - 煤炭黄帽</title>
+  <title>妙用BuildConifg - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Circular dependencies cannot exist in AnimatorSet</span>
+            <span id="subtitle">妙用BuildConifg</span>
           
         </div>
 
@@ -216,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-06 09:36" pubdate>
-          2022年9月6日 上午
+        <time datetime="2022-12-07 21:25" pubdate>
+          2022年12月7日 晚上
         </time>
       </span>
     
@@ -228,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          855 字
+          2.1k 字
         
       </span>
     
@@ -239,7 +238,7 @@
         
         
         
-          11 分钟
+          27 分钟
         
       </span>
     
@@ -318,17 +317,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
+      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
         id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
-        aria-expanded="true"
+        aria-expanded="false"
       >
         errors
         <span class="list-group-count">(3)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-07213a0161f52846ab198be103b5ab43"
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
            role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
         
         
@@ -340,7 +339,7 @@
       
         <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
         </a>
       
@@ -552,17 +551,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
+      <a class="category-subitem 
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
         id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         技巧
         <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+      <div class="category-collapse collapse show" id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
            role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
         
         
@@ -574,7 +573,7 @@
       
         <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/" title="妙用BuildConifg"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">妙用BuildConifg</span>
         </a>
       
@@ -658,17 +657,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
-        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
         aria-expanded="true"
       >
-        errors
-        <span class="list-group-count">(3)</span>
+        技巧
+        <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-07213a0161f52846ab198be103b5ab43"
-           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+      <div class="category-collapse collapse show" id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
         
         
           
@@ -677,28 +676,10 @@
     
       
       
-        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+        <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/" title="妙用BuildConifg"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/09/06/errorlist/InstantiationException%20could%20not%20find%20Fragment%20constructor/" title="InstantiationException--could not find Fragment constructor"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">liveData仅第一次回调</span>
+          <span class="category-post">妙用BuildConifg</span>
         </a>
       
     
@@ -721,19 +702,34 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Circular dependencies cannot exist in AnimatorSet</h1>
+            <h1 style="display: none">妙用BuildConifg</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Circular-dependencies-cannot-exist-in-AnimatorSet"><a href="#Circular-dependencies-cannot-exist-in-AnimatorSet" class="headerlink" title="Circular dependencies cannot exist in AnimatorSet"></a>Circular dependencies cannot exist in AnimatorSet</h1><h2 id="现象一："><a href="#现象一：" class="headerlink" title="现象一："></a>现象一：</h2><p>AnimatorSet 播放，取消后，再播放 。具体代码如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> <span class="hljs-keyword">set</span> <span class="hljs-keyword">by</span> lazy &#123;<br>        AnimatorSet().apply &#123;<br>            interpolator = LinearInterpolator()<br>            duration = DURATION<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-comment">//通过状态控制开启和暂停</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> animationState <span class="hljs-keyword">by</span> Delegates.observable(<span class="hljs-literal">false</span>, &#123; pre, old, new -&gt;<br>    <span class="hljs-keyword">if</span> (new) &#123;<br>        <span class="hljs-keyword">set</span>.playTogether(animatorY, animatorPoint)<br>        <span class="hljs-keyword">set</span>.start()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">set</span>.cancel()<br>        invalidate()<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+                <h1 id="妙用BuildConifg"><a href="#妙用BuildConifg" class="headerlink" title="妙用BuildConifg"></a>妙用BuildConifg</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>BuildConfig</code>是android studio在编译项目时自动生成的一个类，这个类中包含了一些基本的常量信息，如包名、版本号、版本名称等信息，我们在开发过程中可以直接使用。</p>
+<p>当然这个类也支持自定义字段，这个功能极大的方便了我们开发。</p>
+<h2 id="默认包含的常量"><a href="#默认包含的常量" class="headerlink" title="默认包含的常量"></a>默认包含的常量</h2><p>新建项目，build之后会自动生成<code>BuildConfig</code>类，路径为：<code>build/generated/source/buildConfig/androidTest或debug或release</code></p>
+<p>打开可以看到默认有以下常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">DEBUG</span> <span class="hljs-operator">=</span> Boolean.parseBoolean(<span class="hljs-string">&quot;true&quot;</span>);<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">APPLICATION_ID</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;com.yellowhat.study&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">BUILD_TYPE</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;debug&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">VERSION_CODE</span> <span class="hljs-operator">=</span> <span class="hljs-number">100221207</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">VERSION_NAME</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;1.00.221207&quot;</span>;<br></code></pre></td></tr></table></figure>
 
-<p>在Android5.0上直接 崩溃，报Circular dependencies cannot exist in AnimatorSet。在Android 11上正常。</p>
-<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>未知；</p>
-<h3 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h3><p>每次播放克隆一个AnimatorSet ，代码如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> <span class="hljs-keyword">set</span> = AnimatorSet().apply &#123;<br>    interpolator = LinearInterpolator()<br>    duration = DURATION<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> animationState <span class="hljs-keyword">by</span> Delegates.observable(<span class="hljs-literal">false</span>, &#123; pre, old, new -&gt;<br>    <span class="hljs-keyword">if</span> (new) &#123;<br>        <span class="hljs-keyword">set</span> = <span class="hljs-keyword">set</span>.clone()<br>        <span class="hljs-keyword">set</span>.playTogether(animatorY, animatorPoint)<br>        <span class="hljs-keyword">set</span>.start()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">set</span>.cancel()<br>        invalidate()<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p>使用如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> log = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    APPLICATION_ID = <span class="hljs-subst">$&#123;BuildConfig.APPLICATION_ID&#125;</span></span><br><span class="hljs-string">    DEBUG = <span class="hljs-subst">$&#123;BuildConfig.DEBUG&#125;</span></span><br><span class="hljs-string">    VERSION_CODE = <span class="hljs-subst">$&#123;BuildConfig.VERSION_CODE&#125;</span></span><br><span class="hljs-string">    VERSION_NAME = <span class="hljs-subst">$&#123;BuildConfig.VERSION_NAME&#125;</span></span><br><span class="hljs-string">&quot;&quot;&quot;</span>.trimIndent()<br>Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,log)<br><br><br><span class="hljs-comment">//输出：</span><br> 	APPLICATION_ID = com.yellowhat.study<br>    DEBUG = <span class="hljs-literal">false</span><br>    VERSION_CODE = <span class="hljs-number">100221207</span><br>    VERSION_NAME = <span class="hljs-number">1.00</span><span class="hljs-number">.221207</span><br></code></pre></td></tr></table></figure>
 
+<p>注意：这里获取的值取决于当前module，而非所在个应用。即一个应用包含有多个module，那么就会有多个<code>BuildConfig</code>，每个<code>BuildConfig</code>下的值对应所在module，可能都不一样。</p>
+<h2 id="自定义常量"><a href="#自定义常量" class="headerlink" title="自定义常量"></a>自定义常量</h2><p><strong>第一步：使用<code>buildConfigField</code>添加字段</strong></p>
+<p>在<code>app</code>下的<code>buil.gradle</code>文件中android{}包内我们有三个地方可以添加：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs gradle">defaultConfig &#123;<br>  ...<br>  <span class="hljs-comment">//分别用于添加 int string  boolean</span><br>      buildConfigField <span class="hljs-string">&quot;int&quot;</span>, <span class="hljs-string">&quot;num&quot;</span>, <span class="hljs-string">&quot;24&quot;</span><br>      buildConfigField <span class="hljs-string">&quot;String&quot;</span>, <span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;\&quot;kobe\&quot;&quot;</span><br>      buildConfigField <span class="hljs-string">&quot;boolean&quot;</span>, <span class="hljs-string">&quot;isMvp&quot;</span>, <span class="hljs-string">&quot;true&quot;</span><br>&#125;<br><br>buildTypes &#123;<br>...<br>      release &#123;<br>            buildConfigField(<span class="hljs-string">&quot;String&quot;</span>, <span class="hljs-string">&quot;ArcGisKey&quot;</span>, <span class="hljs-string">&#x27;&quot;AAP&quot;&#x27;</span>)<br>        &#125;<br>        debug&#123;<br>            buildConfigField(<span class="hljs-string">&quot;String&quot;</span>, <span class="hljs-string">&quot;ArcGisKey&quot;</span>, <span class="hljs-string">&#x27;&quot;AAPK8e&quot;&#x27;</span>)<br>        &#125;<br>&#125;<br>productFlavors&#123;<br>    Flavortest&#123;<br>        buildConfigField(<span class="hljs-string">&quot;String&quot;</span>,<span class="hljs-string">&quot;testFlavorKey&quot;</span>,<span class="hljs-string">&quot;\&quot;testFlavorValue\&quot;&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>第二步：reBuild项目后使用</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> log = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    name = <span class="hljs-subst">$&#123;BuildConfig.name&#125;</span></span><br><span class="hljs-string">    nubmer = <span class="hljs-subst">$&#123;BuildConfig.num&#125;</span></span><br><span class="hljs-string">    isMvp = <span class="hljs-subst">$&#123;BuildConfig.isMvp&#125;</span></span><br><span class="hljs-string">&quot;&quot;&quot;</span>.trimIndent()<br>Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,log)<br></code></pre></td></tr></table></figure>
+
+<p>由此可以看出不同位置定义有不同的适用性：</p>
+<ul>
+<li><code>defaultConfig</code>中适用于定义全局统一常量；</li>
+<li><code>buildTypes</code>适用于定义debug和release区分的常量；</li>
+<li><code>productFlavors</code>适用于定义不同渠道包的常量；</li>
+</ul>
 
                 
               </div>
@@ -757,7 +753,7 @@
   
     <span>></span>
     
-  <a href="/categories/Android/errors/" class="category-chain-item">errors</a>
+  <a href="/categories/Android/%E6%8A%80%E5%B7%A7/" class="category-chain-item">技巧</a>
   
   
 
@@ -776,9 +772,7 @@
       
         <a href="/tags/Android/">#Android</a>
       
-        <a href="/tags/errors/">#errors</a>
-      
-        <a href="/tags/%E5%8A%A8%E7%94%BB/">#动画</a>
+        <a href="/tags/BuildConifg/">#BuildConifg</a>
       
     </div>
   
@@ -790,8 +784,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Circular dependencies cannot exist in AnimatorSet</div>
-      <div>http://example.com/2022/09/06/errorlist/属性动画 Circular dependencies cannot exist in AnimatorSet/</div>
+      <div>妙用BuildConifg</div>
+      <div>http://example.com/2022/12/07/Android/技巧/buildConfig/</div>
     </div>
     <div class="license-meta">
       
@@ -803,14 +797,9 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月6日</div>
+          <div>2022年12月7日</div>
         </div>
       
-      
-        <div class="license-meta-item license-meta-date">
-          <div>更新于</div>
-          <div>2022年9月17日</div>
-        </div>
       
       <div class="license-meta-item">
         <div>许可协议</div>
@@ -838,18 +827,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/adb%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%A4%A7%E5%85%A8/" title="adb指令操作">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">adb指令操作</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" title="kotlin基本语法">
-                        <span class="hidden-mobile">kotlin基本语法</span>
+                      <a href="/2022/11/27/%E5%B7%A5%E5%85%B7/%E4%B8%8D%E9%80%8F%E6%98%8E%E5%BA%A6%E6%8D%A2%E7%AE%97/" title="不透明度换算">
+                        <span class="hidden-mobile">不透明度换算</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
