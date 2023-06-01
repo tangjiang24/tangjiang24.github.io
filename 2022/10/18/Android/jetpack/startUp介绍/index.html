@@ -1,0 +1,1185 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="StartUp 介绍前言 通常我们在项目的application中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，onCreate()方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过ContentProvider来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的ContentPr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StartUp 介绍">
+<meta property="og:url" content="http://example.com/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="StartUp 介绍前言 通常我们在项目的application中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，onCreate()方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过ContentProvider来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的ContentPr">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-18T13:36:14.000Z">
+<meta property="article:modified_time" content="2022-10-18T13:36:14.000Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Jetpack">
+<meta property="article:tag" content="startUp">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>StartUp 介绍 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">StartUp 介绍</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-18 21:36" pubdate>
+          2022年10月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(21)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
+        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+        aria-expanded="false"
+      >
+        errors
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
+           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/errorlist/InstantiationException%20could%20not%20find%20Fragment%20constructor/" title="InstantiationException--could not find Fragment constructor"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData仅第一次回调</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/viewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylib"
+        id="heading-0032f5a392d2bb530cd635362ad873c4" role="tab" data-toggle="collapse" href="#collapse-0032f5a392d2bb530cd635362ad873c4"
+        aria-expanded="false"
+      >
+        mylib
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-0032f5a392d2bb530cd635362ad873c4"
+           role="tabpanel" aria-labelledby="heading-0032f5a392d2bb530cd635362ad873c4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView/" title="Android代码阅读器--YHCodeView"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android代码阅读器--YHCodeView</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/02/26/mylibs/%E4%B8%89%E6%96%B9%E5%BA%93MateralDialog%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="material-dialogs基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">material-dialogs基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="false"
+      >
+        性能优化
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+        aria-expanded="false"
+      >
+        技巧
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/" title="妙用BuildConifg"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">妙用BuildConifg</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="false"
+      >
+        自定义View
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/03/29/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/drawText()%E5%B1%85%E4%B8%AD/" title="drawText()居中"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">drawText()居中</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/viewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">StartUp 介绍</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="StartUp-介绍"><a href="#StartUp-介绍" class="headerlink" title="StartUp 介绍"></a>StartUp 介绍</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>通常我们在项目的<code>application</code>中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，<code>onCreate()</code>方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过<code>ContentProvider</code>来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的<code>ContentProvider</code>，这样会进一步拉低我们应用的启动速度。<code>startUp</code>就是在这样的背景下出现的，只要使用了<code>startUp</code>,那么你的组件就会公用一个<code>ContentProvider</code>。</p>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><blockquote>
+<p>一般用于开发<code>SDK</code>或者基础组件库，用于自动初始化，达到无感使用的目的，同时可简单用于控制初始化顺序。</p>
+</blockquote>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">implementation <span class="hljs-string">&quot;androidx.startup:startup-runtime:1.0.0&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="常规使用"><a href="#常规使用" class="headerlink" title="常规使用"></a>常规使用</h3><p><strong>第一步</strong>：继承 <code>Initializer&lt;T&gt;</code>接口		</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">AInitializer</span> :<span class="hljs-type">Initializer</span>&lt;<span class="hljs-type">Unit</span>&gt;&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">create</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>        ImageLoader.<span class="hljs-keyword">init</span>(context)<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;AInitializer初始化！&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>        <span class="hljs-keyword">return</span> mutableListOf()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>有两个方法需要重写：</p>
+<ul>
+<li><code>create()</code>:拿到全局<code>context</code>实例，并编写自己的初始化逻辑；</li>
+<li><code>dependencies()</code>：返回一个空集合即可。</li>
+</ul>
+<p>第二步：<code>Mainefest</code>文件中注册<code>provider</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;provider<br>    android:name=<span class="hljs-string">&quot;androidx.startup.InitializationProvider&quot;</span><br>    android:authorities=<span class="hljs-string">&quot;<span class="hljs-subst">$&#123;applicationId&#125;</span>.androidx-startup&quot;</span><br>    android:exported=<span class="hljs-string">&quot;false&quot;</span><br>    tools:node=<span class="hljs-string">&quot;merge&quot;</span>&gt;<br>    &lt;meta-<span class="hljs-keyword">data</span><br>        android:name=<span class="hljs-string">&quot;com.yellowhat.image.initializer.AInitializer&quot;</span><br>        android:value=<span class="hljs-string">&quot;androidx.startup&quot;</span> /&gt;<br>&lt;/provider&gt;<br></code></pre></td></tr></table></figure>
+
+<p>只需将<code>meta-data</code>标签下<code>name</code>属性替换成自己<code>Initializer</code>的路径即可，其它如上保持不变。</p>
+<p>通过两步就完成了自动初始化，运行程序可以看到日志输出：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>ImageLoadInitializer初始化！<br></code></pre></td></tr></table></figure>
+
+<h3 id="顺序初始化"><a href="#顺序初始化" class="headerlink" title="顺序初始化"></a>顺序初始化</h3><p>有时候我们自身初始化可能还依赖于其他组件，<code>startUp</code>提供了简单的顺序控制：可以将所依赖的组件对应的<code>Initializer</code>放在上述第一步的<code>dependencies()</code>中。</p>
+<p>比如A组件的初始化必须在B组件之后，B组件对应的<code>Initializer</code>为<code>BInitializer</code>:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">BInitializer</span> :<span class="hljs-type">Initializer</span>&lt;<span class="hljs-type">Unit</span>&gt;&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">create</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>        ImageLoader.<span class="hljs-keyword">init</span>(context)<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;BInitializer初始化！&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>        <span class="hljs-keyword">return</span> mutableListOf()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>改写A组件的<code>dependencies()</code>方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>    <span class="hljs-keyword">return</span> mutableListOf(BInitializer::<span class="hljs-keyword">class</span>.java)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样就保证了A组件的初始化一定在B组件之后！</p>
+<p>同理可以将其他多个<code>Initializer</code>加入到<code>dependencies()</code>返回集合中，则代表A组件要等所有组件完成初始化后才能执行自己的初始化！</p>
+<p><strong>注意：集合内多个<code>Initializer</code>的初始化顺序这里无法控制！</strong>因此说是可以简单控制初始化顺序。</p>
+<h3 id="懒启动"><a href="#懒启动" class="headerlink" title="懒启动"></a>懒启动</h3><p>上面介绍的是自动初始化，<code>startUp</code>还可以实现懒启动，即在需要的时候初始化！</p>
+<p>只需在清单文件中将<code>tools</code>标签的值改为：<code>tools:node=&quot;remove&quot;</code>即可，这样就关闭了自动启动开关。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;provider<br>    android:name=<span class="hljs-string">&quot;androidx.startup.InitializationProvider&quot;</span><br>    android:authorities=<span class="hljs-string">&quot;<span class="hljs-subst">$&#123;applicationId&#125;</span>.androidx-startup&quot;</span><br>    android:exported=<span class="hljs-string">&quot;false&quot;</span><br>    tools:node=<span class="hljs-string">&quot;remove&quot;</span>&gt;<br>    &lt;meta-<span class="hljs-keyword">data</span><br>        android:name=<span class="hljs-string">&quot;com.yellowhat.image.initializer.AInitializer&quot;</span><br>        android:value=<span class="hljs-string">&quot;androidx.startup&quot;</span> /&gt;<br>&lt;/provider&gt;<br></code></pre></td></tr></table></figure>
+
+<p>随后在任何地方根据需要主动调用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">AppInitializer.getInstance(<span class="hljs-keyword">this</span>).initializeComponent(AInitializer::<span class="hljs-keyword">class</span>.java)<br></code></pre></td></tr></table></figure>
+
+<h3 id="在application中的执行顺序"><a href="#在application中的执行顺序" class="headerlink" title="在application中的执行顺序"></a>在<code>application</code>中的执行顺序</h3><p>第一次使用这个心里没底，不知道与<code>application</code>的生命周期方法执行顺序是什么样的，特意做了试验，添加如下代码在<code>application</code>中：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">protected</span> void attachBaseContext(Context base) &#123;<br>    <span class="hljs-keyword">super</span>.attachBaseContext(base);<br>    Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;attachBaseContext&quot;</span>);<br>&#125;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> void onCreate() &#123;<br>    <span class="hljs-keyword">super</span>.onCreate();<br>    Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;oncreate()&quot;</span>);<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行程序，日志输出：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">attachBaseContext<br>AInitializer初始化！<br>oncreate()<br></code></pre></td></tr></table></figure>
+
+<p>可以得出结论：</p>
+<p><code>attachBaseContext()</code> &gt; <code>startUp</code>自动初始化 &gt; <code>onCreate()</code></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/Jetpack/">#Jetpack</a>
+      
+        <a href="/tags/startUp/">#startUp</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>StartUp 介绍</div>
+      <div>http://example.com/2022/10/18/Android/jetpack/startUp介绍/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Android换肤框架--YHReskin</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/14/%E5%B7%A5%E5%85%B7/Android%20studio%20%E6%8F%92%E4%BB%B6/" title="Android studio常用插件">
+                        <span class="hidden-mobile">Android studio常用插件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

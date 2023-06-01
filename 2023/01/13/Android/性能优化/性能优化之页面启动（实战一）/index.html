@@ -16,26 +16,24 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Jetpack StartUp前言 通常我们在项目的application中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，onCreate()方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过ContentProvider来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的Cont">
+    <meta name="description" content="性能优化之页面启动（实战一）前言在项目中发现应用启动有黑屏现象，经测试有700ms之久。本是一个非常简单的应用，黑屏这么久实不应该，特此记录一下本次的优化历程，供以后注意借鉴。 方式一：设置windowBackground一般情况下我们activity都有一个style，在style中添加windowBackground属性，属性值就设置一个和页面主题风格接近的颜色或者底图都可以。 123&lt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jetpack StartUp">
-<meta property="og:url" content="http://example.com/2022/10/18/Android/jetpack/Jetpack%20startUp/index.html">
+<meta property="og:title" content="性能优化之页面启动（实战一）">
+<meta property="og:url" content="http://example.com/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="Jetpack StartUp前言 通常我们在项目的application中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，onCreate()方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过ContentProvider来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的Cont">
+<meta property="og:description" content="性能优化之页面启动（实战一）前言在项目中发现应用启动有黑屏现象，经测试有700ms之久。本是一个非常简单的应用，黑屏这么久实不应该，特此记录一下本次的优化历程，供以后注意借鉴。 方式一：设置windowBackground一般情况下我们activity都有一个style，在style中添加windowBackground属性，属性值就设置一个和页面主题风格接近的颜色或者底图都可以。 123&lt;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-18T13:36:14.000Z">
-<meta property="article:modified_time" content="2022-10-18T13:36:14.000Z">
+<meta property="article:published_time" content="2023-01-13T13:58:20.000Z">
+<meta property="article:modified_time" content="2023-01-13T13:58:20.000Z">
 <meta property="article:author" content="煤炭黄帽">
-<meta property="article:tag" content="Android">
-<meta property="article:tag" content="Jetpack">
-<meta property="article:tag" content="startUp">
+<meta property="article:tag" content="性能优化，启动优化">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Jetpack StartUp - 煤炭黄帽</title>
+  <title>性能优化之页面启动（实战一） - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Jetpack StartUp</span>
+            <span id="subtitle">性能优化之页面启动（实战一）</span>
           
         </div>
 
@@ -216,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-18 21:36" pubdate>
-          2022年10月18日 晚上
+        <time datetime="2023-01-13 21:58" pubdate>
+          2023年1月13日 晚上
         </time>
       </span>
     
@@ -228,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          1.4k 字
         
       </span>
     
@@ -239,7 +237,7 @@
         
         
         
-          39 分钟
+          19 分钟
         
       </span>
     
@@ -297,7 +295,7 @@
         aria-expanded="true"
       >
         Android
-        <span class="list-group-count">(12)</span>
+        <span class="list-group-count">(21)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -324,7 +322,7 @@
         aria-expanded="false"
       >
         errors
-        <span class="list-group-count">(3)</span>
+        <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -356,6 +354,15 @@
     
       
       
+        <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
+        </a>
+      
+    
+      
+      
         <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
            class="list-group-item list-group-item-action
            ">
@@ -373,66 +380,71 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
+      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
         id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
-        aria-expanded="true"
+        aria-expanded="false"
       >
         jetpack
-        <span class="list-group-count">(1)</span>
+        <span class="list-group-count">(5)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+      <div class="category-collapse collapse " id="collapse-388f3517eda5bf26174654c89c9d201f"
            role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
         
         
           
-          
-  <div class="category-post-list">
-    
-    
-  </div>
-
-          
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="startUp"
-        id="heading-c8459a7b18beea3a04d7018062734385" role="tab" data-toggle="collapse" href="#collapse-c8459a7b18beea3a04d7018062734385"
-        aria-expanded="true"
-      >
-        startUp
-        <span class="list-group-count">(1)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-c8459a7b18beea3a04d7018062734385"
-           role="tabpanel" aria-labelledby="heading-c8459a7b18beea3a04d7018062734385">
-        
-        
-          
   <div class="category-post-list">
     
     
       
       
-        <a href="/2022/10/18/Android/jetpack/Jetpack%20startUp/" title="Jetpack StartUp"
+        <a href="/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/" title="StartUp 介绍"
            class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">Jetpack StartUp</span>
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/viewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
         </a>
       
     
   </div>
 
-        
-      </div>
-    </div>
-  
         
       </div>
     </div>
@@ -447,7 +459,7 @@
         aria-expanded="false"
       >
         mylib
-        <span class="list-group-count">(1)</span>
+        <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -461,40 +473,12 @@
     
       
       
-        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+        <a href="/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView/" title="Android代码阅读器--YHCodeView"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">wifiConnector 使用说明</span>
+          <span class="category-post">Android代码阅读器--YHCodeView</span>
         </a>
       
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylibs"
-        id="heading-10763dff943142505f19b1dfc2a6f234" role="tab" data-toggle="collapse" href="#collapse-10763dff943142505f19b1dfc2a6f234"
-        aria-expanded="false"
-      >
-        mylibs
-        <span class="list-group-count">(1)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse " id="collapse-10763dff943142505f19b1dfc2a6f234"
-           role="tabpanel" aria-labelledby="heading-10763dff943142505f19b1dfc2a6f234">
-        
-        
-          
-  <div class="category-post-list">
-    
     
       
       
@@ -502,6 +486,24 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/02/26/mylibs/%E4%B8%89%E6%96%B9%E5%BA%93MateralDialog%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="material-dialogs基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">material-dialogs基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
         </a>
       
     
@@ -539,6 +541,43 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="true"
+      >
+        性能优化
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
         </a>
       
     
@@ -595,7 +634,7 @@
         aria-expanded="false"
       >
         自定义View
-        <span class="list-group-count">(4)</span>
+        <span class="list-group-count">(5)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -636,6 +675,15 @@
     
       
       
+        <a href="/2023/03/29/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/drawText()%E5%B1%85%E4%B8%AD/" title="drawText()居中"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">drawText()居中</span>
+        </a>
+      
+    
+      
+      
         <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
            class="list-group-item list-group-item-action
            ">
@@ -658,44 +706,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
-        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
         aria-expanded="true"
       >
-        jetpack
+        性能优化
         <span class="list-group-count">(1)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
-           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
-        
-        
-          
-          
-  <div class="category-post-list">
-    
-    
-  </div>
-
-          
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="startUp"
-        id="heading-c8459a7b18beea3a04d7018062734385" role="tab" data-toggle="collapse" href="#collapse-c8459a7b18beea3a04d7018062734385"
-        aria-expanded="true"
-      >
-        startUp
-        <span class="list-group-count">(1)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-c8459a7b18beea3a04d7018062734385"
-           role="tabpanel" aria-labelledby="heading-c8459a7b18beea3a04d7018062734385">
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
         
         
           
@@ -704,51 +725,10 @@
     
       
       
-        <a href="/2022/10/18/Android/jetpack/Jetpack%20startUp/" title="Jetpack StartUp"
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/" title="性能优化之页面启动（实战一）"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Jetpack StartUp</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="startUp"
-        id="heading-c8459a7b18beea3a04d7018062734385" role="tab" data-toggle="collapse" href="#collapse-c8459a7b18beea3a04d7018062734385"
-        aria-expanded="true"
-      >
-        startUp
-        <span class="list-group-count">(1)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-c8459a7b18beea3a04d7018062734385"
-           role="tabpanel" aria-labelledby="heading-c8459a7b18beea3a04d7018062734385">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/10/18/Android/jetpack/Jetpack%20startUp/" title="Jetpack StartUp"
-           class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">Jetpack StartUp</span>
+          <span class="category-post">性能优化之页面启动（实战一）</span>
         </a>
       
     
@@ -771,58 +751,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Jetpack StartUp</h1>
+            <h1 style="display: none">性能优化之页面启动（实战一）</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Jetpack-StartUp"><a href="#Jetpack-StartUp" class="headerlink" title="Jetpack StartUp"></a>Jetpack StartUp</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>通常我们在项目的<code>application</code>中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，<code>onCreate()</code>方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过<code>ContentProvider</code>来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的<code>ContentProvider</code>，这样会进一步拉低我们应用的启动速度。<code>startUp</code>就是在这样的背景下出现的，只要使用了<code>startUp</code>,那么你的组件就会公用一个<code>ContentProvider</code>。</p>
-</blockquote>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><blockquote>
-<p>一般用于开发<code>SDK</code>或者基础组件库，用于自动初始化，达到无感使用的目的，同时可简单用于控制初始化顺序。</p>
-</blockquote>
-<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">implementation <span class="hljs-string">&quot;androidx.startup:startup-runtime:1.0.0&quot;</span><br></code></pre></td></tr></table></figure>
+                <h1 id="性能优化之页面启动（实战一）"><a href="#性能优化之页面启动（实战一）" class="headerlink" title="性能优化之页面启动（实战一）"></a>性能优化之页面启动（实战一）</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在项目中发现应用启动有黑屏现象，经测试有700ms之久。本是一个非常简单的应用，黑屏这么久实不应该，特此记录一下本次的优化历程，供以后注意借鉴。</p>
+<h2 id="方式一：设置windowBackground"><a href="#方式一：设置windowBackground" class="headerlink" title="方式一：设置windowBackground"></a>方式一：设置<code>windowBackground</code></h2><p>一般情况下我们activity都有一个style，在style中添加<code>windowBackground</code>属性，属性值就设置一个和页面主题风格接近的颜色或者底图都可以。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;base_homeTheme&quot;</span> <span class="hljs-attr">parent</span>=<span class="hljs-string">&quot;Theme.AppCompat.Light.NoActionBar&quot;</span>&gt;</span><span class="language-xml"></span><br><span class="language-xml">     <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:windowBackground&quot;</span>&gt;</span>@color/blue<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="常规使用"><a href="#常规使用" class="headerlink" title="常规使用"></a>常规使用</h3><p><strong>第一步</strong>：继承 <code>Initializer&lt;T&gt;</code>接口		</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">AInitializer</span> :<span class="hljs-type">Initializer</span>&lt;<span class="hljs-type">Unit</span>&gt;&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">create</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>        ImageLoader.<span class="hljs-keyword">init</span>(context)<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;AInitializer初始化！&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>        <span class="hljs-keyword">return</span> mutableListOf()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样，activity在启动的时候会提前显示这个背景，直到页面加载成功后将其覆盖。因此这样并不会缩短页面加载时间，只不过是通过障眼法迷惑了用户，视觉上不那么突兀。</p>
+<h2 id="方式二：滞后fragment添加动作"><a href="#方式二：滞后fragment添加动作" class="headerlink" title="方式二：滞后fragment添加动作"></a>方式二：滞后fragment添加动作</h2><p>方式一只是一种无可奈何的方法，并没有从根本上解决问题。通过分析代码发现首页activity结构并不复杂，属于一个activity拖两个fragment这种常见结构，其中<code>onCreate()</code>方法也都中规中矩，除了设置view外就是一些监听的设置。唯一值得怀疑的地方就是实例化两个fragment并进行add操作。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initView</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">super</span>.initView()<br>    dataBinding.tvSearch.visibility = View.VISIBLE<br>    initListener()<br>    supportFragmentManager.beginTransaction()?.run &#123;<br>        add(R.id.rl_content, SeasonFragment)<br>        add(R.id.rl_content, RecommendFragment)<br>        commit()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>有两个方法需要重写：</p>
-<ul>
-<li><code>create()</code>:拿到全局<code>context</code>实例，并编写自己的初始化逻辑；</li>
-<li><code>dependencies()</code>：返回一个空集合即可。</li>
+<p>为了验证猜想，注释掉fragment添加代码，运行程序后竟然秒开。这样就好办多了，等页面加载出来后再去添加fragment即可，即一定要等<code>onResume()</code>方法执行完毕后。因此我的方案是通过页面任一view进行post：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initView</span><span class="hljs-params">()</span></span> &#123;<br>     <span class="hljs-keyword">super</span>.initView()<br>        dataBinding.tvSearch.visibility = View.VISIBLE<br>        initListener()<br>         dataBinding.tvSource.post &#123;<br>            supportFragmentManager.beginTransaction()?.run &#123;<br>                add(R.id.rl_content, festivalSeasonFragment)<br>                add(R.id.rl_content, recipeRecommendFragment)<br>                commit()<br>            &#125;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>同样实现了秒开。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>给activity设置<code>windowBackground</code>可以迷惑用户，消除感官上的不适。</li>
+<li>对于需要长时间初始化的任务尽量要放在<code>onResume()</code>执行完毕后，否则会拖慢activity的启动速度！方法为放在任一view.post()中。</li>
 </ul>
-<p>第二步：<code>Mainefest</code>文件中注册<code>provider</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;provider<br>    android:name=<span class="hljs-string">&quot;androidx.startup.InitializationProvider&quot;</span><br>    android:authorities=<span class="hljs-string">&quot;<span class="hljs-subst">$&#123;applicationId&#125;</span>.androidx-startup&quot;</span><br>    android:exported=<span class="hljs-string">&quot;false&quot;</span><br>    tools:node=<span class="hljs-string">&quot;merge&quot;</span>&gt;<br>    &lt;meta-<span class="hljs-keyword">data</span><br>        android:name=<span class="hljs-string">&quot;com.yellowhat.image.initializer.AInitializer&quot;</span><br>        android:value=<span class="hljs-string">&quot;androidx.startup&quot;</span> /&gt;<br>&lt;/provider&gt;<br></code></pre></td></tr></table></figure>
-
-<p>只需将<code>meta-data</code>标签下<code>name</code>属性替换成自己<code>Initializer</code>的路径即可，其它如上保持不变。</p>
-<p>通过两步就完成了自动初始化，运行程序可以看到日志输出：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>ImageLoadInitializer初始化！<br></code></pre></td></tr></table></figure>
-
-<h3 id="顺序初始化"><a href="#顺序初始化" class="headerlink" title="顺序初始化"></a>顺序初始化</h3><p>有时候我们自身初始化可能还依赖于其他组件，<code>startUp</code>提供了简单的顺序控制：可以将所依赖的组件对应的<code>Initializer</code>放在上述第一步的<code>dependencies()</code>中。</p>
-<p>比如A组件的初始化必须在B组件之后，B组件对应的<code>Initializer</code>为<code>BInitializer</code>:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">BInitializer</span> :<span class="hljs-type">Initializer</span>&lt;<span class="hljs-type">Unit</span>&gt;&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">create</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>        ImageLoader.<span class="hljs-keyword">init</span>(context)<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;BInitializer初始化！&quot;</span>)<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>        <span class="hljs-keyword">return</span> mutableListOf()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>改写A组件的<code>dependencies()</code>方法：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">dependencies</span><span class="hljs-params">()</span></span>: List&lt;Class&lt;<span class="hljs-keyword">out</span> Initializer&lt;*&gt;&gt;&gt; &#123;<br>    <span class="hljs-keyword">return</span> mutableListOf(BInitializer::<span class="hljs-keyword">class</span>.java)<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这样就保证了A组件的初始化一定在B组件之后！</p>
-<p>同理可以将其他多个<code>Initializer</code>加入到<code>dependencies()</code>返回集合中，则代表A组件要等所有组件完成初始化后才能执行自己的初始化！</p>
-<p><strong>注意：集合内多个<code>Initializer</code>的初始化顺序这里无法控制！</strong>因此说是可以简单控制初始化顺序。</p>
-<h3 id="懒启动"><a href="#懒启动" class="headerlink" title="懒启动"></a>懒启动</h3><p>上面介绍的是自动初始化，<code>startUp</code>还可以实现懒启动，即在需要的时候初始化！</p>
-<p>只需在清单文件中将<code>tools</code>标签的值改为：<code>tools:node=&quot;remove&quot;</code>即可，这样就关闭了自动启动开关。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;provider<br>    android:name=<span class="hljs-string">&quot;androidx.startup.InitializationProvider&quot;</span><br>    android:authorities=<span class="hljs-string">&quot;<span class="hljs-subst">$&#123;applicationId&#125;</span>.androidx-startup&quot;</span><br>    android:exported=<span class="hljs-string">&quot;false&quot;</span><br>    tools:node=<span class="hljs-string">&quot;remove&quot;</span>&gt;<br>    &lt;meta-<span class="hljs-keyword">data</span><br>        android:name=<span class="hljs-string">&quot;com.yellowhat.image.initializer.AInitializer&quot;</span><br>        android:value=<span class="hljs-string">&quot;androidx.startup&quot;</span> /&gt;<br>&lt;/provider&gt;<br></code></pre></td></tr></table></figure>
-
-<p>随后在任何地方根据需要主动调用：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">AppInitializer.getInstance(<span class="hljs-keyword">this</span>).initializeComponent(AInitializer::<span class="hljs-keyword">class</span>.java)<br></code></pre></td></tr></table></figure>
-
-<h3 id="在application中的执行顺序"><a href="#在application中的执行顺序" class="headerlink" title="在application中的执行顺序"></a>在<code>application</code>中的执行顺序</h3><p>第一次使用这个心里没底，不知道与<code>application</code>的生命周期方法执行顺序是什么样的，特意做了试验，添加如下代码在<code>application</code>中：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">protected</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">attachBaseContext</span>(<span class="hljs-params">Context base</span>) &#123;<br>    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">attachBaseContext</span>(base);<br>    <span class="hljs-title class_">Log</span>.<span class="hljs-title function_">e</span>(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;attachBaseContext&quot;</span>);<br>&#125;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onCreate</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">onCreate</span>();<br>    <span class="hljs-title class_">Log</span>.<span class="hljs-title function_">e</span>(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;oncreate()&quot;</span>);<br> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>运行程序，日志输出：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">attachBaseContext<br>AInitializer初始化！<br><span class="hljs-function"><span class="hljs-title">oncreate</span><span class="hljs-params">()</span></span><br></code></pre></td></tr></table></figure>
-
-<p>可以得出结论：</p>
-<p><code>attachBaseContext()</code> &gt; <code>startUp</code>自动初始化 &gt; <code>onCreate()</code></p>
 
                 
               </div>
@@ -846,15 +795,8 @@
   
     <span>></span>
     
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
+  <a href="/categories/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="category-chain-item">性能优化</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/startUp/" class="category-chain-item">startUp</a>
-  
-  
-
   
 
   
@@ -870,11 +812,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Android/">#Android</a>
-      
-        <a href="/tags/Jetpack/">#Jetpack</a>
-      
-        <a href="/tags/startUp/">#startUp</a>
+        <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">#性能优化，启动优化</a>
       
     </div>
   
@@ -886,8 +824,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Jetpack StartUp</div>
-      <div>http://example.com/2022/10/18/Android/jetpack/Jetpack startUp/</div>
+      <div>性能优化之页面启动（实战一）</div>
+      <div>http://example.com/2023/01/13/Android/性能优化/性能优化之页面启动（实战一）/</div>
     </div>
     <div class="license-meta">
       
@@ -899,7 +837,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月18日</div>
+          <div>2023年1月13日</div>
         </div>
       
       
@@ -929,9 +867,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin">
+                      <a href="/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView/" title="Android代码阅读器--YHCodeView">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Android换肤框架--YHReskin</span>
+                        <span class="hidden-mobile">Android代码阅读器--YHCodeView</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -939,8 +877,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/14/%E5%B7%A5%E5%85%B7/Android%20studio%20%E6%8F%92%E4%BB%B6/" title="Android studio常用插件">
-                        <span class="hidden-mobile">Android studio常用插件</span>
+                      <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/" title="妙用BuildConifg">
+                        <span class="hidden-mobile">妙用BuildConifg</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

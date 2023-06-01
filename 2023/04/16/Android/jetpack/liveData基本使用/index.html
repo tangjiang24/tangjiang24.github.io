@@ -1,0 +1,1206 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="liveData基本使用[TOC] 前言LiveData 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 activity、fragment 或 service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。 项目中使用有以下优势：  确保界面符合数据状态，即无需每次数据变换时刷新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="liveData基本使用">
+<meta property="og:url" content="http://example.com/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="liveData基本使用[TOC] 前言LiveData 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 activity、fragment 或 service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。 项目中使用有以下优势：  确保界面符合数据状态，即无需每次数据变换时刷新">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-16T03:12:12.000Z">
+<meta property="article:modified_time" content="2023-04-16T03:12:12.000Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="liveData">
+<meta property="article:tag" content="Jetpack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>liveData基本使用 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">liveData基本使用</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-16 11:12" pubdate>
+          2023年4月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(21)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
+        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+        aria-expanded="false"
+      >
+        errors
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
+           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/errorlist/InstantiationException%20could%20not%20find%20Fragment%20constructor/" title="InstantiationException--could not find Fragment constructor"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData仅第一次回调</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/viewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylib"
+        id="heading-0032f5a392d2bb530cd635362ad873c4" role="tab" data-toggle="collapse" href="#collapse-0032f5a392d2bb530cd635362ad873c4"
+        aria-expanded="false"
+      >
+        mylib
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-0032f5a392d2bb530cd635362ad873c4"
+           role="tabpanel" aria-labelledby="heading-0032f5a392d2bb530cd635362ad873c4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView/" title="Android代码阅读器--YHCodeView"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android代码阅读器--YHCodeView</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/02/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin/" title="Android换肤框架--YHReskin"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/02/26/mylibs/%E4%B8%89%E6%96%B9%E5%BA%93MateralDialog%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="material-dialogs基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">material-dialogs基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="false"
+      >
+        性能优化
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+        aria-expanded="false"
+      >
+        技巧
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/buildConfig/" title="妙用BuildConifg"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">妙用BuildConifg</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="false"
+      >
+        自定义View
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/paint%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/path%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/03/29/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/drawText()%E5%B1%85%E4%B8%AD/" title="drawText()居中"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">drawText()居中</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/startUp%E4%BB%8B%E7%BB%8D/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/viewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">liveData基本使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="liveData基本使用"><a href="#liveData基本使用" class="headerlink" title="liveData基本使用"></a>liveData基本使用</h1><p>[TOC]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/lifecycle/LiveData?hl=zh-cn"><code>LiveData</code></a> 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 activity、fragment 或 service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。 项目中使用有以下优势：</p>
+<ul>
+<li><strong>确保界面符合数据状态</strong>，即无需每次数据变换时刷新界面，可以在生命周期更改时再刷新；</li>
+<li><strong>不会发生内存泄漏</strong> ，会自动绑定生命周期，在ondestroy时自行解绑；</li>
+<li><strong>不会因 Activity 停止而导致崩溃</strong>，如果LifecycleOwner生命周期处于非活跃状态，则它不会接收任何 LiveData事件 ；</li>
+<li><strong>无需手动解除观察</strong>； </li>
+<li><strong>数据始终保持最新状态</strong> ，如果生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，曾经在后台的 Activity 会在返回前台后立即接收最新的数据 ；</li>
+<li><strong>数据共享</strong>，您可以使用单例模式扩展 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/lifecycle/LiveData?hl=zh-cn"><code>LiveData</code></a> 对象以封装系统服务，以便在应用中共享它们。</li>
+</ul>
+<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>liveData是LifeCycle的一个组件库，所以只需要添加LifeCycle库的依赖即可 （已经适配了AndroidX的项目好像不用依赖，具体看吧）:</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">implementation <span class="hljs-string">&#x27;androidx.lifecycle:lifecycle-extensions:$lifecycleVersion&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>通常会配合携程一起使用，因此一般会采用如下依赖方式：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">&quot;androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleExtensionsVersion&quot;</span><br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/jetpack/androidx/releases/lifecycle?hl=zh-cn#kotlin">官方历史版本</a> </p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="标准使用"><a href="#标准使用" class="headerlink" title="标准使用"></a>标准使用</h3><ol>
+<li>创建liveData实例 MutableLiveData，并指定数据源类型；</li>
+<li>创建Observer实例，实现onChanged()方法 ；</li>
+<li>调用第一步创建的liveData的observe()方法添加观察者，并传入lifeCycleOwner;</li>
+<li>liveData实例使用setValue()或者postValue()更新数据源；</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LiveDataActivity</span> : <span class="hljs-type">AppCompatActivity</span>() &#123;<br><br>    <span class="hljs-keyword">val</span> liveData = MutableLiveData&lt;<span class="hljs-built_in">Int</span>&gt;()<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState)<br>        setContentView(R.layout.activity_live_data)<br>        initListener()<br>        initObserve()<br>    &#125;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initListener</span><span class="hljs-params">()</span></span> &#123;<br>        tv_live.setOnClickListener &#123;<br>            liveData.value = <span class="hljs-number">0</span><br>            MainScope().launch &#123;<br>                repeat(<span class="hljs-number">100000</span>)&#123;<br>                    delay(<span class="hljs-number">1000</span>)<br>                    liveData.value = liveData.value!! +<span class="hljs-number">1</span><br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initObserve</span><span class="hljs-params">()</span></span> &#123;<br>        liveData.observe(<span class="hljs-keyword">this</span>)&#123;<br>            Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;liveData = <span class="hljs-variable">$it</span>&quot;</span>)<br>            tv_observe.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：上述例子只是介绍liveData的使用步骤，我们将liveData定义在了activity中，实际使用时需确保liveData定义在viewModel中。原因如下：</p>
+<ul>
+<li>避免 Activity 和 Fragment 过于庞大。现在，这些界面控制器负责显示数据，但不负责存储数据状态。</li>
+<li>将 <code>LiveData</code> 实例与特定的 Activity 或 Fragment 实例分离开，并使 <code>LiveData</code> 对象在配置更改后继续存在。</li>
+</ul>
+</blockquote>
+<h3 id="ObserveForever使用"><a href="#ObserveForever使用" class="headerlink" title="ObserveForever使用"></a>ObserveForever使用</h3><p>一般情况下，我们使用liveData.observe()方法，这样我们的页面只有在onResume()状态下才会观察到数据的变化。那如果我们的业务需要页面在onPause()也要监听数据变化，就需要使用liveData.observeForever()，这样系统就不会根据生命周期的变化移除我们的观察者，因此需要手动在合适的时机去移除，否则会造成内存泄漏。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> observerForever =  <span class="hljs-keyword">object</span> : Observer&lt;<span class="hljs-built_in">Int</span>&gt;&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onChanged</span><span class="hljs-params">(t: <span class="hljs-type">Int</span>?)</span></span> &#123;<br>        tv_observeforever.text = <span class="hljs-string">&quot;<span class="hljs-variable">$t</span>&quot;</span><br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;forever liveData = <span class="hljs-variable">$t</span>&quot;</span>)<br>     &#125;<br>&#125;<br> <br>liveData.observeForever(observerForever)<br> <br><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">super</span>.onDestroy()<br>    liveData.removeObserver(observerForever)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="扩展liveData"><a href="#扩展liveData" class="headerlink" title="扩展liveData"></a>扩展liveData</h3><p>以官方例子来介绍，如何自定义liveData，并使用liveData单例模式，来实现多个页面共享数据的例子。</p>
+<p>1.自定义liveData,实现onActive(),onInactive() </p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">StockLiveData</span>(symbol: String) : LiveData&lt;BigDecimal&gt;() &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> stockManager: StockManager = StockManager(symbol)<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> listener = &#123; price: BigDecimal -&gt;<br>        value = price<br>    &#125;<br><br>    <span class="hljs-comment">//对象具有活跃观察者时，会调用 onActive() 方法</span><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onActive</span><span class="hljs-params">()</span></span> &#123;<br>        stockManager.requestPriceUpdates(listener)<br>    &#125;<br><br>    <span class="hljs-comment">//对象没有任何活跃观察者时，会调用 onInactive() 方法</span><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onInactive</span><span class="hljs-params">()</span></span> &#123;<br>        stockManager.removeUpdates(listener)<br>    &#125;<br><br>    <span class="hljs-keyword">companion</span> <span class="hljs-keyword">object</span> &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> sInstance: StockLiveData<br><br>        <span class="hljs-meta">@MainThread</span><br>        <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">get</span><span class="hljs-params">(symbol: <span class="hljs-type">String</span>)</span></span>: StockLiveData &#123;<br>            sInstance = <span class="hljs-keyword">if</span> (::sInstance.isInitialized) sInstance <span class="hljs-keyword">else</span> StockLiveData(symbol)<br>            <span class="hljs-keyword">return</span> sInstance<br>        &#125;<br>    &#125;<br>&#125;<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">StockManager</span>(symbol:String) &#123;<br>    <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> job :Job<br><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">requestPriceUpdates</span><span class="hljs-params">(listener: (<span class="hljs-type">BigDecimal</span>) -&gt; <span class="hljs-type">Unit</span>)</span></span> &#123;<br>        job =  MainScope().launch &#123;<br>            repeat(<span class="hljs-number">1000</span>)&#123;<br>                delay(<span class="hljs-number">1000</span>)<br>                listener(BigDecimal((<span class="hljs-number">12.</span><span class="hljs-number">.45</span>).random()))<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">removeUpdates</span><span class="hljs-params">(listener: (<span class="hljs-type">BigDecimal</span>) -&gt; <span class="hljs-type">Unit</span>)</span></span> &#123;<br>        job.cancel()<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>StockLiveData 用于监听股票价格的变动，且为单例模式，并且重写了onActive()、onInactive()。其中：</p>
+<ul>
+<li>onActive()调用时机为：活跃的观察者（LifecycleOwner）数量从 0 变为 1 时。</li>
+<li>onInactive()调用时机为：活跃的观察者（LifecycleOwner）数量从 1 变为 0 时。</li>
+</ul>
+<p> 也就是说只有存在活跃的观察者时，才会连接到 股价更新服务 监听股价变化 </p>
+<p>2、在多个activity或者fragment中使用：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">StockLiveData.<span class="hljs-keyword">get</span>(<span class="hljs-string">&quot;精达股份&quot;</span>).observe(<span class="hljs-keyword">this</span>)&#123;<br>    tv_stock.text = <span class="hljs-string">&quot;股票:<span class="hljs-variable">$it</span>&quot;</span><br>    Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;股票liveData = <span class="hljs-variable">$it</span>&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 以上例子特别适用于多个页面需要监听同一数据源的场景。</p>
+</blockquote>
+<h3 id="数据转换Transformations-map"><a href="#数据转换Transformations-map" class="headerlink" title="数据转换Transformations.map"></a>数据转换Transformations.map</h3><p>将源liveData进行转换，如下源类型为int 的liveData没有添加监听，而是对其转换为类型为string的mapLiveData后，监听mapLiveData：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> liveData = MutableLiveData&lt;<span class="hljs-built_in">Int</span>&gt;()<br><br> <span class="hljs-keyword">val</span> mapLiveData = Transformations.map(liveData)&#123;<br>     <span class="hljs-string">&quot;tj24: <span class="hljs-variable">$it</span>&quot;</span><br> &#125;<br><br> mapLiveData.observe(<span class="hljs-keyword">this</span>)&#123;<br>     tv_mapLiveData.text = it<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="数据转换Transformations-switchMap"><a href="#数据转换Transformations-switchMap" class="headerlink" title="数据转换Transformations.switchMap"></a>数据转换Transformations.switchMap</h3><p>如果要根据某个值动态去切换不同的liveData数据，则可以使用transformations.switchMap() 。如我们的数据同时从网络和本地获取，有网时获取网络数据，没有网络时获取离线数据：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initTransFormationSwitchMap</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">val</span> offLineData = MutableLiveData&lt;String&gt;()<br>    <span class="hljs-keyword">val</span> onLineData = MutableLiveData&lt;String&gt;()<br>    <span class="hljs-keyword">val</span> switchData = MutableLiveData&lt;<span class="hljs-built_in">Boolean</span>&gt;()<br>    <span class="hljs-keyword">val</span> switchMap = Transformations.switchMap(switchData)&#123;<br>        <span class="hljs-keyword">if</span> (it)&#123;<br>            onLineData<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            offLineData<br>        &#125;<br>    &#125;<br>    switchMap.observe(<span class="hljs-keyword">this</span>)&#123;<br>        tv_switchData.text = it<br>    &#125;<br><br>    offLineData.value = <span class="hljs-string">&quot;offLine&quot;</span><br>    onLineData.value = <span class="hljs-string">&quot;onLine&quot;</span><br>    switch1.setOnCheckedChangeListener &#123; buttonView, isChecked -&gt;<br>        switchData.value = isChecked<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="合并数据MediatorLiveData"><a href="#合并数据MediatorLiveData" class="headerlink" title="合并数据MediatorLiveData"></a>合并数据MediatorLiveData</h3><p>MediatorLiveData 是 LiveData 的子类，允许合并多个 LiveData 源。只要任何原始的 LiveData 源对象发生更改，就会触发 MediatorLiveData 对象的观察者。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">initMediatorLiveData</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">val</span> mediatorLiveData = MediatorLiveData&lt;String&gt;()<br>    <span class="hljs-keyword">val</span> offLineData = MutableLiveData&lt;String&gt;()<br>    <span class="hljs-keyword">val</span> onLineData = MutableLiveData&lt;String&gt;()<br><br>    mediatorLiveData.addSource(offLineData)&#123;<br>        mediatorLiveData.value = it<br>    &#125;<br>    mediatorLiveData.addSource(onLineData)&#123;<br>        mediatorLiveData.value = it<br>    &#125;<br><br>    mediatorLiveData.observe(<span class="hljs-keyword">this</span>)&#123;<br>        tv_mediator_observe.text = it<br>    &#125;<br>    tv_online.setOnClickListener &#123;<br>        onLineData.value = <span class="hljs-string">&quot;在线&quot;</span><br>    &#125;<br>    tv_offline.setOnClickListener &#123;<br>        offLineData.value = <span class="hljs-string">&quot;离线&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="postValue-数据丢失问题"><a href="#postValue-数据丢失问题" class="headerlink" title="postValue()数据丢失问题"></a>postValue()数据丢失问题</h3><p>如果多次连续postValue()，往往只会收到最后一次post的值。且看源码的注释，解释的很清楚了。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Posts a task to a main thread to set the given value. So if you have a following code</span><br><span class="hljs-comment"> * executed in the main thread:</span><br><span class="hljs-comment"> * &lt;pre class=&quot;prettyprint&quot;&gt;</span><br><span class="hljs-comment"> * liveData.postValue(&quot;a&quot;);</span><br><span class="hljs-comment"> * liveData.setValue(&quot;b&quot;);</span><br><span class="hljs-comment"> * &lt;/pre&gt;</span><br><span class="hljs-comment"> * The value &quot;b&quot; would be set at first and later the main thread would override it with</span><br><span class="hljs-comment"> * the value &quot;a&quot;.</span><br><span class="hljs-comment"> * &lt;p&gt;</span><br><span class="hljs-comment"> * If you called this method multiple times before a main thread executed a posted task, only</span><br><span class="hljs-comment"> * the last value would be dispatched.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> value The new value</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">protected</span> void postValue(T value) &#123;<br>    boolean postTask;<br>    synchronized (mDataLock) &#123;<br>        postTask = mPendingData == NOT_SET;<br>        mPendingData = value;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (!postTask) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    ArchTaskExecutor.getInstance().postToMainThread(mPostValueRunnable);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="liveData仅第一次回调"><a href="#liveData仅第一次回调" class="headerlink" title="liveData仅第一次回调"></a>liveData仅第一次回调</h3><p>这个问题请看<a target="_blank" rel="noopener" href="https://tj24.gitee.io/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/">这里</a>。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>参考文章</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fa60246d87c0">liveData讲解</a> </li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/topic/libraries/architecture/livedata?hl=zh_cn#the_advantages_of_using_livedata">官方介绍</a></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/liveData/">#liveData</a>
+      
+        <a href="/tags/Jetpack/">#Jetpack</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>liveData基本使用</div>
+      <div>http://example.com/2023/04/16/Android/jetpack/liveData基本使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">lifeCycle基本使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="viewModel基本使用">
+                        <span class="hidden-mobile">viewModel基本使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

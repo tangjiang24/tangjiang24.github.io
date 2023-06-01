@@ -225,23 +225,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/25/kotlin/kotlin%E9%9B%86%E5%90%88%E5%87%BD%E6%95%B0/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="kotlin集合函数">
+        <a href="/2022/10/06/kotlin/kotlin%E5%8D%8F%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin协程基础">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/25/kotlin/kotlin%E9%9B%86%E5%90%88%E5%87%BD%E6%95%B0/" target="_blank">
-          kotlin集合函数
+        <a href="/2022/10/06/kotlin/kotlin%E5%8D%8F%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_blank">
+          Kotlin协程基础
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/25/kotlin/kotlin%E9%9B%86%E5%90%88%E5%87%BD%E6%95%B0/" target="_blank">
+      <a class="index-excerpt " href="/2022/10/06/kotlin/kotlin%E5%8D%8F%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_blank">
         <div>
-          kotlin集合函数一、集合排序sort()&#x2F;sorted()针对可比较类型元素可直接调用进行排序。前者改变源集合，后者返回 一个新集合； sortBy{ }&#x2F;sortedBy{}根据后面的表达式进行排序，通常用于根据元素的某个字段来排序。前者改变源集合，后者返回 一个新集合； sortWith(Comparator)&#x2F;sortedWith(Comparator)需要
+          Kotlin协程基础引言之前我们在异步编程中都用的是线程，线程是基于操作系统的，因此它是非常重量级的，过多的线程一定会让我们的 程序不堪重负。而kotlin在语言层面为我们提供了协程，允许我们在单线程下模拟多线程的编程效果，同时开启上万个协程完成并发任务不是梦！ 可以理解为协程就是一种轻量级的线程 。 开启10万个协程来看看究竟有多轻量： 12345678910111213fun main()&amp;#
         </div>
       </a>
 
@@ -249,8 +249,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-25 14:36" pubdate>
-              2022-09-25
+            <time datetime="2022-10-06 09:36" pubdate>
+              2022-10-06
             </time>
           </div>
         
@@ -282,7 +282,9 @@
             
               <a href="/tags/kotlin/">#kotlin</a>
             
-              <a href="/tags/%E9%9B%86%E5%90%88/">#集合</a>
+              <a href="/tags/%E5%8D%8F%E7%A8%8B/">#协程</a>
+            
+              <a href="/tags/coroutines/">#coroutines</a>
             
           </div>
         
@@ -294,23 +296,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/23/kotlin/kotlin%E6%89%A9%E5%B1%95/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="扩展函数、属性">
+        <a href="/2022/09/30/kotlin/kotlin%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin常用注解">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/23/kotlin/kotlin%E6%89%A9%E5%B1%95/" target="_blank">
-          扩展函数、属性
+        <a href="/2022/09/30/kotlin/kotlin%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/" target="_blank">
+          Kotlin常用注解
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/23/kotlin/kotlin%E6%89%A9%E5%B1%95/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/30/kotlin/kotlin%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/" target="_blank">
         <div>
-          Kotlin扩展kotlin为我们提供了扩展功能，即对任何可见的类扩展额外的函数和属性，且无用修改类的源码或者创建其子类。可以大大 提高我们的编程效率及代码的可读性。 扩展函数基本使用扩展函数的基本语法结构如下： 123fun ClassName.method(param1:Int,param2:Int):Int&amp;#123;    return 0&amp;#125;  即在需要扩展的方法前加上所在的类名
+          Kotlin常用注解JVM相关@JvmOverloads 作用于方法或者构造方法，配合方法参数的默认值，可以自动生成重载方法，供java调用：  1234@JvmOverloadsfun love(name:String&#x3D;&quot;kobe&quot;)&amp;#123;&amp;#125;  常常用在自定义view中： 12345class CanvasView @JvmOverloads construc
         </div>
       </a>
 
@@ -318,8 +320,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-23 23:11" pubdate>
-              2022-09-23
+            <time datetime="2022-09-30 22:25" pubdate>
+              2022-09-30
             </time>
           </div>
         
@@ -351,7 +353,7 @@
             
               <a href="/tags/kotlin/">#kotlin</a>
             
-              <a href="/tags/%E6%89%A9%E5%B1%95/">#扩展</a>
+              <a href="/tags/%E6%B3%A8%E8%A7%A3/">#注解</a>
             
           </div>
         
@@ -363,23 +365,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="liveData仅第一次回调">
+        <a href="/2022/09/30/kotlin/kotlin%E5%86%85%E8%81%94%E7%B1%BB%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin内联类及类型别名">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" target="_blank">
-          liveData仅第一次回调
+        <a href="/2022/09/30/kotlin/kotlin%E5%86%85%E8%81%94%E7%B1%BB%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D/" target="_blank">
+          Kotlin内联类及类型别名
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/30/kotlin/kotlin%E5%86%85%E8%81%94%E7%B1%BB%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D/" target="_blank">
         <div>
-          问题现象：项目中采用 监听liveData的变化来更新UI,奇怪的是进入页面后viewModel第一次获取到数据并改变触发liveData回调后，后续再次改变liveData都不回调：即LiveData.observe（）只响应一次。 分析：首先想到的原因有以下：  LiveData.observe（）所在页面处于后台； viewModel获取数据接口出现问题，根本就没有setValue()；
+          Kotlin内联类及类型别名内联类内联类（inline class）在kotlin1.5.0版本发布后修改了表示方法，将inline替换成了value，现声明内联类方式如下： 123456@JvmInlinevalue class InlinePlayer(val name: String) &amp;#123;    fun getNameLength() &amp;#123;        println(n
         </div>
       </a>
 
@@ -387,86 +389,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-20 22:11" pubdate>
-              2022-09-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/errors/" class="category-chain-item">errors</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/errors/">#errors</a>
-            
-              <a href="/tags/liveData/">#liveData</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/18/kotlin/kotlin%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin集合介绍">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/09/18/kotlin/kotlin%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" target="_blank">
-          Kotlin集合介绍
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2022/09/18/kotlin/kotlin%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" target="_blank">
-        <div>
-          Kotlin集合介绍集合分类按照可变性：  可变集合：可以增删改查操作  不可变集合：只能读取，不能增删改  按照类型：  List Map Set  两者结合起来如下：    集合类型 可变 不可变    List multableListOf()、arrayListOf() listOf()   Map multableMapOf()、hashMapOf()、linkedMapOf()、sor
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-18 16:11" pubdate>
-              2022-09-18
+            <time datetime="2022-09-30 21:24" pubdate>
+              2022-09-30
             </time>
           </div>
         
@@ -498,7 +422,11 @@
             
               <a href="/tags/kotlin/">#kotlin</a>
             
-              <a href="/tags/%E9%9B%86%E5%90%88/">#集合</a>
+              <a href="/tags/%E5%86%85%E8%81%94%E7%B1%BB/">#内联类</a>
+            
+              <a href="/tags/%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D/">#类型别名</a>
+            
+              <a href="/tags/typealias/">#typealias</a>
             
           </div>
         
@@ -510,23 +438,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/adb%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%A4%A7%E5%85%A8/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="adb指令操作">
+        <a href="/2022/09/29/kotlin/kotlin%E4%B8%AD%E7%BC%80%20infix/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin中缀函数">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/adb%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%A4%A7%E5%85%A8/" target="_blank">
-          adb指令操作
+        <a href="/2022/09/29/kotlin/kotlin%E4%B8%AD%E7%BC%80%20infix/" target="_blank">
+          Kotlin中缀函数
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/06/%E5%B7%A5%E5%85%B7/adb%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%A4%A7%E5%85%A8/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/29/kotlin/kotlin%E4%B8%AD%E7%BC%80%20infix/" target="_blank">
         <div>
-          ADB，即 Android Debug Bridge，它是 Android 开发&#x2F;测试人员不可替代的强大工具，也是 Android 设备玩家的好玩具。 本文是从网上盗来的，加上了自己常用的一些命令。 可以将 此 GitHub 仓库 Star 收藏备用。 注： 文中有部分命令的支持情况可能与 Android 系统版本及定制 ROM 的实现有关。 Other languages: :gb:
+          Kotlin中缀函数简介中缀函数可以使得代码更加语义化，提高可读性。它允许我们函数调用时省略.以及（）。以Kobe喜欢篮球为例编写代码如下： 1234567class Kobe &amp;#123;    fun like(ball: BasketBall)&amp;#123;    &amp;#125;        infix fun love(ball:BasketBall) &#x3D; like(ball)&amp;#125;
         </div>
       </a>
 
@@ -534,157 +462,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 21:36" pubdate>
-              2022-09-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
-            
-              <a href="/tags/adb/">#adb</a>
-            
-              <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Circular dependencies cannot exist in AnimatorSet">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" target="_blank">
-          Circular dependencies cannot exist in AnimatorSet
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" target="_blank">
-        <div>
-          Circular dependencies cannot exist in AnimatorSet现象一：AnimatorSet 播放，取消后，再播放 。具体代码如下： 1234567891011121314151617    private val set by lazy &amp;#123;        AnimatorSet().apply &amp;#123;            interpolat
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 09:36" pubdate>
-              2022-09-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/errors/" class="category-chain-item">errors</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/errors/">#errors</a>
-            
-              <a href="/tags/%E5%8A%A8%E7%94%BB/">#动画</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="kotlin基本语法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" target="_blank">
-          kotlin基本语法
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" target="_blank">
-        <div>
-          kotlin基本语法一、变量var&#x2F;val可变， val 不可变（final） lateinit延迟初始化，只可修饰 var,使用前必须确保初始化 1234lateinit var c: String   if (!::c.isInitialized) &amp;#123;     c &#x3D; &quot;hello&quot;  &amp;#125;  by lazy懒加载，使用时自己初始化,只可修饰va
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 09:36" pubdate>
-              2022-09-06
+            <time datetime="2022-09-29 23:58" pubdate>
+              2022-09-29
             </time>
           </div>
         
@@ -716,6 +495,10 @@
             
               <a href="/tags/kotlin/">#kotlin</a>
             
+              <a href="/tags/%E4%B8%AD%E7%BC%80/">#中缀</a>
+            
+              <a href="/tags/infix/">#infix</a>
+            
           </div>
         
       </div>
@@ -726,23 +509,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/kotlin/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Lambda表达式">
+        <a href="/2022/09/29/kotlin/kotlin%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="kotlin内联函数">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/06/kotlin/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
-          Lambda表达式
+        <a href="/2022/09/29/kotlin/kotlin%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/" target="_blank">
+          kotlin内联函数
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/06/kotlin/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/29/kotlin/kotlin%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/" target="_blank">
         <div>
-          Lambda表达式定义 本质：一小段可以作为参数传递的代码  语法结构（可以简化）： {参数名1：参数类型，参数名2：参数类型 -&gt; 函数体}   maxBy函数举例众所周知，找出集合中最长名字的元素可以这么做： 12val list &#x3D; listOf&lt;String&gt;(&quot;kobe&quot;,&quot;ivrerson&quot;,&quot;tracy&quot;)
+          inline&#x2F;noinline&#x2F;crossinline内联 inline作用对于inline标注的方法，在调用它的时候会将其方法体中的代码移动到调用的地方，而非通过方法栈。对于这个结论我们做以下验证。 首先编写下面测试代码如下： 12345678fun point()&amp;#123;    shoot()    println(&quot;得分&quot;)&amp;#125;fun sh
         </div>
       </a>
 
@@ -750,8 +533,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 09:36" pubdate>
-              2022-09-06
+            <time datetime="2022-09-29 23:28" pubdate>
+              2022-09-29
             </time>
           </div>
         
@@ -782,6 +565,83 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/%E5%86%85%E8%81%94/">#内联</a>
+            
+              <a href="/tags/inline/">#inline</a>
+            
+              <a href="/tags/noinline/">#noinline</a>
+            
+              <a href="/tags/crosssinline/">#crosssinline</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/29/kotlin/kotlin%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin高阶函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/29/kotlin/kotlin%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" target="_blank">
+          Kotlin高阶函数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/29/kotlin/kotlin%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" target="_blank">
+        <div>
+          Kotlin高阶函数定义一个函数的参数或者返回值不是具体的类型，而是一个函数类型，那么这个函数就被称为高阶函数。 函数类型在kotlin中引入了函数类型的概念，是对函数的参数类型或者返回值类型的一个抽象，跟一般Int,String一样可以被用来定义。我们举例说明： 定义一个函数如下： 1fun add(a: Int,b: Int) &#x3D; a + b  这个函数的函数类型就可以被抽象出来为：(Int,
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 22:24" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/">#高阶函数</a>
             
               <a href="/tags/lambda/">#lambda</a>
             
@@ -795,23 +655,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="wifiConnector 使用说明">
+        <a href="/2022/09/28/kotlin/kotlin%E6%95%B0%E6%8D%AE%E7%B1%BB%20data/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin数据类 data">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" target="_blank">
-          wifiConnector 使用说明
+        <a href="/2022/09/28/kotlin/kotlin%E6%95%B0%E6%8D%AE%E7%B1%BB%20data/" target="_blank">
+          Kotlin数据类 data
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/06/mylibs/wifiConnecter%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/28/kotlin/kotlin%E6%95%B0%E6%8D%AE%E7%B1%BB%20data/" target="_blank">
         <div>
-          **	前言：早在去年，我曾写过一个针对android6.0连接指定WiFi的文章。虽然能成功连接，但有好多不合理甚至错误的地方，因此现在对那篇文章进行重新编辑发布**。 最近项目中有通过已知WiFi名称和密码连接传感器WiFi，实现数据交换的需求。在网上找了许多资料发现都是复制黏贴，也有好多bug,现在我将其整理封装并在项目中使用。 github地址：https:&#x2F;&#x2F;github.com&#x2F;tang
+          Kotlin数据类 data简介kotlin提供了专门的数据类来方便我们替代Java Bean。通过data关键字表示： 12345678data class DataPlayer(    var name: String,    var age: Int &#x3D; 21,    var team: String &#x3D; &quot;&quot;,    var isMvp: Boolean &#x3D; false
         </div>
       </a>
 
@@ -819,8 +679,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 09:36" pubdate>
-              2022-09-06
+            <time datetime="2022-09-28 23:02" pubdate>
+              2022-09-28
             </time>
           </div>
         
@@ -835,15 +695,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Android/mylib/" class="category-chain-item">mylib</a>
-  
-  
-
   
 
       </span>
@@ -857,11 +710,11 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Android/">#Android</a>
+              <a href="/tags/kotlin/">#kotlin</a>
             
-              <a href="/tags/wifi/">#wifi</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB/">#数据类</a>
             
-              <a href="/tags/mylib/">#mylib</a>
+              <a href="/tags/data/">#data</a>
             
           </div>
         
@@ -873,23 +726,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="hexo">
+        <a href="/2022/09/28/kotlin/kotlin%E5%AF%86%E5%B0%81%E7%B1%BB%20sealed/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin密封类 sealed">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo/" target="_blank">
-          hexo
+        <a href="/2022/09/28/kotlin/kotlin%E5%AF%86%E5%B0%81%E7%B1%BB%20sealed/" target="_blank">
+          Kotlin密封类 sealed
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/28/kotlin/kotlin%E5%AF%86%E5%B0%81%E7%B1%BB%20sealed/" target="_blank">
         <div>
-          1、文章使用自动概述配置安装相关组件 npm install hexo-excerpt –save复制在_config.yml中增加相关配置 ################### 文章自动化概述生成excerpt:  depth: 10  excerpt_excludes:  more_excludes:  hideWholePostExcerpts: true复制2、文章头部设置在文章.md文
+          Kotlin密封类 sealed简介密封类用来表示受限的类继承结构：当一个值为有限几种的类型, 而不能有任何其他类型时。看起来和枚举类有点像，但功能有所扩展。密封类可以有子类，使用sealed关键字修饰。比如我们创建一个结果密封类，包含两个子类分别代表成功和失败。 1234sealed class Results&amp;#123;    class Success(val data:String) :R
         </div>
       </a>
 
@@ -897,8 +750,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-06 09:36" pubdate>
-              2022-09-06
+            <time datetime="2022-09-28 21:35" pubdate>
+              2022-09-28
             </time>
           </div>
         
@@ -913,7 +766,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
   
   
 
@@ -928,9 +781,153 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
+              <a href="/tags/kotlin/">#kotlin</a>
             
-              <a href="/tags/hexo/">#hexo</a>
+              <a href="/tags/%E5%AF%86%E5%B0%81%E7%B1%BB/">#密封类</a>
+            
+              <a href="/tags/sealed/">#sealed</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/27/kotlin/kotlin%E6%B3%9B%E5%9E%8B/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin泛型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/27/kotlin/kotlin%E6%B3%9B%E5%9E%8B/" target="_blank">
+          Kotlin泛型
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/27/kotlin/kotlin%E6%B3%9B%E5%9E%8B/" target="_blank">
+        <div>
+          Kotlin泛型泛型，即我们在编程过程中允许我们给一个类、方法、接口不指定具体的类型，转而用大写英文字母来表示。可以大大提高我们代码的重用性，并将类型转换异常由运行期提前到编译期，保证类型转换安全。 基本使用类中使用12345class Kobe&lt;T&gt; : Lakers() &amp;#123;    fun shoot(t:T)&amp;#123;        println(t.toString
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-27 23:18" pubdate>
+              2022-09-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/%E6%B3%9B%E5%9E%8B/">#泛型</a>
+            
+              <a href="/tags/%E5%8D%8F%E5%8F%98/">#协变</a>
+            
+              <a href="/tags/%E9%80%86%E5%8F%98/">#逆变</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/26/kotlin/kotlin%E5%A7%94%E6%89%98/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin委托">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/26/kotlin/kotlin%E5%A7%94%E6%89%98/" target="_blank">
+          Kotlin委托
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/26/kotlin/kotlin%E5%A7%94%E6%89%98/" target="_blank">
+        <div>
+          Kotlin委托委托模式是软件设计中常用的一种设计模式，在Java中我们需要编写很多模板类来实现委托，而kotlin则是通过关键字by,直接在语法层面上支持委托，使用起来更加优雅、简洁。 Kotlin类委托通过在类后面加上by关键字，将类的实现交给委托对象。这里我们举一个球员将得分和防守的任务都委托给队友，自己负责举起奖杯的例子： 123456789101112131415161718192021
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-26 23:12" pubdate>
+              2022-09-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/%E5%A7%94%E6%89%98/">#委托</a>
             
           </div>
         
@@ -942,7 +939,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

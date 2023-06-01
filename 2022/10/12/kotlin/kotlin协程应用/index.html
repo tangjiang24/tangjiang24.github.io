@@ -297,7 +297,7 @@
         aria-expanded="true"
       >
         kotlin
-        <span class="list-group-count">(20)</span>
+        <span class="list-group-count">(21)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -396,6 +396,15 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Kotlin数据类 data</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/03/30/kotlin/kotlin%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" title="Kotlin文件操作"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin文件操作</span>
         </a>
       
     
@@ -590,7 +599,7 @@
 <p>此类通过<code>map</code>保存记录正在执行的定时器，key、value分别为定时器名称和对应的协程<code>Job</code>,采用<code>mainScope()</code>创建协程。提供<code>startTimmer()</code>方法和<code>cancelTimer()</code>两个方法。主要通过挂起函数<code>delay()</code>进行延时，<code>repeat()</code>用于任务重复，注释有详细说明。通过在<code>activity</code>中验证同时开启一万个定时任务毫无压力。</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv_startTimmer.setOnClickListener &#123;<br>    repeat(<span class="hljs-number">10000</span>)&#123;<br>        <span class="hljs-keyword">var</span> start = System.currentTimeMillis()<br>        CoroutineTimmer.startTimmer(<span class="hljs-string">&quot;kobe <span class="hljs-variable">$it</span>&quot;</span>, <span class="hljs-number">2400</span>, <span class="hljs-number">1000</span>, <span class="hljs-number">8</span>, <span class="hljs-literal">true</span>) &#123;<br>            Log.e(<span class="hljs-string">&quot;tj24&quot;</span>, <span class="hljs-string">&quot;thread=<span class="hljs-subst">$&#123;Thread.currentThread()&#125;</span>&quot;</span>)<br>            tv_content.text = it<br>            <span class="hljs-keyword">val</span> <span class="hljs-keyword">const</span> = System.currentTimeMillis() - start<br>            start = System.currentTimeMillis()<br>            Toast.makeText(<span class="hljs-keyword">this</span>,it,Toast.LENGTH_LONG).show()<br>            Log.e(<span class="hljs-string">&quot;tj24&quot;</span>, <span class="hljs-string">&quot;timerout = <span class="hljs-variable">$it</span> timmer const = <span class="hljs-subst">$&#123;const&#125;</span>&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h3><p>查询数据库操作很多时候我们都是在主线程进行，这样有<code>aar</code>的风险，用线程通信来优化又要频繁回调。结合协程我们可以这么玩：</p>
+<h3 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h3><p>查询数据库操作很多时候我们都是在主线程进行，这样有<code>anr</code>的风险，用线程通信来优化又要频繁回调。结合协程我们可以这么玩：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">suspend</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryPlayer</span><span class="hljs-params">()</span></span>:String&#123;<br>       <span class="hljs-keyword">return</span>  withContext(Dispatchers.IO)&#123;<br>           delay(<span class="hljs-number">1000</span>)<br>           <span class="hljs-string">&quot;Kobe Bryant&quot;</span><br>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <p>通过延时模拟一个数据库查询操作，利用<code>withContext()</code>将数据库查询放到<code>IO</code>线程，使用如下：</p>
