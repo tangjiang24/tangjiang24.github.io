@@ -16,29 +16,24 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RuntimeException: trying to use a recycled bitmap问题：自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误： 123456789101112131415161718192021222324252627282930313233343536373839404142434445java.lang.RuntimeException: Canvas: t">
+    <meta name="description" content="非静态内部类引起内存泄露处理误区及经验前言最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录： 滥用弱引用问题在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RuntimeException trying to use a recycled bitmap">
-<meta property="og:url" content="http://example.com/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/index.html">
+<meta property="og:title" content="非静态内部类引起内存泄露处理误区及经验">
+<meta property="og:url" content="http://example.com/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="RuntimeException: trying to use a recycled bitmap问题：自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误： 123456789101112131415161718192021222324252627282930313233343536373839404142434445java.lang.RuntimeException: Canvas: t">
+<meta property="og:description" content="非静态内部类引起内存泄露处理误区及经验前言最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录： 滥用弱引用问题在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg">
-<meta property="article:published_time" content="2023-06-01T13:12:45.000Z">
-<meta property="article:modified_time" content="2023-06-01T13:12:45.000Z">
+<meta property="article:published_time" content="2023-06-08T14:38:23.000Z">
+<meta property="article:modified_time" content="2023-06-08T14:38:23.000Z">
 <meta property="article:author" content="煤炭黄帽">
-<meta property="article:tag" content="Android">
-<meta property="article:tag" content="errors">
-<meta property="article:tag" content="bitmap">
-<meta property="article:tag" content="recycled bitmap">
+<meta property="article:tag" content="性能优化，内存泄露，静态内部类，弱引用">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>RuntimeException trying to use a recycled bitmap - 煤炭黄帽</title>
+  <title>非静态内部类引起内存泄露处理误区及经验 - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">RuntimeException trying to use a recycled bitmap</span>
+            <span id="subtitle">非静态内部类引起内存泄露处理误区及经验</span>
           
         </div>
 
@@ -219,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-01 21:12" pubdate>
-          2023年6月1日 晚上
+        <time datetime="2023-06-08 22:38" pubdate>
+          2023年6月8日 晚上
         </time>
       </span>
     
@@ -231,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k 字
+          2.7k 字
         
       </span>
     
@@ -242,7 +237,7 @@
         
         
         
-          51 分钟
+          34 分钟
         
       </span>
     
@@ -321,17 +316,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
+      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
         id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
-        aria-expanded="true"
+        aria-expanded="false"
       >
         errors
         <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-07213a0161f52846ab198be103b5ab43"
+      <div class="category-collapse collapse " id="collapse-07213a0161f52846ab198be103b5ab43"
            role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
         
         
@@ -361,7 +356,7 @@
       
         <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
         </a>
       
@@ -559,17 +554,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
+      <a class="category-subitem 
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
         id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         性能优化
         <span class="list-group-count">(2)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse " id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
            role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
         
         
@@ -590,7 +585,7 @@
       
         <a href="/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C/" title="非静态内部类引起内存泄露处理误区及经验"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">非静态内部类引起内存泄露处理误区及经验</span>
         </a>
       
@@ -720,17 +715,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errors"
-        id="heading-07213a0161f52846ab198be103b5ab43" role="tab" data-toggle="collapse" href="#collapse-07213a0161f52846ab198be103b5ab43"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
         aria-expanded="true"
       >
-        errors
-        <span class="list-group-count">(4)</span>
+        性能优化
+        <span class="list-group-count">(2)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-07213a0161f52846ab198be103b5ab43"
-           role="tabpanel" aria-labelledby="heading-07213a0161f52846ab198be103b5ab43">
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
         
         
           
@@ -739,37 +734,19 @@
     
       
       
-        <a href="/2022/09/06/errorlist/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB%20Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet/" title="Circular dependencies cannot exist in AnimatorSet"
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89/" title="性能优化之页面启动（实战一）"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+          <span class="category-post">性能优化之页面启动（实战一）</span>
         </a>
       
     
       
       
-        <a href="/2022/09/06/errorlist/InstantiationException%20could%20not%20find%20Fragment%20constructor/" title="InstantiationException--could not find Fragment constructor"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap"
+        <a href="/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C/" title="非静态内部类引起内存泄露处理误区及经验"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E5%9B%9E%E8%B0%83%E4%B8%80%E6%AC%A1/" title="liveData仅第一次回调"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">liveData仅第一次回调</span>
+          <span class="category-post">非静态内部类引起内存泄露处理误区及经验</span>
         </a>
       
     
@@ -792,38 +769,51 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">RuntimeException trying to use a recycled bitmap</h1>
+            <h1 style="display: none">非静态内部类引起内存泄露处理误区及经验</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="RuntimeException-trying-to-use-a-recycled-bitmap"><a href="#RuntimeException-trying-to-use-a-recycled-bitmap" class="headerlink" title="RuntimeException: trying to use a recycled bitmap"></a>RuntimeException: trying to use a recycled bitmap</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">java.lang.RuntimeException: Canvas: trying to use a recycled bitmap android.graphic<br>	at android.graphics.Canvas.throwIfCannotDraw(Canvas.java:<span class="hljs-number">1282</span>)<br>	at android.view.GLES20Canvas.drawBitmap(GLES20Canvas.java:<span class="hljs-number">599</span>)<br>	at android.graphics.drawable.BitmapDrawable.draw(BitmapDrawable.java:<span class="hljs-number">538</span>)<br>	at android.widget.ImageView.onDraw(ImageView.java:<span class="hljs-number">1176</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15495</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.widget.FrameLayout.draw(FrameLayout.java:<span class="hljs-number">658</span>)<br>	at android.widget.ScrollView.draw(ScrollView.java:<span class="hljs-number">1715</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.widget.FrameLayout.draw(FrameLayout.java:<span class="hljs-number">658</span>)<br>	at android.widget.ScrollView.draw(ScrollView.java:<span class="hljs-number">1715</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br><br></code></pre></td></tr></table></figure>
+                <h1 id="非静态内部类引起内存泄露处理误区及经验"><a href="#非静态内部类引起内存泄露处理误区及经验" class="headerlink" title="非静态内部类引起内存泄露处理误区及经验"></a>非静态内部类引起内存泄露处理误区及经验</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录：</p>
+<h1 id="滥用弱引用问题"><a href="#滥用弱引用问题" class="headerlink" title="滥用弱引用问题"></a><strong>滥用弱引用问题</strong></h1><p>在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部类：1.接收刷新的广播；2.liveData的监听。本身很简明的代码逻辑，此时变得突然复杂起来，仔细看是将这两个内部类全部都改成了静态内部类，并且加了弱引用，而在使用弱引用时没有判空处理导致空指针。看了其它一些优化代码发现同样是这样的问题：<strong>在处理内存泄露过程中凡是用了内部类，统统改为了静态内部类+弱引用的方式。这显然是不合适的。</strong></p>
+<h2 id="危害"><a href="#危害" class="headerlink" title="危害"></a>危害</h2><p>弱引用加大了我们代码的复杂度，若一个类中存在多个内部类，一股脑全是弱引用，维护起来风险极大。最近项目中新增的一连串的bug也验证了这一点。</p>
+<h2 id="内部类和内存泄露的关系"><a href="#内部类和内存泄露的关系" class="headerlink" title="内部类和内存泄露的关系"></a>内部类和内存泄露的关系</h2><p>大家都知道非静态内部类会持有外部类的引用，一定要主要内部类引起的内存泄露。那么非静态内部类就一定会引起内存泄露吗？</p>
+<p>答案是否定的！因为内存泄露的本质是生命周期短的对象被生命周期长的对象引用，导致“短命”的对象不能及时释放，从而导致泄露。因此内部类能引起内存泄露的前提是其生命周期要比外部类长。</p>
+<p>看下面的代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs Kotlin">static <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChangeUserReceiver</span> <span class="hljs-title">extends</span> <span class="hljs-title">BroadcastReceiver</span> &#123;<br>    WeakReference&lt;RecipeViewModel&gt; recipeViewModelWeakReference;<br><br>    <span class="hljs-keyword">public</span> void setRecipeViewModelWeakReference(RecipeViewModel recipeViewModel) &#123;<br>        recipeViewModelWeakReference = new WeakReference&lt;&gt;(recipeViewModel);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> void onReceive(Context context, Intent intent) &#123;<br>        <span class="hljs-keyword">if</span> (recipeViewModelWeakReference != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">if</span> (recipeViewModelWeakReference.<span class="hljs-keyword">get</span>() != <span class="hljs-literal">null</span><br>                    &amp;&amp; intent != <span class="hljs-literal">null</span><br>                    &amp;&amp; INTENTACTIVE_USER_CHANGE.equals(intent.getAction())) &#123;<br>                recipeViewModelWeakReference.<span class="hljs-keyword">get</span>().getDietPlan();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>一般崩溃日志都会明确指明上层代码错误点，但上面日志只有系统错误。这给我们定位问题增加了不少难度。</p>
-<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>从错误内容可以看出是使用了已回收的bitmap导致，好在是我们自己测试出来的，可以明确知道是哪个activity引起的。观察log的崩溃栈可以看出是由<code>imageview</code>的<code>onDraw()</code>方法引发（第5行）。那么问题就来到了如何定位具体的<code>imagview</code>？</p>
-<p><strong>下面是重点！！！</strong></p>
-<p>既然是<code>onDraw()</code>引发的崩溃，那就自定义一个<code>imageview</code>并在<code>onDraw()</code>中捕捉异常并打印<code>imageview</code>的信息，同时替换这个activity中所有可疑的image view，根据打印信息来查找具体是哪一个<code>imageview</code>。代码如下</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExceptionImageView</span> <span class="hljs-meta">@JvmOverloads</span> <span class="hljs-keyword">constructor</span>(context: Context, attrs: AttributeSet?, def:<span class="hljs-built_in">Int</span>=<span class="hljs-number">0</span>) :<br>    ImageView(context, attrs,def) &#123;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onDraw</span><span class="hljs-params">(canvas: <span class="hljs-type">Canvas</span>?)</span></span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">super</span>.onDraw(canvas)<br>        &#125; <span class="hljs-keyword">catch</span> (e: RuntimeException) &#123;<br>            Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;使用了已回收的bitmap: <span class="hljs-variable">$context</span> imageViewID = <span class="hljs-variable">$id</span>&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>接着疯狂操作复现问题，直到有对应log输出如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">使用了已回收的bitmap xxx.xxx.<span class="hljs-symbol">Activity@</span>2c3f53ce imageViewID <span class="hljs-number">2131296992</span><br></code></pre></td></tr></table></figure>
-
-<p>后面的id值对应我们的代码中的资源id，这里输出的是十进制，需要转换为对应的16进制：7F0902E0。将apk拖入Android studio查找对应的id值：</p>
-<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg" srcset="/img/loading.gif" lazyload></p>
-<p>这样就找出了出错的<code>imageview</code>为 iv_effect，至此问题具体点就找出来了。</p>
-<p>经错排查代码，确实存在主动回收bitmap的代码，并且此bitmap也在稍早之前被设置到 iv_effect上。类似代码如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">iv.setImageBitmap(bitmap);<br>...<br>...<br>bitmap.recycle();<br></code></pre></td></tr></table></figure>
-
-<h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h2><p>通过git追踪到代码原始作者，沟通得知是为了节约内存主动调用了bitmap.recycle()。经过详细梳理，其实完全没有必要，并且源码也有相关说明（注释最后一句话）：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *释放与此位图关联的本机对象，并清除对像素数据的引用。这将不会同步释放像素数据；它只是允许在没有其他引用的情况下对其进行垃圾收集。位图被标记为“dead”，这意味着如果调用getPixels（）或setPixels），它将抛出异常，并且不会绘制任何内容。此操作无法反转，因此只有在确定位图不再使用时才应调用此操作。这是一个高级调用，通常不需要调用，因为当不再引用此位图时，普通GC进程将释放此内存。</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void recycle() &#123;<br>    <span class="hljs-keyword">if</span> (!mRecycled) &#123;<br>        nativeRecycle(mNativePtr);<br>        mNinePatchChunk = <span class="hljs-literal">null</span>;<br>        mRecycled = <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>因此直接删掉后即可。</p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
-<li><strong>根据log自定义view主动打印报错信息这个操作给了我们解决只有系统log崩溃处理提供了一个新的思路；</strong></li>
-<li><strong>bitmap通常不需要我们主动去调用回收方法；</strong></li>
-<li><strong>Android studio可以帮我们查看所有的资源id值；</strong></li>
+<p>收到广播后仅仅是调用了一下viewModel中的方法，显然如果在view消失之前反注册了广播，即可保证广播的生命周期view的生命周期短，根本用不到弱引用+静态。类似的还有handler的处理，只要保证在activity的onDestroy()移除了handler的message，就压根用不到弱引用+静态。</p>
+<p>如果内部类生命周期长于外部类，此时就需要将内部类改为静态，这样就可以避免内存泄露，当然改为静态后会引发另一个问题：如果方法内引用了外部类的对象，那么所引用的外部对象也必须是静态的！这个问题看实际情况要处理的话，再配合弱引用即可。</p>
+<h2 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h2><p>在了解了内部类和内存泄露的关系后，我总结了以下方法来避免内部类引起的内存泄露问题：</p>
+<ol>
+<li>首先分析比较内部类和外部类生命周期，如果内部类本身“命短”，不必担心内存泄露，正常使用即可；</li>
+<li>如果内部类“长寿”，想法设法减少其寿命，比如在activity退出时主动结束内部类的执行逻辑，典型场景有主动调用handler的removeCallbacksAndMessages(null)；</li>
+<li>若没有办法及时结束内部类生命周期，则考虑将内部类改为静态，同时方法中还引用了外部类中的变量，还必须将外部类变量改为静态；</li>
+<li>若外部类改为静态不合适，可以用弱引用，但需注意空指针问题。</li>
 </ol>
+<h1 id="缓存与内存泄露混淆"><a href="#缓存与内存泄露混淆" class="headerlink" title="缓存与内存泄露混淆"></a><strong>缓存与内存泄露混淆</strong></h1><p>大家在排查内存泄露过程中，会去查看内存堆栈信息，看到占用内存大的对象就想着如何去释放。这样虽然能减少机器内存压力，但往往会引发其他一些问题，还必须考虑这些对象是否是由于内存泄露产生。</p>
+<p>比如，图片加载为了更快的显示会选择将图片缓存到内存，实现秒开效果。这时如果只考虑内存占用，将这些图片缓存禁用掉，显然就过于片面。</p>
+<h2 id="如何应对"><a href="#如何应对" class="headerlink" title="如何应对"></a>如何应对</h2><ol>
+<li>拿到dump文件后，对于较大对象，先分析存在的原因，是内存泄露引起还是缓存？</li>
+<li>内存泄露问题不用说，想方设法去追溯解决；</li>
+<li>若是缓存需要结合使用场景及当前机器实际内存压力来确认是否需要移除；</li>
+</ol>
+<p>比如当前内存本就比较富裕，程序运行流畅，那么缓存就非常有必要，倘若程序内存压力大，应该想办法释放部分内存。</p>
+<p><strong>冷知识：对于非静态内部类引起的内存泄露，如果其没有使用外部类的方法或者对象，采用lamda的方式也可以避免内存泄露，可自行验证。</strong></p>
+<h1 id="优先级问题"><a href="#优先级问题" class="headerlink" title="优先级问题"></a>优先级问题</h1><p>具体来说：</p>
+<ol>
+<li>优先处理activity、fragment的内存泄露；</li>
+<li>其次根据dump文件查看泄露对象大小，优先处理内存占用大的。</li>
+</ol>
+<h1 id="工具的选择"><a href="#工具的选择" class="headerlink" title="工具的选择"></a>工具的选择</h1><h2 id="Profiler"><a href="#Profiler" class="headerlink" title="Profiler"></a>Profiler</h2><p>AndroidStudio自带的Profiler，其对于fragment、activity产生的内存泄露能非常友好的展示给我们，但对于一些其他对象的泄露则显得不够友好，需要我们自己去dump内存信息进行比较分析，显得不是很方便。</p>
+<p>我们现在普遍采用这种方式。</p>
+<h2 id="leakCanary"><a href="#leakCanary" class="headerlink" title="leakCanary"></a>leakCanary</h2><p>leakCanary作为一个老牌内存泄露分析工具，非常值得使用。他能够将所有的泄漏点及引用关系展示给开发者，不论是在开发过程中还是测试过程中都能及时提醒开发者，使得内存泄漏点一目了然。</p>
+<p>具体介绍：<a target="_blank" rel="noopener" href="https://square.github.io/leakcanary/">https://square.github.io/leakcanary/</a></p>
+<p>简单使用：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Groovy">debugImplementation <span class="hljs-string">&#x27;com.squareup.leakcanary:leakcanary-android:2.10&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>在一些定制机中可能无法自动显示记录页面，需要手动弹出leakCanary页面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">adb shell am start -n 应用包名/leakcanary.internal.activity.LeakActivity<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -847,7 +837,7 @@
   
     <span>></span>
     
-  <a href="/categories/Android/errors/" class="category-chain-item">errors</a>
+  <a href="/categories/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="category-chain-item">性能优化</a>
   
   
 
@@ -864,13 +854,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Android/">#Android</a>
-      
-        <a href="/tags/errors/">#errors</a>
-      
-        <a href="/tags/bitmap/">#bitmap</a>
-      
-        <a href="/tags/recycled-bitmap/">#recycled bitmap</a>
+        <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8/">#性能优化，内存泄露，静态内部类，弱引用</a>
       
     </div>
   
@@ -882,8 +866,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>RuntimeException trying to use a recycled bitmap</div>
-      <div>http://example.com/2023/06/01/errorlist/RuntimeException trying to use a recycled bitmap/</div>
+      <div>非静态内部类引起内存泄露处理误区及经验</div>
+      <div>http://example.com/2023/06/08/Android/性能优化/非静态内部类引起内存泄露处理误区及经验/</div>
     </div>
     <div class="license-meta">
       
@@ -895,7 +879,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年6月1日</div>
+          <div>2023年6月8日</div>
         </div>
       
       
@@ -925,18 +909,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C/" title="非静态内部类引起内存泄露处理误区及经验">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">非静态内部类引起内存泄露处理误区及经验</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="lifeCycle基本使用">
-                        <span class="hidden-mobile">lifeCycle基本使用</span>
+                      <a href="/2023/06/01/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap/" title="RuntimeException trying to use a recycled bitmap">
+                        <span class="hidden-mobile">RuntimeException trying to use a recycled bitmap</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
