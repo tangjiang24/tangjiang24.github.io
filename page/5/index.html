@@ -225,23 +225,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="妙用BuildConifg">
+        <a href="/2022/09/06/kotlin/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%20K8B24%20%5Bkotlin,lambda%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Lambda表达式">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/07/26/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" target="_blank">
-          妙用BuildConifg
+        <a href="/2022/09/06/kotlin/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%20K8B24%20%5Bkotlin,lambda%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          Lambda表达式
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2023/07/26/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/06/kotlin/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%20K8B24%20%5Bkotlin,lambda%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
         <div>
-          妙用BuildConifg前言BuildConfig是android studio在编译项目时自动生成的一个类，这个类中包含了一些基本的常量信息，如包名、版本号、版本名称等信息，我们在开发过程中可以直接使用。 当然这个类也支持自定义字段，这个功能极大的方便了我们开发。 默认包含的常量新建项目，build之后会自动生成BuildConfig类，路径为：build&#x2F;generated&#x2F;source&#x2F;b
+          Lambda表达式定义 本质：一小段可以作为参数传递的代码  语法结构（可以简化）： {参数名1：参数类型，参数名2：参数类型 -&gt; 函数体}   maxBy函数举例众所周知，找出集合中最长名字的元素可以这么做： 12val list &#x3D; listOf&lt;String&gt;(&quot;kobe&quot;,&quot;ivrerson&quot;,&quot;tracy&quot;)
         </div>
       </a>
 
@@ -249,8 +249,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
             </time>
           </div>
         
@@ -265,15 +265,144 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/%E6%8A%80%E5%B7%A7/" class="category-chain-item">技巧</a>
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
   
   
 
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/lambda/">#lambda</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%20K8B24%20%5Bkotlin%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="kotlin基本语法">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%20K8B24%20%5Bkotlin%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          kotlin基本语法
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/06/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%20K8B24%20%5Bkotlin%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+        <div>
+          kotlin基本语法一、变量var&#x2F;val可变， val 不可变（final） lateinit延迟初始化，只可修饰 var,使用前必须确保初始化 1234lateinit var c: String   if (!::c.isInitialized) &amp;#123;     c &#x3D; &quot;hello&quot;  &amp;#125;  by lazy懒加载，使用时自己初始化,只可修饰va
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/06/mylibs/wifiConnector%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20K8B24%20%5BAndroid,wifi,mylib%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="wifiConnector 使用说明">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/06/mylibs/wifiConnector%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20K8B24%20%5BAndroid,wifi,mylib%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          wifiConnector 使用说明
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/06/mylibs/wifiConnector%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20K8B24%20%5BAndroid,wifi,mylib%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+        <div>
+          **	前言：早在去年，我曾写过一个针对android6.0连接指定WiFi的文章。虽然能成功连接，但有好多不合理甚至错误的地方，因此现在对那篇文章进行重新编辑发布**。 最近项目中有通过已知WiFi名称和密码连接传感器WiFi，实现数据交换的需求。在网上找了许多资料发现都是复制黏贴，也有好多bug,现在我将其整理封装并在项目中使用。 github地址：https:&#x2F;&#x2F;github.com&#x2F;tang
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/mylibs/" class="category-chain-item">mylibs</a>
+  
   
 
       </span>
@@ -289,7 +418,9 @@
             
               <a href="/tags/Android/">#Android</a>
             
-              <a href="/tags/BuildConifg/">#BuildConifg</a>
+              <a href="/tags/wifi/">#wifi</a>
+            
+              <a href="/tags/mylib/">#mylib</a>
             
           </div>
         
@@ -301,23 +432,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="非静态内部类引起内存泄露处理误区及经验">
+        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo%20K8B24%20%5B%E5%B7%A5%E5%85%B7,hexo%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="hexo">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" target="_blank">
-          非静态内部类引起内存泄露处理误区及经验
+        <a href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo%20K8B24%20%5B%E5%B7%A5%E5%85%B7,hexo%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          hexo
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/06/%E5%B7%A5%E5%85%B7/hexo%20K8B24%20%5B%E5%B7%A5%E5%85%B7,hexo%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
         <div>
-          非静态内部类引起内存泄露处理误区及经验前言最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录： 滥用弱引用问题在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部
+          1、文章使用自动概述配置安装相关组件 npm install hexo-excerpt –save复制在_config.yml中增加相关配置 ################### 文章自动化概述生成excerpt:  depth: 10  excerpt_excludes:  more_excludes:  hideWholePostExcerpts: true复制2、文章头部设置在文章.md文
         </div>
       </a>
 
@@ -325,8 +456,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
             </time>
           </div>
         
@@ -341,15 +472,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="category-chain-item">性能优化</a>
-  
-  
-
   
 
       </span>
@@ -363,7 +487,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8/">#性能优化，内存泄露，静态内部类，弱引用</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
+            
+              <a href="/tags/hexo/">#hexo</a>
             
           </div>
         
@@ -375,471 +501,7 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="性能优化之页面启动（实战一）">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" target="_blank">
-          性能优化之页面启动（实战一）
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" target="_blank">
-        <div>
-          性能优化之页面启动（实战一）前言在项目中发现应用启动有黑屏现象，经测试有700ms之久。本是一个非常简单的应用，黑屏这么久实不应该，特此记录一下本次的优化历程，供以后注意借鉴。 方式一：设置windowBackground一般情况下我们activity都有一个style，在style中添加windowBackground属性，属性值就设置一个和页面主题风格接近的颜色或者底图都可以。 123&lt;
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="category-chain-item">性能优化</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">#性能优化，启动优化</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="viewModel基本使用">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" target="_blank">
-          viewModel基本使用
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" target="_blank">
-        <div>
-          viewModel基本使用[TOC] 前言ViewModel 类旨在以注重生命周期的方式存储和管理界面相关数据。有以下特点：  配置变更（横竖屏切换、分辨率调整等）导致的页面重建不会导致viewmodel的数据丢失； 可与fragment、自定义view等共享数据； 相比onSaveInstanceState()只可保存少量且可序列化的数据，viewmodel可保存所有数据； 生命周期长于acti
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Jetpack/">#Jetpack</a>
-            
-              <a href="/tags/viewModel/">#viewModel</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="ViewBinding基本使用">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" target="_blank">
-          ViewBinding基本使用
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" target="_blank">
-        <div>
-          ViewBinding基本使用[TOC] 前言 ViewBinding主要用于查找控件id，相比于dataBinding更加轻量化，且不需要额外的引入其他第三方库（butterknife）,使用过程中不像kotlin-android-extensions不注意会引错包造成空指针。  配置模块build.gradle文件中 android 闭包中配置如下： 12345android &amp;#123;
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Jetpack/">#Jetpack</a>
-            
-              <a href="/tags/viewBinding/">#viewBinding</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="StartUp 介绍">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" target="_blank">
-          StartUp 介绍
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" target="_blank">
-        <div>
-          StartUp 介绍前言 通常我们在项目的application中会进行大量的初始化工作，如一些第三方依赖或者我们公司内部封装的一些组件。随着项目的迭代，onCreate()方法会越来越辣眼睛，并会拖慢应用启动速度。你可能会在开发组件的过程中通过ContentProvider来获取应用实例，从而达到在组件内部实现自动初始化，但如果每一个组件或者第三方框架都各自为政，启动一个自己的ContentPr
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Jetpack/">#Jetpack</a>
-            
-              <a href="/tags/startUp/">#startUp</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="liveData基本使用">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" target="_blank">
-          liveData基本使用
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" target="_blank">
-        <div>
-          liveData基本使用[TOC] 前言LiveData 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 activity、fragment 或 service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。 项目中使用有以下优势：  确保界面符合数据状态，即无需每次数据变换时刷新
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/liveData/">#liveData</a>
-            
-              <a href="/tags/Jetpack/">#Jetpack</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/07/26/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="lifeCycle基本使用">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/26/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" target="_blank">
-          lifeCycle基本使用
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/07/26/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" target="_blank">
-        <div>
-          lifeCycle基本使用[TOC] 前言lifeCycle用于简化组件生命周期的管理，一般在SDK封装中比较常用。 比如我们有一个自定义view需要绑定activity的生命周期，之前我们会写一个接口并且在activity的各个生命周期方法中回调给自定义view，而lifeCycle可以极大的简化我们的工作。 基本使用绑定activity生命周期到组件方法一： 组件实现DefaultLifecy
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-26 18:38" pubdate>
-              2023-07-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Android/" class="category-chain-item">Android</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Jetpack/">#Jetpack</a>
-            
-              <a href="/tags/lifeCycle/">#lifeCycle</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank">
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
           <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Canvas类使用">
         </a>
       </div>
@@ -847,13 +509,13 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank">
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
           Canvas类使用
         </a>
       </h1>
 
       
-      <a class="index-excerpt " href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank">
+      <a class="index-excerpt " href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
         <div>
           Canvas类使用[TOC] 一、简介Canvas类，即画布，可以理解为屏幕上的一片可绘制的区域。获取方式如下：  构造方法自定义： 12345&#x2F;&#x2F;利用空构造方法直接创建对象val canvas &#x3D; Canvas()&#x2F;&#x2F;通过传入装载画布Bitmap对象创建Canvas对象 Bitmap上存储所有绘制在Canvas的信息val canvas &#x3D; Canvas(bitmap)  重写View.onDr
         </div>
@@ -884,7 +546,7 @@
   
     <span>></span>
     
-  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89View/" class="category-chain-item">自定义View</a>
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="category-chain-item">自定义view</a>
   
   
 
@@ -906,6 +568,238 @@
               <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
             
               <a href="/tags/Canvas/">#Canvas</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Paint%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Paint%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Paint类使用">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Paint%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Paint%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          Paint类使用
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Paint%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Paint%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+        <div>
+          Paint类使用[TOC] 一、简介Paint类，即画笔。在绘制View的过程中，可以定义颜色、透明度、线条样式、图案样式等。直接实例化即可获取： 123val textPaint &#x3D; Paint().apply &amp;#123;        &#x2F;&#x2F;....属性设置       &amp;#125;  二、常用属性主要可以实现 画笔的 颜色、透明度、文本 样式等  设置画笔颜色1234&#x2F;** * @param
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="category-chain-item">自定义view</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
+            
+              <a href="/tags/Paint/">#Paint</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Path%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Path%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Path类使用">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Path%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Path%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          Path类使用
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Path%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Path%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+        <div>
+          Path类使用[TOC] 一、简介 Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径，用于描述顺序和区域。 使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。  使用过程中如有异常请关闭硬件加速 。  创建： 1val path &#x3D; Path()  二、设置路径主要有moveTo、 setLastPoint、 lineTo 和 close lineTo&#x2F;rL
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="category-chain-item">自定义view</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
+            
+              <a href="/tags/Path/">#Path</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="自定义属性">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+          自定义属性
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View%5D%20K8B24%202022-09-06%2009;36;05/" target="_blank">
+        <div>
+          自定义属性一、基本使用流程 自定义 CustomAttrsView 类；  编写values&#x2F;attrs.xml，在其中编写styleable和item等标签元素； 1234567891011121314151617181920212223242526&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;&lt;r
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-06 09:36" pubdate>
+              2022-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="category-chain-item">自定义view</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/">#自定义View</a>
             
           </div>
         
