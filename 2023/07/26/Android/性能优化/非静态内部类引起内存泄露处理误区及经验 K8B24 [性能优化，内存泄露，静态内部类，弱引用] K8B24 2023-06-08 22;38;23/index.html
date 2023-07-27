@@ -1,0 +1,1099 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="非静态内部类引起内存泄露处理误区及经验前言最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录： 滥用弱引用问题在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非静态内部类引起内存泄露处理误区及经验">
+<meta property="og:url" content="http://example.com/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20[%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8]%20K8B24%202023-06-08%2022;38;23/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="非静态内部类引起内存泄露处理误区及经验前言最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录： 滥用弱引用问题在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-26T10:38:21.808Z">
+<meta property="article:modified_time" content="2023-07-27T02:37:57.211Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="性能优化，内存泄露，静态内部类，弱引用">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>非静态内部类引起内存泄露处理误区及经验 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">非静态内部类引起内存泄露处理误区及经验</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-26 18:38" pubdate>
+          2023年7月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(15)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="false"
+      >
+        jetpack
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB%20K8B24%20%5BAndroid,%E5%8A%A8%E7%94%BB%5D%20K8B24%202022-09-06%2009;36;05/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="true"
+      >
+        性能优化
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" title="非静态内部类引起内存泄露处理误区及经验"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">非静态内部类引起内存泄露处理误区及经验</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+        aria-expanded="false"
+      >
+        技巧
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" title="妙用BuildConifg"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">妙用BuildConifg</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义View"
+        id="heading-06fd2b72b3379ff02cc4b39d39ae386a" role="tab" data-toggle="collapse" href="#collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+        aria-expanded="false"
+      >
+        自定义View
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-06fd2b72b3379ff02cc4b39d39ae386a"
+           role="tabpanel" aria-labelledby="heading-06fd2b72b3379ff02cc4b39d39ae386a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/canvas%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义view"
+        id="heading-5766bff0e279fc6044b6df2f4508918f" role="tab" data-toggle="collapse" href="#collapse-5766bff0e279fc6044b6df2f4508918f"
+        aria-expanded="false"
+      >
+        自定义view
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-5766bff0e279fc6044b6df2f4508918f"
+           role="tabpanel" aria-labelledby="heading-5766bff0e279fc6044b6df2f4508918f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Paint%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Paint%5D%20K8B24%202022-09-06%2009;36;05/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Path%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Path%5D%20K8B24%202022-09-06%2009;36;05/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/drawText()%E5%B1%85%E4%B8%AD%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas,drawText,%E6%96%87%E5%AD%97%E5%B1%85%E4%B8%AD%5D%20K8B24%202023-03-29%2023;56;05/" title="drawText()居中"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">drawText()居中</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View%5D%20K8B24%202022-09-06%2009;36;05/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="true"
+      >
+        性能优化
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" title="非静态内部类引起内存泄露处理误区及经验"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">非静态内部类引起内存泄露处理误区及经验</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">非静态内部类引起内存泄露处理误区及经验</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="非静态内部类引起内存泄露处理误区及经验"><a href="#非静态内部类引起内存泄露处理误区及经验" class="headerlink" title="非静态内部类引起内存泄露处理误区及经验"></a>非静态内部类引起内存泄露处理误区及经验</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近项目中着手处理内存泄露的问题，由于各人对内存泄露的理解不一致，发现在处理过程中存在很大的误区和弯路，特此记录：</p>
+<h1 id="滥用弱引用问题"><a href="#滥用弱引用问题" class="headerlink" title="滥用弱引用问题"></a><strong>滥用弱引用问题</strong></h1><p>在处理内存泄露后，突然发现项目中多了一大堆crash 及业务bug，对比相关log日志发现集中在非静态内部类引起的内存泄露优化的代码中，看了下优化代码发现简简单单的业务类变得异常复杂，弱引用也是一个套一个。如某个业务类有两个内部类：1.接收刷新的广播；2.liveData的监听。本身很简明的代码逻辑，此时变得突然复杂起来，仔细看是将这两个内部类全部都改成了静态内部类，并且加了弱引用，而在使用弱引用时没有判空处理导致空指针。看了其它一些优化代码发现同样是这样的问题：<strong>在处理内存泄露过程中凡是用了内部类，统统改为了静态内部类+弱引用的方式。这显然是不合适的。</strong></p>
+<h2 id="危害"><a href="#危害" class="headerlink" title="危害"></a>危害</h2><p>弱引用加大了我们代码的复杂度，若一个类中存在多个内部类，一股脑全是弱引用，维护起来风险极大。最近项目中新增的一连串的bug也验证了这一点。</p>
+<h2 id="内部类和内存泄露的关系"><a href="#内部类和内存泄露的关系" class="headerlink" title="内部类和内存泄露的关系"></a>内部类和内存泄露的关系</h2><p>大家都知道非静态内部类会持有外部类的引用，一定要主要内部类引起的内存泄露。那么非静态内部类就一定会引起内存泄露吗？</p>
+<p>答案是否定的！因为内存泄露的本质是生命周期短的对象被生命周期长的对象引用，导致“短命”的对象不能及时释放，从而导致泄露。因此内部类能引起内存泄露的前提是其生命周期要比外部类长。</p>
+<p>看下面的代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs Kotlin">static <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChangeUserReceiver</span> <span class="hljs-title">extends</span> <span class="hljs-title">BroadcastReceiver</span> &#123;<br>    WeakReference&lt;RecipeViewModel&gt; recipeViewModelWeakReference;<br><br>    <span class="hljs-keyword">public</span> void setRecipeViewModelWeakReference(RecipeViewModel recipeViewModel) &#123;<br>        recipeViewModelWeakReference = new WeakReference&lt;&gt;(recipeViewModel);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> void onReceive(Context context, Intent intent) &#123;<br>        <span class="hljs-keyword">if</span> (recipeViewModelWeakReference != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">if</span> (recipeViewModelWeakReference.<span class="hljs-keyword">get</span>() != <span class="hljs-literal">null</span><br>                    &amp;&amp; intent != <span class="hljs-literal">null</span><br>                    &amp;&amp; INTENTACTIVE_USER_CHANGE.equals(intent.getAction())) &#123;<br>                recipeViewModelWeakReference.<span class="hljs-keyword">get</span>().getDietPlan();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>收到广播后仅仅是调用了一下viewModel中的方法，显然如果在view消失之前反注册了广播，即可保证广播的生命周期view的生命周期短，根本用不到弱引用+静态。类似的还有handler的处理，只要保证在activity的onDestroy()移除了handler的message，就压根用不到弱引用+静态。</p>
+<p>如果内部类生命周期长于外部类，此时就需要将内部类改为静态，这样就可以避免内存泄露，当然改为静态后会引发另一个问题：如果方法内引用了外部类的对象，那么所引用的外部对象也必须是静态的！这个问题看实际情况要处理的话，再配合弱引用即可。</p>
+<h2 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h2><p>在了解了内部类和内存泄露的关系后，我总结了以下方法来避免内部类引起的内存泄露问题：</p>
+<ol>
+<li>首先分析比较内部类和外部类生命周期，如果内部类本身“命短”，不必担心内存泄露，正常使用即可；</li>
+<li>如果内部类“长寿”，想法设法减少其寿命，比如在activity退出时主动结束内部类的执行逻辑，典型场景有主动调用handler的removeCallbacksAndMessages(null)；</li>
+<li>若没有办法及时结束内部类生命周期，则考虑将内部类改为静态，同时方法中还引用了外部类中的变量，还必须将外部类变量改为静态；</li>
+<li>若外部类改为静态不合适，可以用弱引用，但需注意空指针问题。</li>
+</ol>
+<h1 id="缓存与内存泄露混淆"><a href="#缓存与内存泄露混淆" class="headerlink" title="缓存与内存泄露混淆"></a><strong>缓存与内存泄露混淆</strong></h1><p>大家在排查内存泄露过程中，会去查看内存堆栈信息，看到占用内存大的对象就想着如何去释放。这样虽然能减少机器内存压力，但往往会引发其他一些问题，还必须考虑这些对象是否是由于内存泄露产生。</p>
+<p>比如，图片加载为了更快的显示会选择将图片缓存到内存，实现秒开效果。这时如果只考虑内存占用，将这些图片缓存禁用掉，显然就过于片面。</p>
+<h2 id="如何应对"><a href="#如何应对" class="headerlink" title="如何应对"></a>如何应对</h2><ol>
+<li>拿到dump文件后，对于较大对象，先分析存在的原因，是内存泄露引起还是缓存？</li>
+<li>内存泄露问题不用说，想方设法去追溯解决；</li>
+<li>若是缓存需要结合使用场景及当前机器实际内存压力来确认是否需要移除；</li>
+</ol>
+<p>比如当前内存本就比较富裕，程序运行流畅，那么缓存就非常有必要，倘若程序内存压力大，应该想办法释放部分内存。</p>
+<p><strong>冷知识：对于非静态内部类引起的内存泄露，如果其没有使用外部类的方法或者对象，采用lamda的方式也可以避免内存泄露，可自行验证。</strong></p>
+<h1 id="优先级问题"><a href="#优先级问题" class="headerlink" title="优先级问题"></a>优先级问题</h1><p>具体来说：</p>
+<ol>
+<li>优先处理activity、fragment的内存泄露；</li>
+<li>其次根据dump文件查看泄露对象大小，优先处理内存占用大的。</li>
+</ol>
+<h1 id="工具的选择"><a href="#工具的选择" class="headerlink" title="工具的选择"></a>工具的选择</h1><h2 id="Profiler"><a href="#Profiler" class="headerlink" title="Profiler"></a>Profiler</h2><p>AndroidStudio自带的Profiler，其对于fragment、activity产生的内存泄露能非常友好的展示给我们，但对于一些其他对象的泄露则显得不够友好，需要我们自己去dump内存信息进行比较分析，显得不是很方便。</p>
+<p>我们现在普遍采用这种方式。</p>
+<h2 id="leakCanary"><a href="#leakCanary" class="headerlink" title="leakCanary"></a>leakCanary</h2><p>leakCanary作为一个老牌内存泄露分析工具，非常值得使用。他能够将所有的泄漏点及引用关系展示给开发者，不论是在开发过程中还是测试过程中都能及时提醒开发者，使得内存泄漏点一目了然。</p>
+<p>具体介绍：<a target="_blank" rel="noopener" href="https://square.github.io/leakcanary/">https://square.github.io/leakcanary/</a></p>
+<p>简单使用：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Groovy">debugImplementation <span class="hljs-string">&#x27;com.squareup.leakcanary:leakcanary-android:2.10&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>在一些定制机中可能无法自动显示记录页面，需要手动弹出leakCanary页面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">adb shell am start -n 应用包名/leakcanary.internal.activity.LeakActivity<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="category-chain-item">性能优化</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8/">#性能优化，内存泄露，静态内部类，弱引用</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>非静态内部类引起内存泄露处理误区及经验</div>
+      <div>http://example.com/2023/07/26/Android/性能优化/非静态内部类引起内存泄露处理误区及经验 K8B24 [性能优化，内存泄露，静态内部类，弱引用] K8B24 2023-06-08 22;38;23/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/26/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" title="妙用BuildConifg">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">妙用BuildConifg</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/26/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" title="性能优化之页面启动（实战一）">
+                        <span class="hidden-mobile">性能优化之页面启动（实战一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"ELr9UvQ0CKkFmPjl3MbFM0wp-gzGzoHsz","appKey":"6PBJlR78sNXdrY332SJH6Mtf","path":"window.location.pathname","placeholder":"来喷我啊","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://elr9uvq0.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

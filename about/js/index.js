@@ -21,13 +21,13 @@ window.onload = function () {
     }
   }
 
-  function showTipFun(id) {
+  function showTipFun(text) {
     let tipModelContent = document.getElementById('tipModelContent');
     tipModelContent.innerHTML = '';
     let tipModel = document.getElementById('tipModel');
     let $div = document.createElement('div');
-    const data = addressList.find(item => String(item.id) === String(id));
-    $div.innerHTML = data.desc;
+    // const data = bookMarks.find(item => String(item.id) === String(id));
+    $div.innerHTML = text;
     tipModelContent.appendChild($div);
     tipModel.style.display = 'block';
   }
@@ -35,41 +35,43 @@ window.onload = function () {
   /*
    * 渲染地址列表
    **/
-  function renderContainer(id, name) {
+  function renderContainer(name) {
     listContainer.innerHTML = '';
-    if (addressList && addressList.length) {
-      let empty = true;
-      for (let i = 0; i < addressList.length; i ++) {
-        const item = addressList[i];
-        if (String(id) === String(item.parentId)) {
-          empty = false;
-          let $li = document.createElement('li');
-          let $img = document.createElement('img');
-          let $p = document.createElement('p');
-          $img.src = item.imgUrl || './img/default.webp';
-          $p.innerText = item.name || '未知链接';
-          $li.address = item.address;
-          $li.className = 'list-item';
-          $li.onclick = function () {
-            goToNewAddress(this.address);
-          };
-          $li.appendChild($img);
-          $li.appendChild($p);
-          if (item.desc) {
-            let $div = document.createElement('div');
-            $div.className = 'list-item-tip';
-            $div.descId = item.id;
-            $div.onclick = function (e) {
-              e.stopPropagation(); // 阻止冒泡
-              e.preventDefault(); // 阻止默认事件
-              showTipFun(this.descId);
+    let marks = bookMarks[name]
+    if (marks && marks.length) {
+      if(marks.length >0){
+        for (let i = 0; i < marks.length; i ++) {
+          const item = marks[i];
+            let $li = document.createElement('li');
+            let $img = document.createElement('img');
+            let $p = document.createElement('p');
+            $img.src = item.icon || './img/default.webp';
+            $p.innerText = item.text || '未知链接';
+            $li.address = item.href;
+            $li.className = 'list-item';
+          
+            $li.onclick = function () {
+              goToNewAddress(this.address);
             };
-            $li.appendChild($div);
-          }
-          listContainer.appendChild($li);
+            $li.onmouseover = function(){
+              $p.title = item.text
+            }
+            $li.appendChild($img);
+            $li.appendChild($p);
+            if (item.text) {
+              let $div = document.createElement('div');
+              $div.className = 'list-item-tip';
+              $div.descId = item.text;
+              $div.onclick = function (e) {
+                e.stopPropagation(); // 阻止冒泡
+                e.preventDefault(); // 阻止默认事件
+                showTipFun(item.text);
+              };
+              $li.appendChild($div);
+            }
+            listContainer.appendChild($li);
         }
-      }
-      if (empty) {
+      }else{
         let $li = document.createElement('li');
         let $img = document.createElement('img');
         let $p = document.createElement('p');
@@ -97,15 +99,15 @@ window.onload = function () {
    * 渲染nav导航栏
    **/
   function renderNav() {
-    if (navList && navList.length) {
-      for (let i = 0; i < navList.length; i ++) {
-        const item = navList[i];
+    if (navTexts && navTexts.length) {
+      for (let i = 0; i < navTexts.length; i ++) {
+        const item = navTexts[i];
         let $li = document.createElement('li');
-        $li.id = item.id;
-        $li.innerText = item.name;
+        $li.id = item;
+        $li.innerText = item;
         $li.className = 'nav-list-item';
         $li.onclick = function () {
-          renderContainer(this.id, this.innerText);
+          renderContainer(item);
           clearNavFocus();
           this.style.borderBottom = '5px solid #2283E2';
         };
@@ -114,7 +116,7 @@ window.onload = function () {
         }
         navContainer.appendChild($li);
       }
-      renderContainer(navList[0].id, navList[0].name);
+      renderContainer(navTexts[0]);
     } else {
       alert('未配置链接地址列表');
     }

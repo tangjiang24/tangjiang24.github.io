@@ -68,8 +68,8 @@ body {
 }
 
 .list-item img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   box-sizing: border-box;
   border-radius: 20px;
 }
@@ -79,6 +79,7 @@ body {
   height: 32px;
   line-height: 32px;
   text-align: center;
+  overflow:hidden;
   background-color: rgba(34, 131, 226, 0.1);
   color: #2283E2;
   border-radius: 10px;

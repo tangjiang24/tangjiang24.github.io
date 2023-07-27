@@ -1,0 +1,765 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="RuntimeException: trying to use a recycled bitmap问题：自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误： 123456789101112131415161718192021222324252627282930313233343536373839404142434445java.lang.RuntimeException: Canvas: t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RuntimeException trying to use a recycled bitmap">
+<meta property="og:url" content="http://example.com/2023/07/26/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap%20K8B24%20[Android,errors,bitmap,recycled%20bitmap]%20K8B24%202023-06-01%2021;12;45/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="RuntimeException: trying to use a recycled bitmap问题：自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误： 123456789101112131415161718192021222324252627282930313233343536373839404142434445java.lang.RuntimeException: Canvas: t">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg">
+<meta property="article:published_time" content="2023-07-26T10:38:26.037Z">
+<meta property="article:modified_time" content="2023-07-27T02:37:58.462Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="errors">
+<meta property="article:tag" content="bitmap">
+<meta property="article:tag" content="recycled bitmap">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>RuntimeException trying to use a recycled bitmap - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">RuntimeException trying to use a recycled bitmap</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-26 18:38" pubdate>
+          2023年7月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="errorlist"
+        id="heading-393bd9e2301cc8712b9149fb0d134c49" role="tab" data-toggle="collapse" href="#collapse-393bd9e2301cc8712b9149fb0d134c49"
+        aria-expanded="true"
+      >
+        errorlist
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-393bd9e2301cc8712b9149fb0d134c49"
+           role="tabpanel" aria-labelledby="heading-393bd9e2301cc8712b9149fb0d134c49">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/errorlist/Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet%20K8B24%20%5BAndroid,errors,%E5%8A%A8%E7%94%BB%5D%20K8B24%202022-09-06%2009;36;05/" title="Circular dependencies cannot exist in AnimatorSet"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Circular dependencies cannot exist in AnimatorSet</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/errorlist/InstantiationException--could%20not%20find%20Fragment%20constructor%20K8B24%20%5BAndroid,errors%5D%20K8B24%202022-09-06%2009;36;05/" title="InstantiationException--could not find Fragment constructor"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">InstantiationException--could not find Fragment constructor</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/errorlist/RuntimeException%20trying%20to%20use%20a%20recycled%20bitmap%20K8B24%20%5BAndroid,errors,bitmap,recycled%20bitmap%5D%20K8B24%202023-06-01%2021;12;45/" title="RuntimeException trying to use a recycled bitmap"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">RuntimeException trying to use a recycled bitmap</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/errorlist/liveData%E4%BB%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9B%9E%E8%B0%83%20K8B24%20%5BAndroid,errors,liveData%5D%20K8B24%202022-09-20%2022;11;24/" title="liveData仅第一次回调"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData仅第一次回调</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">RuntimeException trying to use a recycled bitmap</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="RuntimeException-trying-to-use-a-recycled-bitmap"><a href="#RuntimeException-trying-to-use-a-recycled-bitmap" class="headerlink" title="RuntimeException: trying to use a recycled bitmap"></a>RuntimeException: trying to use a recycled bitmap</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>自测时发现有页面偶发性崩溃，看了后台崩溃日志报有以下错误：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">java.lang.RuntimeException: Canvas: trying to use a recycled bitmap android.graphic<br>	at android.graphics.Canvas.throwIfCannotDraw(Canvas.java:<span class="hljs-number">1282</span>)<br>	at android.view.GLES20Canvas.drawBitmap(GLES20Canvas.java:<span class="hljs-number">599</span>)<br>	at android.graphics.drawable.BitmapDrawable.draw(BitmapDrawable.java:<span class="hljs-number">538</span>)<br>	at android.widget.ImageView.onDraw(ImageView.java:<span class="hljs-number">1176</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15495</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.widget.FrameLayout.draw(FrameLayout.java:<span class="hljs-number">658</span>)<br>	at android.widget.ScrollView.draw(ScrollView.java:<span class="hljs-number">1715</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14376</span>)<br>	at android.view.View.getDisplayList(View.java:<span class="hljs-number">14413</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15204</span>)<br>	at android.view.ViewGroup.drawChild(ViewGroup.java:<span class="hljs-number">3532</span>)<br>	at android.view.ViewGroup.dispatchDraw(ViewGroup.java:<span class="hljs-number">3325</span>)<br>	at android.view.View.draw(View.java:<span class="hljs-number">15507</span>)<br>	at android.widget.FrameLayout.draw(FrameLayout.java:<span class="hljs-number">658</span>)<br>	at android.widget.ScrollView.draw(ScrollView.java:<span class="hljs-number">1715</span>)<br>	at android.view.View.updateDisplayListIfDirty(View.java:<span class="hljs-number">14384</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>一般崩溃日志都会明确指明上层代码错误点，但上面日志只有系统错误。这给我们定位问题增加了不少难度。</p>
+<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>从错误内容可以看出是使用了已回收的bitmap导致，好在是我们自己测试出来的，可以明确知道是哪个activity引起的。观察log的崩溃栈可以看出是由<code>imageview</code>的<code>onDraw()</code>方法引发（第5行）。那么问题就来到了如何定位具体的<code>imagview</code>？</p>
+<p><strong>下面是重点！！！</strong></p>
+<p>既然是<code>onDraw()</code>引发的崩溃，那就自定义一个<code>imageview</code>并在<code>onDraw()</code>中捕捉异常并打印<code>imageview</code>的信息，同时替换这个activity中所有可疑的image view，根据打印信息来查找具体是哪一个<code>imageview</code>。代码如下</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExceptionImageView</span> <span class="hljs-meta">@JvmOverloads</span> <span class="hljs-keyword">constructor</span>(context: Context, attrs: AttributeSet?, def:<span class="hljs-built_in">Int</span>=<span class="hljs-number">0</span>) :<br>    ImageView(context, attrs,def) &#123;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onDraw</span><span class="hljs-params">(canvas: <span class="hljs-type">Canvas</span>?)</span></span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">super</span>.onDraw(canvas)<br>        &#125; <span class="hljs-keyword">catch</span> (e: RuntimeException) &#123;<br>            Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;使用了已回收的bitmap: <span class="hljs-variable">$context</span> imageViewID = <span class="hljs-variable">$id</span>&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着疯狂操作复现问题，直到有对应log输出如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">使用了已回收的bitmap xxx.xxx.<span class="hljs-symbol">Activity@</span>2c3f53ce imageViewID <span class="hljs-number">2131296992</span><br></code></pre></td></tr></table></figure>
+
+<p>后面的id值对应我们的代码中的资源id，这里输出的是十进制，需要转换为对应的16进制：7F0902E0。将apk拖入Android studio查找对应的id值：</p>
+<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/errors_bitmap_recycler.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>这样就找出了出错的<code>imageview</code>为 iv_effect，至此问题具体点就找出来了。</p>
+<p>经错排查代码，确实存在主动回收bitmap的代码，并且此bitmap也在稍早之前被设置到 iv_effect上。类似代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">iv.setImageBitmap(bitmap);<br>...<br>...<br>bitmap.recycle();<br></code></pre></td></tr></table></figure>
+
+<h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h2><p>通过git追踪到代码原始作者，沟通得知是为了节约内存主动调用了bitmap.recycle()。经过详细梳理，其实完全没有必要，并且源码也有相关说明（注释最后一句话）：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *释放与此位图关联的本机对象，并清除对像素数据的引用。这将不会同步释放像素数据；它只是允许在没有其他引用的情况下对其进行垃圾收集。位图被标记为“dead”，这意味着如果调用getPixels（）或setPixels），它将抛出异常，并且不会绘制任何内容。此操作无法反转，因此只有在确定位图不再使用时才应调用此操作。这是一个高级调用，通常不需要调用，因为当不再引用此位图时，普通GC进程将释放此内存。</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> void recycle() &#123;<br>    <span class="hljs-keyword">if</span> (!mRecycled) &#123;<br>        nativeRecycle(mNativePtr);<br>        mNinePatchChunk = <span class="hljs-literal">null</span>;<br>        mRecycled = <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因此直接删掉后即可。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
+<li><strong>根据log自定义view主动打印报错信息这个操作给了我们解决只有系统log崩溃处理提供了一个新的思路；</strong></li>
+<li><strong>bitmap通常不需要我们主动去调用回收方法；</strong></li>
+<li><strong>Android studio可以帮我们查看所有的资源id值；</strong></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/errorlist/" class="category-chain-item">errorlist</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/errors/">#errors</a>
+      
+        <a href="/tags/bitmap/">#bitmap</a>
+      
+        <a href="/tags/recycled-bitmap/">#recycled bitmap</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>RuntimeException trying to use a recycled bitmap</div>
+      <div>http://example.com/2023/07/26/errorlist/RuntimeException trying to use a recycled bitmap K8B24 [Android,errors,bitmap,recycled bitmap] K8B24 2023-06-01 21;12;45/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/26/errorlist/Circular%20dependencies%20cannot%20exist%20in%20AnimatorSet%20K8B24%20%5BAndroid,errors,%E5%8A%A8%E7%94%BB%5D%20K8B24%202022-09-06%2009;36;05/" title="Circular dependencies cannot exist in AnimatorSet">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Circular dependencies cannot exist in AnimatorSet</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/26/errorlist/liveData%E4%BB%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9B%9E%E8%B0%83%20K8B24%20%5BAndroid,errors,liveData%5D%20K8B24%202022-09-20%2022;11;24/" title="liveData仅第一次回调">
+                        <span class="hidden-mobile">liveData仅第一次回调</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"ELr9UvQ0CKkFmPjl3MbFM0wp-gzGzoHsz","appKey":"6PBJlR78sNXdrY332SJH6Mtf","path":"window.location.pathname","placeholder":"来喷我啊","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://elr9uvq0.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

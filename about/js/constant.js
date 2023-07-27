@@ -1,3 +1,3 @@
-const title = 'haier123';
+const title = '360';
 
 const footer = '*** tj24';

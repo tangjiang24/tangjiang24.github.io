@@ -1,0 +1,922 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Lambda表达式定义 本质：一小段可以作为参数传递的代码  语法结构（可以简化）： {参数名1：参数类型，参数名2：参数类型 -&gt; 函数体}   maxBy函数举例众所周知，找出集合中最长名字的元素可以这么做： 12val list &#x3D; listOf&lt;String&gt;(&quot;kobe&quot;,&quot;ivrerson&quot;,&quot;tracy&quot;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda表达式">
+<meta property="og:url" content="http://example.com/2023/07/26/kotlin/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%20K8B24%20[kotlin,lambda]%20K8B24%202022-09-06%2009;36;05/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="Lambda表达式定义 本质：一小段可以作为参数传递的代码  语法结构（可以简化）： {参数名1：参数类型，参数名2：参数类型 -&gt; 函数体}   maxBy函数举例众所周知，找出集合中最长名字的元素可以这么做： 12val list &#x3D; listOf&lt;String&gt;(&quot;kobe&quot;,&quot;ivrerson&quot;,&quot;tracy&quot;)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-26T10:38:36.786Z">
+<meta property="article:modified_time" content="2023-07-27T02:38:02.753Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="kotlin">
+<meta property="article:tag" content="lambda">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Lambda表达式 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Lambda表达式</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-26 18:38" pubdate>
+          2023年7月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="kotlin"
+        id="heading-4fba3bc02b72ee9a687a1e5286e373c6" role="tab" data-toggle="collapse" href="#collapse-4fba3bc02b72ee9a687a1e5286e373c6"
+        aria-expanded="true"
+      >
+        kotlin
+        <span class="list-group-count">(21)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-4fba3bc02b72ee9a687a1e5286e373c6"
+           role="tabpanel" aria-labelledby="heading-4fba3bc02b72ee9a687a1e5286e373c6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E4%B8%AD%E7%BC%80%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E4%B8%AD%E7%BC%80,infix%5D%20K8B24%202022-09-29%2023;58;20/" title="Kotlin中缀函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin中缀函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%86%85%E8%81%94%E7%B1%BB%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%20K8B24%20%5Bkotlin,%E5%86%85%E8%81%94%E7%B1%BB,%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D,typealias%5D%20K8B24%202022-09-30%2021;24;25/" title="Kotlin内联类及类型别名"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin内联类及类型别名</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%8D%8F%E7%A8%8B%E5%8F%96%E6%B6%88%20K8B24%20%5Bkotlin,%E5%8D%8F%E7%A8%8B,coroutines%5D%20K8B24%202022-10-10%2020;36;05/" title="Kotlin协程取消"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin协程取消</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%8D%8F%E7%A8%8B%E5%9F%BA%E7%A1%80%20K8B24%20%5Bkotlin,%E5%8D%8F%E7%A8%8B,coroutines%5D%20K8B24%202022-10-06%2009;36;05/" title="Kotlin协程基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin协程基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%8D%8F%E7%A8%8B%E5%BA%94%E7%94%A8%20K8B24%20%5Bkotlin,%E5%8D%8F%E7%A8%8B,coroutines%5D%20K8B24%202022-10-12%2022;15;08/" title="Kotlin协程应用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin协程应用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%8D%8F%E7%A8%8B%E5%BC%82%E5%B8%B8%20K8B24%20%5Bkotlin,%E5%8D%8F%E7%A8%8B,coroutines%5D%20K8B24%202022-10-11%2021;25;04/" title="Kotlin协程异常"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin协程异常</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%A7%94%E6%89%98%20K8B24%20%5Bkotlin,%E5%A7%94%E6%89%98%5D%20K8B24%202022-09-26%2023;12;50/" title="Kotlin委托"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin委托</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%AF%86%E5%B0%81%E7%B1%BB%20sealed%20K8B24%20%5Bkotlin,%E5%AF%86%E5%B0%81%E7%B1%BB,sealed%5D%20K8B24%202022-09-28%2021;35;36/" title="Kotlin密封类 sealed"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin密封类 sealed</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3%20K8B24%20%5Bkotlin,%E6%B3%A8%E8%A7%A3%5D%20K8B24%202022-09-30%2022;25;58/" title="Kotlin常用注解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin常用注解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E6%95%B0%E6%8D%AE%E7%B1%BB%20data%20K8B24%20%5Bkotlin,%E6%95%B0%E6%8D%AE%E7%B1%BB,data%5D%20K8B24%202022-09-28%2023;02;36/" title="Kotlin数据类 data"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin数据类 data</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%20K8B24%20%5Bkotlin,%E6%96%87%E4%BB%B6,use%5D%20K8B24%202023-03-30%2021;36;05/" title="Kotlin文件操作"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin文件操作</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%5D%20K8B24%202022-09-06%2009;36;05/" title="Kotlin标准函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin标准函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E6%B3%9B%E5%9E%8B%20K8B24%20%5Bkotlin,%E6%B3%9B%E5%9E%8B,%E5%8D%8F%E5%8F%98,%E9%80%86%E5%8F%98%5D%20K8B24%202022-09-27%2023;18;25/" title="Kotlin泛型"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin泛型</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E9%9B%86%E5%90%88%E4%BB%8B%E7%BB%8D%20K8B24%20%5Bkotlin,%E9%9B%86%E5%90%88%5D%20K8B24%202022-09-18%2016;11;24/" title="Kotlin集合介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin集合介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Kotlin%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0,lambda%5D%20K8B24%202022-09-29%2022;24;51/" title="Kotlin高阶函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kotlin高阶函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%20K8B24%20%5Bkotlin,lambda%5D%20K8B24%202022-09-06%2009;36;05/" title="Lambda表达式"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Lambda表达式</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/kotlin%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E5%86%85%E8%81%94,inline,noinline,crosssinline%5D%20K8B24%202022-09-29%2023;28;58/" title="kotlin内联函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kotlin内联函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/kotlin%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%20K8B24%20%5Bkotlin%5D%20K8B24%202022-09-06%2009;36;05/" title="kotlin基本语法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kotlin基本语法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/kotlin%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%20K8B24%20%5Bkotlin,%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD,operator%5D%20K8B24%202022-09-25%2017;01;32/" title="kotlin运算符重载"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kotlin运算符重载</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/kotlin%E9%9B%86%E5%90%88%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E9%9B%86%E5%90%88%5D%20K8B24%202022-09-25%2014;36;21/" title="kotlin集合函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">kotlin集合函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/kotlin/%E6%89%A9%E5%B1%95%E5%87%BD%E6%95%B0%E3%80%81%E5%B1%9E%E6%80%A7%20K8B24%20%5Bkotlin,%E6%89%A9%E5%B1%95%5D%20K8B24%202022-09-23%2023;11;56/" title="扩展函数、属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">扩展函数、属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Lambda表达式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li><p>本质：一小段可以作为参数传递的代码</p>
+</li>
+<li><p>语法结构（可以简化）：</p>
+<p>{参数名1：参数类型，参数名2：参数类型 -&gt; 函数体}</p>
+</li>
+</ul>
+<h2 id="maxBy函数举例"><a href="#maxBy函数举例" class="headerlink" title="maxBy函数举例"></a>maxBy函数举例</h2><p>众所周知，找出集合中最长名字的元素可以这么做：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> list = listOf&lt;String&gt;(<span class="hljs-string">&quot;kobe&quot;</span>,<span class="hljs-string">&quot;ivrerson&quot;</span>,<span class="hljs-string">&quot;tracy&quot;</span>)<br><span class="hljs-keyword">val</span> max = list.maxByOrNull &#123; it.length &#125;<br></code></pre></td></tr></table></figure>
+
+<p>其本质是接收了一个lambda参数后的简化写法，下来我们一步步推导其简化过程。</p>
+<p><strong>1.根据lambda完整语法结构</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> lambda = &#123; name:String -&gt; name.length&#125;<br><span class="hljs-keyword">val</span> max = list.maxByOrNull(lambda)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到maxByOrNull 函数就是接收了一个lambda参数而已。</p>
+<p><strong>2.直接将lambda 带入到函数</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> max = list.maxByOrNull(&#123; name:String -&gt; name.length&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.当lambda参数为函数的最后一个参数时，可以将其移动到函数的括号外面</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> max = list.maxByOrNull()&#123; name:String -&gt; name.length&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>4.当lambda参数为函数唯一一个参数时，可以将函数的括号省略</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> max = list.maxByOrNull&#123; name:String -&gt; name.length&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>5.kotlin有出色的类型推导机制，大多数情况下不必生命参数类型</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> max = list.maxByOrNull&#123; name -&gt; name.length&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>6.当lambda参数列表中只有一个参数时，不必声明参数名，而是用it 代替</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> max = list.maxByOrNull&#123; it.length&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="java函数式API的使用"><a href="#java函数式API的使用" class="headerlink" title="java函数式API的使用"></a>java函数式API的使用</h2><p><strong>使用条件：kotlin中调用java方法，该方法接受一个Java单抽象方法接口参数时，可以使用。</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Thread(<span class="hljs-keyword">object</span> :Runnable&#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span> &#123;<br>        <br>    &#125;<br>&#125;).start()<br></code></pre></td></tr></table></figure>
+
+<p>如上代码，由于Runnable中只有一个待实现方法，因此不用重写run()方法,Kotlin可以自动明白后面的lambda表达式就是要在run（）中实现的内容,可以简化为：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Thread(Runnable&#123;<br> <br>&#125;).start()<br></code></pre></td></tr></table></figure>
+
+<p>当lambda表达式是方法最后一个参数时可以将其移动到方法括号外面，同时lambda参数时函数的由唯一一个参数，还可以将方法的括号省略：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Thread&#123;<br>    <br>&#125;.start()<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/kotlin/">#kotlin</a>
+      
+        <a href="/tags/lambda/">#lambda</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Lambda表达式</div>
+      <div>http://example.com/2023/07/26/kotlin/Lambda表达式 K8B24 [kotlin,lambda] K8B24 2022-09-06 09;36;05/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/26/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView%20K8B24%20%5Bcodeview,Android,%E8%87%AA%E5%AE%9A%E4%B9%89view%EF%BC%8Cmylib%5D%20K8B24%202023-2-17%2023;01;25/" title="Android代码阅读器--YHCodeView">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Android代码阅读器--YHCodeView</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/26/kotlin/Kotlin%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0,lambda%5D%20K8B24%202022-09-29%2022;24;51/" title="Kotlin高阶函数">
+                        <span class="hidden-mobile">Kotlin高阶函数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"ELr9UvQ0CKkFmPjl3MbFM0wp-gzGzoHsz","appKey":"6PBJlR78sNXdrY332SJH6Mtf","path":"window.location.pathname","placeholder":"来喷我啊","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://elr9uvq0.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

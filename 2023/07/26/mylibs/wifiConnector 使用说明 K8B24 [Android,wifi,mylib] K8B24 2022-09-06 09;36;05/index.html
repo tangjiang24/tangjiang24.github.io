@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="**	前言：早在去年，我曾写过一个针对android6.0连接指定WiFi的文章。虽然能成功连接，但有好多不合理甚至错误的地方，因此现在对那篇文章进行重新编辑发布**。 最近项目中有通过已知WiFi名称和密码连接传感器WiFi，实现数据交换的需求。在网上找了许多资料发现都是复制黏贴，也有好多bug,现在我将其整理封装并在项目中使用。 github地址：https:&#x2F;&#x2F;github.com&#x2F;tang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wifiConnector 使用说明">
+<meta property="og:url" content="http://example.com/2023/07/26/mylibs/wifiConnector%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20K8B24%20[Android,wifi,mylib]%20K8B24%202022-09-06%2009;36;05/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="**	前言：早在去年，我曾写过一个针对android6.0连接指定WiFi的文章。虽然能成功连接，但有好多不合理甚至错误的地方，因此现在对那篇文章进行重新编辑发布**。 最近项目中有通过已知WiFi名称和密码连接传感器WiFi，实现数据交换的需求。在网上找了许多资料发现都是复制黏贴，也有好多bug,现在我将其整理封装并在项目中使用。 github地址：https:&#x2F;&#x2F;github.com&#x2F;tang">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://camo.githubusercontent.com/d766aa96d9d870b894d58a2172ddecc7c7313c9a/68747470733a2f2f6a69747061636b2e696f2f762f74616e676a69616e6732342f57696669436f6e6e6563746f722e737667">
+<meta property="article:published_time" content="2023-07-26T10:38:38.211Z">
+<meta property="article:modified_time" content="2023-07-27T02:38:04.161Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="wifi">
+<meta property="article:tag" content="mylib">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/d766aa96d9d870b894d58a2172ddecc7c7313c9a/68747470733a2f2f6a69747061636b2e696f2f762f74616e676a69616e6732342f57696669436f6e6e6563746f722e737667">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>wifiConnector 使用说明 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">wifiConnector 使用说明</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-26 18:38" pubdate>
+          2023年7月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          75 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="mylibs"
+        id="heading-10763dff943142505f19b1dfc2a6f234" role="tab" data-toggle="collapse" href="#collapse-10763dff943142505f19b1dfc2a6f234"
+        aria-expanded="true"
+      >
+        mylibs
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-10763dff943142505f19b1dfc2a6f234"
+           role="tabpanel" aria-labelledby="heading-10763dff943142505f19b1dfc2a6f234">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/26/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView%20K8B24%20%5Bcodeview,Android,%E8%87%AA%E5%AE%9A%E4%B9%89view%EF%BC%8Cmylib%5D%20K8B24%202023-2-17%2023;01;25/" title="Android代码阅读器--YHCodeView"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android代码阅读器--YHCodeView</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin%20K8B24%20%5Bskin,Android%E6%8D%A2%E8%82%A4,%E6%8D%A2%E8%82%A4%5D%20K8B24%202022-11-2%2021;28;25/" title="Android换肤框架--YHReskin"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android换肤框架--YHReskin</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/mylibs/material-dialogs%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5Bmaterial,dialog%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93%5D%20K8B24%202023-2-26%2017;23;25/" title="material-dialogs基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">material-dialogs基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/26/mylibs/wifiConnector%20%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%20K8B24%20%5BAndroid,wifi,mylib%5D%20K8B24%202022-09-06%2009;36;05/" title="wifiConnector 使用说明"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">wifiConnector 使用说明</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">wifiConnector 使用说明</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>**	前言：早在去年，我曾写过一个针对android6.0连接指定WiFi的文章。虽然能成功连接，但有好多不合理甚至错误的地方，因此现在对那篇文章进行重新编辑发布**。</p>
+<p>最近项目中有<strong>通过已知WiFi名称和密码连接传感器WiFi</strong>，实现数据交换的需求。在网上找了许多资料发现都是复制黏贴，也有好多bug,现在我将其整理封装并在项目中使用。</p>
+<p>github地址：<a target="_blank" rel="noopener" href="https://github.com/tangjiang24/WifiConnector">https://github.com/tangjiang24/WifiConnector</a> </p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h4 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h4><p>在根<code>build.gradle</code>中添加：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs fsharp"><span class="hljs-keyword">allprojects</span> &#123;<br>    <span class="hljs-keyword">repositories</span> &#123;<br>        <span class="hljs-keyword">maven</span> &#123; url <span class="hljs-string">&quot;https://jitpack.io&quot;</span> &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在使用的模块<code>build.gradle</code>中添加：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean">dependencies &#123;<br>    <span class="hljs-keyword">implementation</span> <span class="hljs-string">&#x27;com.github.tangjiang24:WifiConnector:Tag&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>(请替换 Tag 为最新的版本号: <a target="_blank" rel="noopener" href="https://jitpack.io/#tangjiang24/WifiConnector"><img src="https://camo.githubusercontent.com/d766aa96d9d870b894d58a2172ddecc7c7313c9a/68747470733a2f2f6a69747061636b2e696f2f762f74616e676a69616e6732342f57696669436f6e6e6563746f722e737667" srcset="/img/loading.gif" lazyload alt="img"></a>)</p>
+<h4 id="Step2"><a href="#Step2" class="headerlink" title="Step2"></a>Step2</h4><p>分两种方法：</p>
+<h5 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h5><p>1.将需要连接的activity继承 库中的 WifiActivity ：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scala">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WifiConnectActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WifiActivity</span></span>&#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>2.直接调用父类中的 connectWifi(String ssid, String pwd, int type) 方法：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">connect<span class="hljs-constructor">Wifi(String <span class="hljs-params">ssid</span>,String <span class="hljs-params">pwd</span>,<span class="hljs-params">int</span> <span class="hljs-params">type</span>)</span>；<br></code></pre></td></tr></table></figure>
+
+<p>3.重写连接失败成功的抽象方法即可：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Override</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onConnectWifiSucess</span>(<span class="hljs-params"></span>) &#123;<br>       <span class="hljs-title class_">ToastUtil</span>.<span class="hljs-title function_">showShortToast</span>(<span class="hljs-variable language_">this</span>,<span class="hljs-string">&quot;连接成功！！&quot;</span>);<br>   &#125;<br><br>   <span class="hljs-meta">@Override</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">onConnectWifiFail</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> failMsg</span>) &#123;<br>       <span class="hljs-title class_">ToastUtil</span>.<span class="hljs-title function_">showShortToast</span>(<span class="hljs-variable language_">this</span>,failMsg);<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>第二种：</p>
+<p>1.构建WifiConnector对象</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">WifiConnector connector = <span class="hljs-keyword">new</span> <span class="hljs-constructor">WifiConnector(<span class="hljs-params">context</span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>2.调用其connectWifi () 方法，并在回调中写成功或者失败后的逻辑</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">connector.connect<span class="hljs-constructor">Wifi(<span class="hljs-params">ssid</span>, <span class="hljs-params">pwd</span>, WifiUtil.TYPE_WPA, <span class="hljs-params">new</span> WifiConnector.WifiConnectCallBack()</span> &#123;<br>    @Override<br>    public void on<span class="hljs-constructor">ConnectSucess()</span> &#123;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Toast</span>.</span></span>make<span class="hljs-constructor">Text(WifiConnectActivity.<span class="hljs-params">this</span>,<span class="hljs-string">&quot;连接成功！！&quot;</span>,Toast.LENGTH_SHORT)</span>.show<span class="hljs-literal">()</span>;<br>    &#125;<br><br>    @Override<br>    public void on<span class="hljs-constructor">ConnectFail(String <span class="hljs-params">msg</span>)</span> &#123;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Toast</span>.</span></span>make<span class="hljs-constructor">Text(WifiConnectActivity.<span class="hljs-params">this</span>,<span class="hljs-params">msg</span>,Toast.LENGTH_SHORT)</span>.show<span class="hljs-literal">()</span>;<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="参数说明："><a href="#参数说明：" class="headerlink" title="参数说明："></a>参数说明：</h2><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>类型</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ssid</td>
+<td>String</td>
+<td>WiFi名称</td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>String</td>
+<td>WiFi 密码</td>
+</tr>
+<tr>
+<td>type</td>
+<td>int</td>
+<td>密码类型</td>
+</tr>
+<tr>
+<td>wifiConnectCallBack</td>
+<td>WifiConnectCallBack</td>
+<td>连接回调</td>
+</tr>
+</tbody></table>
+<p>三种密码类型：</p>
+<ol>
+<li>WifiUtil.TYPE_NO_PWD（无密码）</li>
+<li>WifiUtil.TYPE_WEB (WEB)</li>
+<li>WifiUtil.TYPE_WPA（WPA）</li>
+</ol>
+<h3 id="注意：由于Java的单继承性，第一种方法有很大的局限，建议使用第二种方法。"><a href="#注意：由于Java的单继承性，第一种方法有很大的局限，建议使用第二种方法。" class="headerlink" title="注意：由于Java的单继承性，第一种方法有很大的局限，建议使用第二种方法。"></a>注意：由于Java的单继承性，第一种方法有很大的局限，建议使用第二种方法。</h3><h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><h3 id="1-判断当前手机wifi网络是否开启可用；"><a href="#1-判断当前手机wifi网络是否开启可用；" class="headerlink" title="1.判断当前手机wifi网络是否开启可用；"></a>1.判断当前手机wifi网络是否开启可用；</h3><p>开启WiFi代码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-title function_">openWifi</span>(<span class="hljs-params"></span>) &#123;<br>       <span class="hljs-built_in">boolean</span> sucess = <span class="hljs-literal">true</span>;<br>       <span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-property">mWifiManager</span>.<span class="hljs-title function_">isWifiEnabled</span>()) &#123;<br>           sucess = <span class="hljs-variable language_">this</span>.<span class="hljs-property">mWifiManager</span>.<span class="hljs-title function_">setWifiEnabled</span>(<span class="hljs-literal">true</span>);<br>       &#125;<br><br>       <span class="hljs-keyword">return</span> sucess;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>开启WiFi一般需要一定的时间,因此不能立马去连接，需要等WiFi稳定可用，经测试一般2.5秒即可完成，因此我们每隔100毫秒就去判断WiFi是否可用，代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.openWifi()) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>          long timeMills = System.currentTimeMillis();<br><br>          <span class="hljs-keyword">while</span>(<span class="hljs-keyword">this</span>.mWifiManager.getWifiState() != <span class="hljs-number">3</span>) &#123;<br>              <span class="hljs-keyword">try</span> &#123;<br>                  <span class="hljs-keyword">if</span>(System.currentTimeMillis() - timeMills &gt; <span class="hljs-number">2500L</span>) &#123;<br>                      <span class="hljs-keyword">break</span>;<br>                  &#125;<br><br>                  Thread.sleep(<span class="hljs-number">100L</span>);<br>              &#125; <span class="hljs-keyword">catch</span> (InterruptedException var8) &#123;<br>                  var8.printStackTrace();<br>              &#125;<br>          &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-根据WiFi名称，获取-x2F-创建WifiConfiguration；"><a href="#2-根据WiFi名称，获取-x2F-创建WifiConfiguration；" class="headerlink" title="2.根据WiFi名称，获取&#x2F;创建WifiConfiguration；"></a>2.根据WiFi名称，获取&#x2F;创建WifiConfiguration；</h3><p>首先我们需要判断是否包含有当前WiFi名称的WifiConfiguration，若包含则试着将其删除再添加。1.为什么是试着删除？因为在android6.0以上，只允许删除由本应用创建的wificonfiguratin，不能改变删除其他应用所创建的。 2.为什么不直接连接而要删除再添加？因为wificonfiguratin不一定是连接成功后的wificonfiguratin，也有可能是手残输错了密码，这样直接去连接会导致一辈子也连接不上。</p>
+<p>具体代码如下:</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs routeros">private WifiConfiguration createWifiInfo(String SSID, String Password, int Type) &#123;<br>       WifiConfiguration<span class="hljs-built_in"> config </span>= new WifiConfiguration();<br>       config.allowedAuthAlgorithms.clear();<br>       config.allowedGroupCiphers.clear();<br>       config.allowedKeyManagement.clear();<br>       config.allowedPairwiseCiphers.clear();<br>       config.allowedProtocols.clear();<br>       config.SSID = <span class="hljs-string">&quot;\&quot;&quot;</span> + SSID + <span class="hljs-string">&quot;\&quot;&quot;</span>;<br>       WifiConfiguration tempConfig = this.IsExsits(SSID);<br>       List&lt;WifiConfiguration&gt; beforeConfig = this.mWifiManager.getConfiguredNetworks();<br>       <span class="hljs-keyword">if</span>(tempConfig != <span class="hljs-literal">null</span>) &#123;<br>           this.removeWifi(tempConfig.networkId);<br>       &#125;<br><br>       List&lt;WifiConfiguration&gt; afterConfig = this.mWifiManager.getConfiguredNetworks();<br>       <span class="hljs-keyword">if</span>(tempConfig != <span class="hljs-literal">null</span> &amp;&amp; beforeConfig.size() == afterConfig.size()) &#123;<br>           return tempConfig;<br>       &#125; <span class="hljs-keyword">else</span> &#123;<br>           <span class="hljs-keyword">if</span>(Type == 1) &#123;<br>               config.allowedKeyManagement.<span class="hljs-built_in">set</span>(0);<br>           &#125;<br><br>           <span class="hljs-keyword">if</span>(Type == 2) &#123;<br>               config.hiddenSSID = <span class="hljs-literal">true</span>;<br>               config.wepKeys[0] = <span class="hljs-string">&quot;\&quot;&quot;</span> + Password + <span class="hljs-string">&quot;\&quot;&quot;</span>;<br>               config.allowedAuthAlgorithms.<span class="hljs-built_in">set</span>(1);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(3);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(2);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(0);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(1);<br>               config.allowedKeyManagement.<span class="hljs-built_in">set</span>(0);<br>               config.wepTxKeyIndex = 0;<br>           &#125;<br><br>           <span class="hljs-keyword">if</span>(Type == 3) &#123;<br>               config.preSharedKey = <span class="hljs-string">&quot;\&quot;&quot;</span> + Password + <span class="hljs-string">&quot;\&quot;&quot;</span>;<br>               config.hiddenSSID = <span class="hljs-literal">true</span>;<br>               config.allowedAuthAlgorithms.<span class="hljs-built_in">set</span>(0);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(2);<br>               config.allowedKeyManagement.<span class="hljs-built_in">set</span>(1);<br>               config.allowedPairwiseCiphers.<span class="hljs-built_in">set</span>(1);<br>               config.allowedGroupCiphers.<span class="hljs-built_in">set</span>(3);<br>               config.allowedPairwiseCiphers.<span class="hljs-built_in">set</span>(2);<br>               config.status = 2;<br>           &#125;<br><br>           return<span class="hljs-built_in"> config;</span><br><span class="hljs-built_in"></span>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-注册网络变化的广播，当监听到网络连接上时，判断当前WiFi网络的名称是否和目标WiFi的一致；"><a href="#3-注册网络变化的广播，当监听到网络连接上时，判断当前WiFi网络的名称是否和目标WiFi的一致；" class="headerlink" title="3.注册网络变化的广播，当监听到网络连接上时，判断当前WiFi网络的名称是否和目标WiFi的一致；"></a>3.注册网络变化的广播，当监听到网络连接上时，判断当前WiFi网络的名称是否和目标WiFi的一致；</h3><p>广播中主要代码：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">NetworkInfo info = (NetworkInfo)intent.get<span class="hljs-constructor">ParcelableExtra(<span class="hljs-string">&quot;networkInfo&quot;</span>)</span>;<br>      <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Log</span>.</span></span>i(<span class="hljs-string">&quot;wifi:&quot;</span>, <span class="hljs-string">&quot;接受到网络连接变化的广播，当前网络状态为：&quot;</span> + info.get<span class="hljs-constructor">State()</span>);<br>      <span class="hljs-keyword">if</span>(info.get<span class="hljs-constructor">State()</span>.equals(State.CONNECTED)) &#123;<br>          WifiManager wifiManager = (WifiManager)context.get<span class="hljs-constructor">SystemService(<span class="hljs-string">&quot;wifi&quot;</span>)</span>;<br>          WifiInfo wifiInfo = wifiManager.get<span class="hljs-constructor">ConnectionInfo()</span>;<br>          String ssid = wifiInfo.get<span class="hljs-constructor">SSID()</span>;<br>          <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Log</span>.</span></span>i(<span class="hljs-string">&quot;wifi:&quot;</span>, <span class="hljs-string">&quot;接受到网络连接变化的广播，已连接的网络的ssid=&quot;</span> + ssid);<br>          this.mListner.is<span class="hljs-constructor">ConnectMyWifi(<span class="hljs-params">ssid</span>)</span>;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">setOnWifiConnetListner</span>(<span class="hljs-params">WifiConnectReceiver.onWifiConnectListner listner</span>) &#123;<br>       <span class="hljs-variable language_">this</span>.<span class="hljs-property">mListner</span> = listner;<br>   &#125;<br><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> onWifiConnectListner &#123;<br>       <span class="hljs-built_in">void</span> <span class="hljs-title function_">isConnectMyWifi</span>(<span class="hljs-title class_">String</span> var1);<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>activity中实现receiver中声明的接口onWifiConnectListner，主要代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">public</span> void isConnectMyWifi(String s) &#123;<br>       <span class="hljs-keyword">if</span>(!TextUtils.isEmpty(<span class="hljs-keyword">this</span>.ssid)) &#123;<br>           <span class="hljs-keyword">if</span>(s.equals(<span class="hljs-string">&quot;\&quot;&quot;</span> + <span class="hljs-keyword">this</span>.ssid + <span class="hljs-string">&quot;\&quot;&quot;</span>)) &#123;<br>               <span class="hljs-keyword">this</span>.handler.removeMessages(<span class="hljs-number">1</span>);<br>               <span class="hljs-keyword">this</span>.handler.removeMessages(<span class="hljs-number">2</span>);<br>               <span class="hljs-keyword">this</span>.handler.sendEmptyMessageDelayed(<span class="hljs-number">1</span>, <span class="hljs-number">1000L</span>);<br>           &#125; <span class="hljs-keyword">else</span> &#123;<br>               Log.i(<span class="hljs-string">&quot;wifi:&quot;</span>, <span class="hljs-string">&quot;未连接到指定网络！&quot;</span>);<br>               <span class="hljs-keyword">this</span>.sendFailMessage(<span class="hljs-string">&quot;未连接到指定网络！&quot;</span>, <span class="hljs-number">1L</span>);<br>           &#125;<br>       &#125;<br><br>   &#125;<br><br>   <span class="hljs-keyword">private</span> void registWifiConnectReceiver() &#123;<br>       <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.mReceiverTag) &#123;<br>           <span class="hljs-keyword">this</span>.wifiConnectReceiver = new WifiConnectReceiver();<br>           <span class="hljs-keyword">this</span>.mReceiverTag = <span class="hljs-literal">true</span>;<br>           <span class="hljs-keyword">this</span>.wifiConnectReceiver.setOnWifiConnetListner(<span class="hljs-keyword">this</span>);<br>           IntentFilter intentFilter = new IntentFilter();<br>           intentFilter.addAction(<span class="hljs-string">&quot;android.net.wifi.STATE_CHANGE&quot;</span>);<br>           <span class="hljs-keyword">this</span>.registerReceiver(<span class="hljs-keyword">this</span>.wifiConnectReceiver, intentFilter);<br>       &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="总结及注意点："><a href="#总结及注意点：" class="headerlink" title="总结及注意点："></a>总结及注意点：</h3><p><em><strong>1.开启WiFi时需要时间的，必须等稳定后再去连接；</strong></em></p>
+<p><em><strong>2.手机中保存的wificonfiguratin不一定可用，连接时需要先删除再添加；</strong></em></p>
+<p><em><strong>3.在6.0以后调用mWifiManager.removeNetwork(netId)只对本应用添加的有效；</strong></em></p>
+<p><em><strong>4.在6.0以后需要添加gps权限；</strong></em></p>
+<p><em><strong>5.若是无密码的情况创建WifiConfiguration，则只需要下面一句</strong></em></p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lasso">config.allowedKeyManagement.<span class="hljs-built_in">set</span>(WifiConfiguration.KeyMgmt.<span class="hljs-literal">NONE</span>);<br></code></pre></td></tr></table></figure>
+
+<p><em><strong>网上大多数都是错误的！</strong></em></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/mylibs/" class="category-chain-item">mylibs</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/wifi/">#wifi</a>
+      
+        <a href="/tags/mylib/">#mylib</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>wifiConnector 使用说明</div>
+      <div>http://example.com/2023/07/26/mylibs/wifiConnector 使用说明 K8B24 [Android,wifi,mylib] K8B24 2022-09-06 09;36;05/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年7月27日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/26/mylibs/material-dialogs%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5Bmaterial,dialog%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93%5D%20K8B24%202023-2-26%2017;23;25/" title="material-dialogs基本使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">material-dialogs基本使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/26/mylibs/Android%E6%8D%A2%E8%82%A4%E6%A1%86%E6%9E%B6--YHReskin%20K8B24%20%5Bskin,Android%E6%8D%A2%E8%82%A4,%E6%8D%A2%E8%82%A4%5D%20K8B24%202022-11-2%2021;28;25/" title="Android换肤框架--YHReskin">
+                        <span class="hidden-mobile">Android换肤框架--YHReskin</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"ELr9UvQ0CKkFmPjl3MbFM0wp-gzGzoHsz","appKey":"6PBJlR78sNXdrY332SJH6Mtf","path":"window.location.pathname","placeholder":"来喷我啊","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://elr9uvq0.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
