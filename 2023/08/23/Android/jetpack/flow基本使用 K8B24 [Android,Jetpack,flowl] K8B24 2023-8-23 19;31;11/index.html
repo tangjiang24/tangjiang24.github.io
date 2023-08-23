@@ -16,26 +16,26 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="viewModel基本使用[TOC] 前言ViewModel 类旨在以注重生命周期的方式存储和管理界面相关数据。有以下特点：  配置变更（横竖屏切换、分辨率调整等）导致的页面重建不会导致viewmodel的数据丢失； 可与fragment、自定义view等共享数据； 相比onSaveInstanceState()只可保存少量且可序列化的数据，viewmodel可保存所有数据； 生命周期长于acti">
+    <meta name="description" content="flow基本使用[TOC] 前言flow 依赖于协程，可很好的支持响应式编程，在异步编程中有很好的使用体验，且其学习成本远远低于RxJava，近来被谷歌大力推崇。 基本使用在viewmodel中创建flow： 12345678val timeFlow &#x3D; flow &amp;#123;    var time &#x3D; 0    while (true) &amp;#123;        emit(time)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="viewModel基本使用">
-<meta property="og:url" content="http://example.com/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20[Android,Jetpack,viewModel]%20K8B24%202023-4-15%2012;31;11/index.html">
+<meta property="og:title" content="flow基本使用">
+<meta property="og:url" content="http://example.com/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20[Android,Jetpack,flowl]%20K8B24%202023-8-23%2019;31;11/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="viewModel基本使用[TOC] 前言ViewModel 类旨在以注重生命周期的方式存储和管理界面相关数据。有以下特点：  配置变更（横竖屏切换、分辨率调整等）导致的页面重建不会导致viewmodel的数据丢失； 可与fragment、自定义view等共享数据； 相比onSaveInstanceState()只可保存少量且可序列化的数据，viewmodel可保存所有数据； 生命周期长于acti">
+<meta property="og:description" content="flow基本使用[TOC] 前言flow 依赖于协程，可很好的支持响应式编程，在异步编程中有很好的使用体验，且其学习成本远远低于RxJava，近来被谷歌大力推崇。 基本使用在viewmodel中创建flow： 12345678val timeFlow &#x3D; flow &amp;#123;    var time &#x3D; 0    while (true) &amp;#123;        emit(time)">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-15T04:31:11.000Z">
-<meta property="article:modified_time" content="2023-04-15T04:31:11.000Z">
+<meta property="article:published_time" content="2023-08-23T11:31:11.000Z">
+<meta property="article:modified_time" content="2023-08-23T11:31:11.000Z">
 <meta property="article:author" content="煤炭黄帽">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Jetpack">
-<meta property="article:tag" content="viewModel">
+<meta property="article:tag" content="flowl">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>viewModel基本使用 - 煤炭黄帽</title>
+  <title>flow基本使用 - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">viewModel基本使用</span>
+            <span id="subtitle">flow基本使用</span>
           
         </div>
 
@@ -216,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-15 12:31" pubdate>
-          2023年4月15日 下午
+        <time datetime="2023-08-23 19:31" pubdate>
+          2023年8月23日 晚上
         </time>
       </span>
     
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          6.1k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          26 分钟
+          77 分钟
         
       </span>
     
@@ -358,7 +358,7 @@
       
         <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">flow基本使用</span>
         </a>
       
@@ -385,7 +385,7 @@
       
         <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">viewModel基本使用</span>
         </a>
       
@@ -637,7 +637,7 @@
       
         <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">flow基本使用</span>
         </a>
       
@@ -664,7 +664,7 @@
       
         <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">viewModel基本使用</span>
         </a>
       
@@ -688,47 +688,92 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">viewModel基本使用</h1>
+            <h1 style="display: none">flow基本使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="viewModel基本使用"><a href="#viewModel基本使用" class="headerlink" title="viewModel基本使用"></a>viewModel基本使用</h1><p>[TOC]</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/lifecycle/ViewModel?hl=zh-cn"><code>ViewModel</code></a> 类旨在以注重生命周期的方式存储和管理界面相关数据。有以下特点：</p>
+                <h1 id="flow基本使用"><a href="#flow基本使用" class="headerlink" title="flow基本使用"></a>flow基本使用</h1><p>[TOC]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>flow</code> 依赖于协程，可很好的支持响应式编程，在异步编程中有很好的使用体验，且其学习成本远远低于RxJava，近来被谷歌大力推崇。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>在viewmodel中创建flow：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> timeFlow = flow &#123;<br>    <span class="hljs-keyword">var</span> time = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        emit(time)<br>        delay(<span class="hljs-number">1000</span>)<br>        time++<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>activity中进行接收：</p>
+<p>由于Flow的collect函数是一个挂起函数，因此必须在协程作用域或其他挂起函数中才能调用，另外只要调用了collect函数之后就相当于进入了一个死循环，它的下一行代码是永远都不会执行到的，因此多个flow的collect不能共用一个协程作用域，必须单独持有才行。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">lifecycleScope.launch &#123;<br>    viewModel.timeFlow.collect &#123;<br>        delay(<span class="hljs-number">2000</span>)<br>        tv_flowbasic.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>此种方式存在以下问题：</p>
 <ul>
-<li>配置变更（横竖屏切换、分辨率调整等）导致的页面重建不会导致viewmodel的数据丢失；</li>
-<li>可与fragment、自定义view等共享数据；</li>
-<li>相比onSaveInstanceState()只可保存少量且可序列化的数据，viewmodel可保存所有数据；</li>
-<li>生命周期长于activity、fragment，因此切勿将context实例传入viewmodel，否则会内存泄露；若必须要，可以考虑AndroidViewMode； </li>
-<li>通常配合lilveData、lifeCycle使用，有效避免内存泄漏。</li>
+<li><p>存在一直更新UI问题，即时应用退回到后台，因此存在内存问题</p>
+</li>
+<li><p>旋转屏幕会导致activity重建，会导致重新开始收集数据</p>
+</li>
+<li><p>如果数据处理速度慢于发送速度，会造成数据积累错乱（背压问题）</p>
+</li>
 </ul>
-<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>ViewModel是LifeCycle的一个组件库，所以只需要添加LifeCycle库的依赖即可 （已经适配了AndroidX的项目好像不用依赖，具体看吧）:</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">implementation <span class="hljs-string">&#x27;androidx.lifecycle:lifecycle-extensions:$lifecycleVersion&#x27;</span><br></code></pre></td></tr></table></figure>
+<h3 id="launchWhenStarted-暂停flow"><a href="#launchWhenStarted-暂停flow" class="headerlink" title="launchWhenStarted 暂停flow"></a>launchWhenStarted 暂停flow</h3><p> launchWhenStarted 可以保证activity只在 started 状态下更新UI， 但仍然会保留缓存之前的数据。如退到后台在切回前台，flow会接着之前的逻辑发送数据。 可以理解为 flow暂停了一下</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv_launchWhenStarted.setOnClickListener &#123;<br>    lifecycleScope.launchWhenStarted &#123;<br>        viewModel.timeFlow.collect&#123;<br>            tv_launchWhenStarted.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>通常会配合携程一起使用，因此一般会采用如下依赖方式：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">&quot;androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleExtensionsVersion&quot;</span><br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/jetpack/androidx/releases/lifecycle?hl=zh-cn#kotlin">官方历史版本</a> </p>
-<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="activity、fragment中使用"><a href="#activity、fragment中使用" class="headerlink" title="activity、fragment中使用"></a>activity、fragment中使用</h3><p>1.直接继承ViewModel创建</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyViewModel</span>:<span class="hljs-type">ViewModel</span>() &#123;<br>    、、、<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>  当计时到30s时切换应用到后台一段时间，再回到前台，界面会显示30 并继续计时。</p>
+<h3 id="repeatOnLifecycle-重启flow"><a href="#repeatOnLifecycle-重启flow" class="headerlink" title="repeatOnLifecycle  重启flow"></a>repeatOnLifecycle  重启flow</h3><p>repeatOnLifecycle 可以保证activity在指定生命周期内更新UI，且不会缓存之前的数据。如退到后台在切回前台flow会重新开始发送数据，可以理解为 flow重启了。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv_repeatOn.setOnClickListener &#123;<br>    lifecycleScope.launch &#123;<br>        repeatOnLifecycle(Lifecycle.State.STARTED)&#123;<br>            viewModel.timeFlow.collect &#123;<br>                tv_repeatOn.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>2.获取viewModel</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> viewModel <span class="hljs-keyword">by</span> lazy &#123; ViewModelProvider(<span class="hljs-keyword">this</span>).<span class="hljs-keyword">get</span>(MyViewModel::<span class="hljs-keyword">class</span>.java) &#125;<br></code></pre></td></tr></table></figure>
+<p>当计时到30s时切换应用到后台一段时间，再回到前台，界面会重新从0开始计时。</p>
+<h3 id="collectLatest解决背压问题"><a href="#collectLatest解决背压问题" class="headerlink" title="collectLatest解决背压问题"></a>collectLatest解决背压问题</h3><p>collectLatest会立马去处理新数据，放弃现有数据的处理。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv_latestFlow.setOnClickListener &#123;<br>    lifecycleScope.launch &#123;<br>        viewModel.timeFlow.collectLatest &#123;<br>            tv_latestFlow.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>            delay(<span class="hljs-number">4000</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>通过ViewModelProvider即可获取，示例中的this为 ViewModelStoreOwner，ComponentActivity和Fragment其实都实现了ViewModelStoreOwner接口。</p>
-<p>当然fragment中若想要和activity实现数据共享：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> viewModel <span class="hljs-keyword">by</span> lazy &#123; ViewModelProvider(requireActivity()).<span class="hljs-keyword">get</span>(MyViewModel::<span class="hljs-keyword">class</span>.java) &#125;<br></code></pre></td></tr></table></figure>
+<p>上例中明显数据处理速度跟不上发送速度，但collectLatest会始终去处理新的数据而放弃未处理完的数据。因此定时器会正常计时。</p>
+<h2 id="stateFlow"><a href="#stateFlow" class="headerlink" title="stateFlow"></a>stateFlow</h2><p>接近LiveData，同LiveData的用法保持了高度一致性，方便玩家低成本对接。</p>
+<h3 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h3><p>viewmodel中创建：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> _stateFlow = MutableStateFlow(<span class="hljs-number">100</span>)<br><span class="hljs-keyword">val</span> stateFlow = _stateFlow.asStateFlow()<br><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">startTimmer</span><span class="hljs-params">()</span></span> &#123;<br>        viewModelScope.launch &#123;<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                _stateFlow.value += <span class="hljs-number">2</span><br>                delay(<span class="hljs-number">2000</span>)<br>            &#125;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="自定义view中使用"><a href="#自定义view中使用" class="headerlink" title="自定义view中使用"></a>自定义view中使用</h3><p>额外实现ViewModelStoreOwner接口，返回ViewModelStore实例即可：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TimerTextView</span> <span class="hljs-meta">@JvmOverloads</span> <span class="hljs-keyword">constructor</span>(<br>    context: Context,<br>    attributes: AttributeSet? = <span class="hljs-literal">null</span>,<br>    defstyle: <span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span><br>) : androidx.appcompat.widget.AppCompatTextView(context, attributes, defstyle),<br>    ViewModelStoreOwner &#123;<br><br>   <span class="hljs-keyword">val</span> viewModel = ViewModelProvider(<span class="hljs-keyword">this</span>).<span class="hljs-keyword">get</span>(MyViewModel::<span class="hljs-keyword">class</span>.java)<br><br>   <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span></span>: ViewModelStore &#123;<br>       <span class="hljs-keyword">return</span> ViewModelStore()<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>activity中监听：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">lifecycleScope.launch &#123;<br>                repeatOnLifecycle(Lifecycle.State.STARTED)&#123;<br>                    viewModel.stateFlow.collect &#123;<br>                        tv_stateFlow.text = <span class="hljs-string">&quot;<span class="hljs-variable">$it</span>&quot;</span><br>                    &#125;<br>                &#125;<br>            &#125;<br></code></pre></td></tr></table></figure>
 
-<p>也可以和所属activity共享数据，则直接传入activity即可（无需实现ViewModelStoreOwner接口）：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> viewModelStore = getContext() <span class="hljs-keyword">as</span> ViewModelStoreOwner<br><span class="hljs-keyword">val</span> viewModel = ViewModelProvider(viewModelStore).<span class="hljs-keyword">get</span>(MyViewModel::<span class="hljs-keyword">class</span>.java)<br></code></pre></td></tr></table></figure>
+<p>可以看到和LiveData的用法及其相似，虽然方便了过渡，但显然没有体现出响应式编程思想。</p>
+<h3 id="stateIn函数使用"><a href="#stateIn函数使用" class="headerlink" title="stateIn函数使用"></a>stateIn函数使用</h3><p>在repeatOnLifecycle  例子中我们知道其有重启功能，在前后台切换或者屏幕横竖屏切换过程中，flow会重新计时发射。而stateIn 函数可以将任何flow对象转换换为stateFlow,  并且可以缓存数据一定时间（时常由第二个参数来决定）。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> timeFlow = flow &#123;<br>    <span class="hljs-keyword">var</span> time = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        emit(time)<br>        delay(<span class="hljs-number">1000</span>)<br>        time++<br>    &#125;<br>&#125;<br><span class="hljs-comment">//第2个参数指定了一个5秒的超时时长，</span><br><span class="hljs-comment">// 那么只要在5秒钟内横竖屏切换完成了，Flow就不会停止工作</span><br><span class="hljs-keyword">val</span> stateInFlow = timeFlow.stateIn(<br>    viewModelScope,<br>    SharingStarted.WhileSubscribed(<span class="hljs-number">5000</span>),<br>    <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<p>此时如果在5s内完成了横竖屏切换，或者退出后台不超过5s又切换到前台，那么计时器会继续之前的数据计时，如果超过5s就会重新从0开始计时。</p>
+<h2 id="shareFlow"><a href="#shareFlow" class="headerlink" title="shareFlow"></a>shareFlow</h2><p>stateFlow保留LiveData的一个特点——是粘性的，而shareFlow是非粘性的。</p>
+<p>粘性特性在绝大多数场景下都非常好使，但也有意外，如：我们现在正在开发一个登录功能，点击按钮开始执行登录操作，登录成功之后弹出一个Toast告知用户，分别采用stateFlow和shareFlow来实现对比：</p>
+<p>viewModel中分别创建flow：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//shareFlow 非粘性</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> _shareFlow = MutableSharedFlow&lt;String&gt;()<br><span class="hljs-keyword">val</span> sharedFlow = _shareFlow.asSharedFlow()<br><span class="hljs-comment">//stateFlow 为粘性</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> _loginFlow = MutableStateFlow(<span class="hljs-string">&quot;&quot;</span>)<br><span class="hljs-keyword">val</span> loginFlow = _loginFlow.asStateFlow()<br><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">startStateLogin</span><span class="hljs-params">()</span></span>&#123;<br>    viewModelScope.launch &#123;<br>        _loginFlow.value = <span class="hljs-string">&quot;login Succes <span class="hljs-subst">$&#123;System.currentTimeMillis()&#125;</span>&quot;</span><br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">startShareLogin</span><span class="hljs-params">()</span></span>&#123;<br>    viewModelScope.launch &#123;<br>        _shareFlow.emit(<span class="hljs-string">&quot;login Succes&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h3><p>由上可知，viewModel可实现数据共享，其关键在于传入的ViewModelStoreOwner是否是同一个。本质上如果传入了相同的ViewModelStoreOwner，则返回的viewModel是同一个！</p>
-<h3 id="AndroidViewModel"><a href="#AndroidViewModel" class="headerlink" title="AndroidViewModel"></a>AndroidViewModel</h3><p>使用ViewModel的时候，需要注意的是ViewModel不能够持有View、Lifecycle、Acitivity引用，而且不能够包含任何包含前面内容的类。因为viewModel的生命周期长于view，这样很有可能会造成内存泄漏。</p>
-<p>但如果非要使用，比如使用Toast的情况，则可以使用AndroidViewModel：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainViewModel</span>(application: Application) : AndroidViewModel(application) &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>获取viewModel的方式不变 。</p>
+<p>activity中分别监听：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">tv_shareFlow.setOnClickListener &#123;<br>    viewModel.startShareLogin()<br>&#125;<br>lifecycleScope.launch&#123;<br>    repeatOnLifecycle(Lifecycle.State.STARTED)&#123;<br>        viewModel.sharedFlow.collect &#123;<br>            toastShow(it)<br>        &#125;<br>    &#125;<br>&#125;<br><br>tv_stateLoginFlow.setOnClickListener &#123;<br>    viewModel.startStateLogin()<br>&#125;<br>lifecycleScope.launch&#123;<br>    repeatOnLifecycle(Lifecycle.State.STARTED)&#123;<br>        viewModel.loginFlow.collect &#123;<br>            toastShow(it)&#123;<br>                it.duration = Toast.LENGTH_LONG<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>分别点击登录按钮后旋转屏幕，会发现：</p>
+<p>stateFlow在每次旋转屏幕后还会再次弹出toast，而shareFlow则不会。显然这里shareFlow更适合我们的业务场景。</p>
+<h2 id="常用操作符"><a href="#常用操作符" class="headerlink" title="常用操作符"></a>常用操作符</h2><h3 id="map-filter-each"><a href="#map-filter-each" class="headerlink" title="map filter each"></a>map filter each</h3><p>map用于变换；</p>
+<p>filter用于过滤；</p>
+<p>each用于查看中间态；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> flows = flowOf(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)<br>runBlocking &#123;<br>    flows.filter &#123; it % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> &#125;<br>        .onEach &#123;<br>            println(it)<br>        &#125;.map &#123;<br>            it * it<br>        &#125;.collect &#123;<br>            println(it)<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出：2 ，4       4 , 16</p>
+<h3 id="debounce-sample"><a href="#debounce-sample" class="headerlink" title="debounce   sample"></a>debounce   sample</h3><p>debounce：只有两条数据之间的间隔超过500毫秒,前面的数据才能发送成功；</p>
+<p>sample：从flow的数据流当中按照一定的时间间隔来采样某一条数据；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">runBlocking &#123;<br>    flow &#123;<br>        emit(<span class="hljs-number">1</span>)<br>        emit(<span class="hljs-number">2</span>)<br>        delay(<span class="hljs-number">600</span>)<br>        emit(<span class="hljs-number">3</span>)<br>        delay(<span class="hljs-number">100</span>)<br>        emit(<span class="hljs-number">4</span>)<br>        delay(<span class="hljs-number">100</span>)<br>        emit(<span class="hljs-number">5</span>)<br>    &#125;.debounce(<span class="hljs-number">500</span>)<br>        .collect &#123;<br>            println(it)<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出：2 ， 5</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">runBlocking &#123;<br>    flow &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            emit(<span class="hljs-string">&quot;kobe is MVP!&quot;</span>)<br>        &#125;<br>    &#125;.flowOn(Dispatchers.IO)<br>        .sample(<span class="hljs-number">1000</span>)<br>        .collect &#123;<br>            println(it)<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>每隔一秒中输出：kobe is MVP!</p>
+<h3 id="flatMapConcat"><a href="#flatMapConcat" class="headerlink" title="flatMapConcat()"></a>flatMapConcat()</h3><p>用于将两个flow串联，实际应用中比如需要先通过第一个接口查询城市id，然后在用id去查询对应的天气预报。使用flatMapConcat（）可以消除回调地狱。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">runBlocking &#123;<br>    <span class="hljs-keyword">val</span> cityFlow = getCityId()<br>  <br>    cityFlow.flatMapConcat &#123; id-&gt;<br>        getWeather(id)<br>        &#125;<br>       .collect &#123;<br>            println(it)<br>        &#125;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getCityId</span><span class="hljs-params">()</span></span>: Flow&lt;String&gt; &#123;<br>    <span class="hljs-keyword">return</span> flow &#123;<br>        delay(<span class="hljs-number">2000</span>)<br>        emit(<span class="hljs-string">&quot;xian&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getWeather</span><span class="hljs-params">(id: <span class="hljs-type">String</span>)</span></span>: Flow&lt;String&gt; &#123;<br>    <span class="hljs-keyword">return</span> flow &#123;<br>        delay(<span class="hljs-number">3000</span>)<br>        emit(<span class="hljs-string">&quot;阴转多云&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>由于是串行执行，上例中共耗时为5s。</p>
+<h3 id="zip"><a href="#zip" class="headerlink" title="zip()"></a>zip()</h3><p>并发等待， 总时长等于最长的那个。 用于多接口组合数据。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> kobe = Player()<br>    runBlocking &#123;<br>        getPlayer().zip(getAge()) &#123; name, age -&gt;<br>            kobe.name = name<br>            kobe.age = age<br>            kobe<br>        &#125;.zip(getSucces()) &#123; player, succes -&gt;<br>            kobe.succe = succes<br>            kobe<br>        &#125;.collect &#123; player -&gt;<br>            println(player)<br>        &#125;<br>    &#125;<br>    <br>    <br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getPlayer</span><span class="hljs-params">()</span></span>: Flow&lt;String&gt; &#123;<br>    <span class="hljs-keyword">return</span> flow &#123;<br>        delay(<span class="hljs-number">2000</span>)<br>        emit(<span class="hljs-string">&quot;kobe&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span></span>: Flow&lt;String&gt; &#123;<br>    <span class="hljs-keyword">return</span> flow &#123;<br>        delay(<span class="hljs-number">3000</span>)<br>        emit(<span class="hljs-string">&quot;45&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getSucces</span><span class="hljs-params">()</span></span>: Flow&lt;String&gt; &#123;<br>    <span class="hljs-keyword">return</span> flow &#123;<br>        delay(<span class="hljs-number">1000</span>)<br>        emit(<span class="hljs-string">&quot;$总冠军&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Player</span>(<span class="hljs-keyword">var</span> name: String = <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-keyword">var</span> age: String = <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-keyword">var</span> succe: String = <span class="hljs-string">&quot;&quot;</span>) <br></code></pre></td></tr></table></figure>
+
+<p>由于是并行执行，上例中共耗时为3s。</p>
+<h3 id="retry-when"><a href="#retry-when" class="headerlink" title="retry when"></a>retry when</h3><p>用于重试机制。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">runBlocking &#123;<br>    flowOf(<span class="hljs-number">2</span>)<br>        .onEach &#123;<br>            <span class="hljs-keyword">if</span> (it %<span class="hljs-number">2</span> == <span class="hljs-number">0</span>)&#123;<br>                <span class="hljs-keyword">throw</span> java.lang.NullPointerException()<br>            &#125;<br>        &#125;<br>        .retryWhen &#123; cause, attempt -&gt;<br>            println(<span class="hljs-string">&quot; casse = <span class="hljs-subst">$&#123;cause&#125;</span>  attemp = <span class="hljs-subst">$&#123;attempt&#125;</span>&quot;</span>)<br>            delay(<span class="hljs-number">1000</span>)<br>            attempt &lt; <span class="hljs-number">2</span><br>        &#125;.collect&#123;<br>            println(it)<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/article/details/127466982"><code>Kotlin Flow响应式编程，基础知识入门</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/article/details/127939641"><code>Kotlin Flow响应式编程，操作符函数进阶</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://guolin.blog.csdn.net/article/details/128591076?spm=1001.2014.3001.5502"><code>Kotlin Flow响应式编程，StateFlow和SharedFlow</code></a></p>
 
                 
               </div>
@@ -773,7 +818,7 @@
       
         <a href="/tags/Jetpack/">#Jetpack</a>
       
-        <a href="/tags/viewModel/">#viewModel</a>
+        <a href="/tags/flowl/">#flowl</a>
       
     </div>
   
@@ -785,8 +830,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>viewModel基本使用</div>
-      <div>http://example.com/2023/04/15/Android/jetpack/viewModel基本使用 K8B24 [Android,Jetpack,viewModel] K8B24 2023-4-15 12;31;11/</div>
+      <div>flow基本使用</div>
+      <div>http://example.com/2023/08/23/Android/jetpack/flow基本使用 K8B24 [Android,Jetpack,flowl] K8B24 2023-8-23 19;31;11/</div>
     </div>
     <div class="license-meta">
       
@@ -798,7 +843,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月15日</div>
+          <div>2023年8月23日</div>
         </div>
       
       
@@ -828,18 +873,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" title="liveData基本使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">liveData基本使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用">
-                        <span class="hidden-mobile">ViewBinding基本使用</span>
+                      <a href="/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" title="非静态内部类引起内存泄露处理误区及经验">
+                        <span class="hidden-mobile">非静态内部类引起内存泄露处理误区及经验</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
