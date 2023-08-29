@@ -1,0 +1,1230 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="煤炭黄帽">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="room基本使用[TOC] 前言room 是在sqlite基础上提供了一个抽象层，方便数据库操作，并支持协程、flow。 基本使用配置导入依赖必须项： 12implementation &quot;androidx.room:room-runtime:$roomVersion&quot;kapt &quot;androidx.room:room-compiler:$roomVersion&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="room基本使用">
+<meta property="og:url" content="http://example.com/2023/08/28/Android/jetpack/room%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20[Android,Jetpack,room,sql,%E6%95%B0%E6%8D%AE%E5%BA%93]%20K8B24%202023-8-28%2021;24;05/index.html">
+<meta property="og:site_name" content="煤炭黄帽">
+<meta property="og:description" content="room基本使用[TOC] 前言room 是在sqlite基础上提供了一个抽象层，方便数据库操作，并支持协程、flow。 基本使用配置导入依赖必须项： 12implementation &quot;androidx.room:room-runtime:$roomVersion&quot;kapt &quot;androidx.room:room-compiler:$roomVersion&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-28T13:24:05.000Z">
+<meta property="article:modified_time" content="2023-08-28T13:24:05.000Z">
+<meta property="article:author" content="煤炭黄帽">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Jetpack">
+<meta property="article:tag" content="room">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>room基本使用 - 煤炭黄帽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>煤炭黄帽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_冠军背影.webp.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">room基本使用</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        煤炭黄帽
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-28 21:24" pubdate>
+          2023年8月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          169 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Android"
+        id="heading-e84e30b9390cdb64db6db2c9ab87846d" role="tab" data-toggle="collapse" href="#collapse-e84e30b9390cdb64db6db2c9ab87846d"
+        aria-expanded="true"
+      >
+        Android
+        <span class="list-group-count">(16)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e84e30b9390cdb64db6db2c9ab87846d"
+           role="tabpanel" aria-labelledby="heading-e84e30b9390cdb64db6db2c9ab87846d">
+        
+        
+          
+          
+  <div class="category-post-list">
+    
+    
+  </div>
+
+          
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">flow基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/28/Android/jetpack/room%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,room,sql,%E6%95%B0%E6%8D%AE%E5%BA%93%5D%20K8B24%202023-8-28%2021;24;05/" title="room基本使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">room基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="动画"
+        id="heading-b599979e9a40823363451aeaadc0723f" role="tab" data-toggle="collapse" href="#collapse-b599979e9a40823363451aeaadc0723f"
+        aria-expanded="false"
+      >
+        动画
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-b599979e9a40823363451aeaadc0723f"
+           role="tabpanel" aria-labelledby="heading-b599979e9a40823363451aeaadc0723f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E5%8A%A8%E7%94%BB/Android%E5%8A%A8%E7%94%BB%20K8B24%20%5BAndroid,%E5%8A%A8%E7%94%BB%5D%20K8B24%202022-09-06%2009;36;05/" title="Android动画"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Android动画</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="性能优化"
+        id="heading-c2f42bd2a149bbeb4627b1e1b5fabedb" role="tab" data-toggle="collapse" href="#collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+        aria-expanded="false"
+      >
+        性能优化
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-c2f42bd2a149bbeb4627b1e1b5fabedb"
+           role="tabpanel" aria-labelledby="heading-c2f42bd2a149bbeb4627b1e1b5fabedb">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" title="性能优化之页面启动（实战一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">性能优化之页面启动（实战一）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/06/08/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%A4%84%E7%90%86%E8%AF%AF%E5%8C%BA%E5%8F%8A%E7%BB%8F%E9%AA%8C%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%EF%BC%8C%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%8C%E5%BC%B1%E5%BC%95%E7%94%A8%5D%20K8B24%202023-06-08%2022;38;23/" title="非静态内部类引起内存泄露处理误区及经验"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">非静态内部类引起内存泄露处理误区及经验</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+        aria-expanded="false"
+      >
+        技巧
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" title="妙用BuildConifg"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">妙用BuildConifg</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category-sub row nomargin-x">
+      <a class="category-subitem collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自定义view"
+        id="heading-5766bff0e279fc6044b6df2f4508918f" role="tab" data-toggle="collapse" href="#collapse-5766bff0e279fc6044b6df2f4508918f"
+        aria-expanded="false"
+      >
+        自定义view
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse " id="collapse-5766bff0e279fc6044b6df2f4508918f"
+           role="tabpanel" aria-labelledby="heading-5766bff0e279fc6044b6df2f4508918f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Canvas%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas%5D%20K8B24%202022-09-06%2009;36;05/" title="Canvas类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Canvas类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Paint%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Paint%5D%20K8B24%202022-09-06%2009;36;05/" title="Paint类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Paint类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/Path%E7%B1%BB%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Path%5D%20K8B24%202022-09-06%2009;36;05/" title="Path类使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Path类使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/03/29/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/drawText()%E5%B1%85%E4%B8%AD%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View,Canvas,drawText,%E6%96%87%E5%AD%97%E5%B1%85%E4%B8%AD%5D%20K8B24%202023-03-29%2023;56;05/" title="drawText()居中"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">drawText()居中</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/06/Android/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%20K8B24%20%5BAndroid,%E8%87%AA%E5%AE%9A%E4%B9%89View%5D%20K8B24%202022-09-06%2009;36;05/" title="自定义属性"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">自定义属性</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
+        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+        aria-expanded="true"
+      >
+        jetpack
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/10/18/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" title="StartUp 介绍"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">StartUp 介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ViewBinding基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">flow基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" title="lifeCycle基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">lifeCycle基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" title="liveData基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">liveData基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/28/Android/jetpack/room%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,room,sql,%E6%95%B0%E6%8D%AE%E5%BA%93%5D%20K8B24%202023-8-28%2021;24;05/" title="room基本使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">room基本使用</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">viewModel基本使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">room基本使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="room基本使用"><a href="#room基本使用" class="headerlink" title="room基本使用"></a>room基本使用</h1><p>[TOC]</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>room</code> 是在sqlite基础上提供了一个抽象层，方便数据库操作，并支持协程、flow。</p>
+<h2 id="基本使用配置"><a href="#基本使用配置" class="headerlink" title="基本使用配置"></a>基本使用配置</h2><h3 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h3><p>必须项：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">&quot;androidx.room:room-runtime:$roomVersion&quot;</span><br>kapt <span class="hljs-string">&quot;androidx.room:room-compiler:$roomVersion&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>根据需要添加以下依赖项：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs groovy">	<span class="hljs-comment">//Room 扩展程序增加了对数据库事务的协程支持</span><br>implementation <span class="hljs-string">&quot;androidx.room:room-ktx:$roomVersion&quot;</span><br><br><span class="hljs-comment">// optional - RxJava2 support for Room</span><br>   implementation <span class="hljs-string">&quot;androidx.room:room-rxjava2:$room_version&quot;</span><br><br>   <span class="hljs-comment">// optional - RxJava3 support for Room</span><br>   implementation <span class="hljs-string">&quot;androidx.room:room-rxjava3:$room_version&quot;</span><br><br>   <span class="hljs-comment">// optional - Guava support for Room, including Optional and ListenableFuture</span><br>   implementation <span class="hljs-string">&quot;androidx.room:room-guava:$room_version&quot;</span><br><br>   <span class="hljs-comment">// optional - Test helpers</span><br>   testImplementation <span class="hljs-string">&quot;androidx.room:room-testing:$room_version&quot;</span><br><br>   <span class="hljs-comment">// optional - Paging 3 Integration</span><br>   implementation <span class="hljs-string">&quot;androidx.room:room-paging:$room_version&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="创建数据实体"><a href="#创建数据实体" class="headerlink" title="创建数据实体"></a>创建数据实体</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Entity(tableName = <span class="hljs-string">&quot;players&quot;</span>)</span><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Player</span>(<br>    <span class="hljs-meta">@PrimaryKey(autoGenerate = true)</span><br>    <span class="hljs-keyword">var</span> id: <span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span>,<br>    <span class="hljs-keyword">var</span> name: String = <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-keyword">var</span> birthday: <span class="hljs-built_in">Long</span>? = <span class="hljs-number">0</span>,<br>    <span class="hljs-meta">@Ignore</span><br>    <span class="hljs-keyword">var</span> age:<span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span>,<br>    <span class="hljs-keyword">var</span> team: String = <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-meta">@ColumnInfo(name = <span class="hljs-string">&quot;number&quot;</span>)</span><br>    <span class="hljs-keyword">var</span> NO: String? = <span class="hljs-literal">null</span>,<br>    <span class="hljs-keyword">var</span> teamNum: <span class="hljs-built_in">Int</span>? = <span class="hljs-number">0</span>,<br>    <span class="hljs-keyword">var</span> isChampion: <span class="hljs-built_in">Boolean</span>? = <span class="hljs-literal">false</span><br>)<br><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NameAndTeam</span>(<br>    <span class="hljs-keyword">val</span> id : <span class="hljs-built_in">Int</span>,<br>    <span class="hljs-keyword">val</span> name: String ,<br>    <span class="hljs-keyword">val</span> team: String<br>)<br><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Team</span>(<br>    <span class="hljs-keyword">val</span> team: String<br>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>必须用 @Entity 注解，会自动映射为数据库表；</li>
+<li>默认表名为实体类名，可通过 tableName 重新指定；</li>
+<li>主键用@PrimaryKey 注解，可指定是否自增，默认不会；</li>
+<li>@Ignore 会在声称表结构时忽略此字段；</li>
+<li>数据库列名默认为实体类字段名，可通过 @ColumnInfo(name &#x3D; “ XX”)重新设定；</li>
+</ul>
+<h3 id="创建db"><a href="#创建db" class="headerlink" title="创建db"></a>创建db</h3><ul>
+<li>该类必须带有 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/androidx/room/Database?hl=zh-cn"><code>@Database</code></a> 注解，该注解包含列出所有与数据库关联的数据实体的 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/androidx/room/Database?hl=zh-cn#entities"><code>entities</code></a> 数组；</li>
+<li>该类必须是一个抽象类，用于扩展 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/androidx/room/RoomDatabase?hl=zh-cn"><code>RoomDatabase</code></a>；</li>
+<li>对于与数据库关联的每个 DAO 类，数据库类必须定义一个具有零参数的抽象方法，并返回 DAO 类的实例；</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Database(entities = [Player::class], version = 1)</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataBase</span> : <span class="hljs-type">RoomDatabase</span>() &#123;<br>    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">playersDao</span><span class="hljs-params">()</span></span>: PlayerDao<br><br>    <span class="hljs-keyword">companion</span> <span class="hljs-keyword">object</span> &#123;<br>        <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> instance: MyDataBase<br>		<br>        <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">init</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>            <span class="hljs-comment">//创建数据库实例</span><br>            instance = Room.databaseBuilder(context, MyDataBase::<span class="hljs-keyword">class</span>.java, <span class="hljs-string">&quot;app_db&quot;</span>)<br>                .allowMainThreadQueries()<br>                .build()<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果您的应用在单个进程中运行，在实例化 <code>AppDatabase</code> 对象时应遵循单例设计模式。每个 <code>RoomDatabase</code> 实例的成本相当高，而您几乎不需要在单个进程中访问多个实例。</p>
+<p>如果您的应用在多个进程中运行，请在数据库构建器调用中包含 <code>enableMultiInstanceInvalidation()</code>。这样，如果您在每个进程中都有一个 <code>AppDatabase</code> 实例，可以在一个进程中使共享数据库文件失效，并且这种失效会自动传播到其他进程中 <code>AppDatabase</code> 的实例。</p>
+<h3 id="创建对应的dao"><a href="#创建对应的dao" class="headerlink" title="创建对应的dao"></a>创建对应的dao</h3><p>该类根据业务需要提供了应用与数据库交互的方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Dao</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">PlayerDao</span> &#123;<br>    <span class="hljs-meta">@Insert(onConflict = OnConflictStrategy.REPLACE)</span><br>    <span class="hljs-keyword">suspend</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">insertPlayer</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Long</span><br>   <br>    <span class="hljs-meta">@Update</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">update</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>    <span class="hljs-meta">@Query(<span class="hljs-string">&quot;delete from players&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delAll</span><span class="hljs-params">()</span></span>:<span class="hljs-built_in">Int</span><br><br>    <span class="hljs-meta">@Delete</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delPlayer</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>    <span class="hljs-meta">@Query(<span class="hljs-string">&quot;select * from players where team = :team&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryByTeam</span><span class="hljs-params">(team:<span class="hljs-type">String</span>)</span></span>:Player<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="CRUD基本操作"><a href="#CRUD基本操作" class="headerlink" title="CRUD基本操作"></a>CRUD基本操作</h2><p><em><strong>注意：以下分类是按照SQL操作类型分类，而不是按Room的注解来分类的。</strong></em></p>
+<h3 id="Insert-插入数据"><a href="#Insert-插入数据" class="headerlink" title="Insert 插入数据"></a>Insert 插入数据</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"> <span class="hljs-comment">//insert 单个对象</span><br>    <span class="hljs-meta">@Insert(onConflict = OnConflictStrategy.REPLACE)</span><br>    <span class="hljs-keyword">suspend</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">insert</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Long</span><br><br>    <span class="hljs-comment">//insert 对象数组</span><br>    <span class="hljs-meta">@Insert(onConflict = OnConflictStrategy.REPLACE)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> player: <span class="hljs-type">Player</span>)</span></span>:List&lt;<span class="hljs-built_in">Long</span>&gt;<br><br>    <span class="hljs-comment">//insert 对象集合</span><br>    <span class="hljs-meta">@Insert(onConflict = OnConflictStrategy.REPLACE)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">insert</span><span class="hljs-params">(players : <span class="hljs-type">MutableList</span>&lt;<span class="hljs-type">Player</span>&gt;)</span></span>:List&lt;<span class="hljs-built_in">Long</span>&gt;<br><br>    <span class="hljs-comment">//insert 字段。 这里需要同时包含被注解的所有字段，比如下面目标对象包含7个列，但insert只有两列，因此会报错。</span><br>    <span class="hljs-comment">// 这种方式适合字段比较少的情况。</span><br><span class="hljs-comment">//    @Query(&quot;insert into players values(:name,:team)&quot;)</span><br><span class="hljs-comment">//    fun insertNameAndTeam(name: String,team:String):Long</span><br><br>    <span class="hljs-comment">//添加部分字段的内容。前提为其它字段都可以为null，且参数实体字段名和目标实体字段名相同。</span><br>    <span class="hljs-meta">@Insert(entity = Player::class, onConflict = OnConflictStrategy.REPLACE)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> nameAndTeam: <span class="hljs-type">NameAndTeam</span>)</span></span>:List&lt;<span class="hljs-built_in">Long</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>@Insert注解方法可方便实现数据的插入（单个、多个）；</p>
+</li>
+<li><p>注解包含 entitie 和 onConflict，entity为目标实体，onConflict 为冲突时改如何处理；</p>
+</li>
+<li><p>返回值为 Long类型或者 <code>List&lt;Long&gt;</code>，表示插入的行id；</p>
+</li>
+<li><p>可通过传递自定义实体参数来实现快速添加部分字段内容，前提为其它字段都可以为null，且参数实体字段名和目标实体字段名相同；</p>
+</li>
+</ul>
+<p><strong>onConflict 控制，有三个值可选：</strong></p>
+<ul>
+<li><p>OnConflictStrategy.ABORT ：默认值。出现冲突，撤销当前操作记录。但是已添加的数据不影响，并停止后续的操作。</p>
+</li>
+<li><p>OnConflictStrategy.REPLACE ：出现冲突，将已有数据，进行更新。替换成最新记录。继续执行后面的语句。</p>
+</li>
+<li><p>OnConflictStrategy.IGNORE： 出现冲突，保留已有数据，本次操作不生效。继续执行后面的语句。</p>
+</li>
+</ul>
+<h3 id="update更新"><a href="#update更新" class="headerlink" title="update更新"></a>update更新</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Update</span><br>  <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">update</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>  <span class="hljs-meta">@Update</span><br>  <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>  <span class="hljs-meta">@Update</span><br>  <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">update</span><span class="hljs-params">(players : <span class="hljs-type">List</span>&lt;<span class="hljs-type">Player</span>&gt;)</span></span>:<span class="hljs-built_in">Int</span><br>  <span class="hljs-comment">//参数实体字段名和目标实体字段名相同时，可直接将字段映射到目标实体。前提是参数实体字段必须包含目标实体的主键。</span><br>  <span class="hljs-meta">@Update(entity = Player::class, onConflict = OnConflictStrategy.REPLACE)</span><br>  <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">updateNameAndTeam</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> nameAndTeam: <span class="hljs-type">NameAndTeam</span>)</span></span>:<span class="hljs-built_in">Int</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Update注解可方便实现数据的更新（单个、多个）</li>
+<li>同样包含entitie 和 onConflict；</li>
+<li>返回值为 int，表示更新的数量（当更新实体在数据库中不存在时）;</li>
+<li>可通过传递自定义实体参数来实现快速更新部分字段内容，前提为参数实体字段必须包含目标实体的主键；</li>
+</ul>
+<h3 id="delete删除"><a href="#delete删除" class="headerlink" title="delete删除"></a>delete删除</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">   <span class="hljs-comment">//删除所有</span><br><span class="hljs-meta">@Query(<span class="hljs-string">&quot;delete from players&quot;</span>)</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delAll</span><span class="hljs-params">()</span></span>:<span class="hljs-built_in">Int</span><br><br>   <span class="hljs-meta">@Delete</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delPlayer</span><span class="hljs-params">(player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>   <span class="hljs-meta">@Delete</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delPlayer</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> player: <span class="hljs-type">Player</span>)</span></span>:<span class="hljs-built_in">Int</span><br><br>   <span class="hljs-meta">@Delete</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delPlayers</span><span class="hljs-params">(players: <span class="hljs-type">List</span>&lt;<span class="hljs-type">Player</span>&gt;)</span></span>:<span class="hljs-built_in">Int</span><br><br>   <span class="hljs-comment">//使用sql语句条件删除</span><br>   <span class="hljs-meta">@Query(<span class="hljs-string">&quot;delete from players where name = :name&quot;</span>)</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delByName</span><span class="hljs-params">(name: <span class="hljs-type">String</span>)</span></span>:<span class="hljs-built_in">Int</span><br>   <span class="hljs-comment">//也可以通过参数实体条件删除 。 会将参数实体映射到对应的目标实体</span><br>   <span class="hljs-meta">@Delete(entity = Player::class)</span><br>   <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">delbyTeam</span><span class="hljs-params">(<span class="hljs-keyword">vararg</span> team: <span class="hljs-type">Team</span>)</span></span>:<span class="hljs-built_in">Int</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Delete注解可方便实现数据的删除（单个、多个），但对于复杂情况删除需要用 @Query注解配合SQL语句；</li>
+<li>只包含entitie；</li>
+<li>返回值为 int，表示删除成功的数量;</li>
+<li>可通过sql语句进行条件删除外，也可通过自定义参数实体进行条件删除；</li>
+</ul>
+<h3 id="query查询"><a href="#query查询" class="headerlink" title="query查询"></a>query查询</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//查询所有</span><br><span class="hljs-meta">@Query(value = <span class="hljs-string">&quot;select * from players&quot;</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryAll</span><span class="hljs-params">()</span></span>:List&lt;Player&gt;<br><br><span class="hljs-comment">//根据条件查询返回 集合，如果没有查到返回空集合</span><br><span class="hljs-meta">@Query(<span class="hljs-string">&quot;select * from players where name = :name&quot;</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryByName</span><span class="hljs-params">(name:<span class="hljs-type">String</span>)</span></span>:List&lt;Player&gt;<br><br><span class="hljs-comment">//根据条件查询返回实体，如果查到返回第一条，否则返回null</span><br><span class="hljs-meta">@Query(<span class="hljs-string">&quot;select * from players where team = :team order by name desc&quot;</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryByTeam</span><span class="hljs-params">(team:<span class="hljs-type">String</span>)</span></span>:Player<br><br><span class="hljs-comment">//批量查询</span><br><span class="hljs-meta">@Query(<span class="hljs-string">&quot;select * from players where team in(:teams)&quot;</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryByTeam</span><span class="hljs-params">(team:<span class="hljs-type">String</span>)</span></span>:Player<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>通常通过@Query 及SQL语句进行条件查询;</li>
+<li>返回值可定义为集合或者单个实体；定位为集合若没有查到则会返回空集合，定位为单个实体，如果查到数据返回第一条数据，否则返回null；</li>
+</ul>
+<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="定义复合主键"><a href="#定义复合主键" class="headerlink" title="定义复合主键"></a>定义复合主键</h3><p>每个 Room 实体都必须定义一个<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sql/relational-databases/tables/create-primary-keys?view=sql-server-ver16">主键</a>，用于唯一标识相应数据库表中的每一行。</p>
+<p>如果您需要通过多个列的组合对实体实例进行唯一标识，则可以通过列出 <code>@Entity</code> 的 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/androidx/room/Entity?hl=zh-cn#primaryKeys()"><code>primaryKeys</code></a> 属性中的以下列定义一个复合主键：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Entity(primaryKeys = [<span class="hljs-string">&quot;firstName&quot;</span>, <span class="hljs-string">&quot;lastName&quot;</span>])</span><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>(<br>    <span class="hljs-keyword">val</span> firstName: String?,<br>    <span class="hljs-keyword">val</span> lastName: String?<br>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="忽略字段"><a href="#忽略字段" class="headerlink" title="忽略字段"></a>忽略字段</h3><p>默认情况下，Room 会为实体中定义的每个字段创建一个列。 如果某个实体中有您不想保留的字段，则可以使用 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/room/Ignore?hl=zh-cn"><code>@Ignore</code></a> 为这些字段添加注解。</p>
+<p>如果实体继承了父实体的字段，则使用 <code>@Entity</code> 属性的 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/androidx/room/Entity?hl=zh-cn#ignoredColumns()"><code>ignoredColumns</code></a> 属性通常会更容易，因为会自动生成从父类中继承的字段对应的列：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">open</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-keyword">var</span> picture: Bitmap? = <span class="hljs-literal">null</span><br>&#125;<br><br><span class="hljs-meta">@Entity(ignoredColumns = [<span class="hljs-string">&quot;picture&quot;</span>])</span><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RemoteUser</span>(<br>    <span class="hljs-meta">@PrimaryKey</span> <span class="hljs-keyword">val</span> id: <span class="hljs-built_in">Int</span>,<br>    <span class="hljs-keyword">val</span> hasVpn: <span class="hljs-built_in">Boolean</span><br>) : User()<br></code></pre></td></tr></table></figure>
+
+<h3 id="多重映射返回值类型"><a href="#多重映射返回值类型" class="headerlink" title="多重映射返回值类型"></a>多重映射返回值类型</h3><p>根据所需的映射结构为您的方法定义<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Multimap">多重映射</a>返回值类型，并直接在 SQL 查询中定义实体之间的关系。</p>
+<p>例如，以下查询方法会返回 <code>User</code> 和 <code>Book</code> 实例的映射，用于表示已借阅特定图书的图书馆用户：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Query(</span><br><span class="hljs-meta">    <span class="hljs-string">&quot;SELECT * FROM user&quot;</span> +</span><br><span class="hljs-meta">    <span class="hljs-string">&quot;JOIN book ON user.id = book.user_id&quot;</span></span><br><span class="hljs-meta">)</span><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">loadUserAndBookNames</span><span class="hljs-params">()</span></span>: Map&lt;User, List&lt;Book&gt;&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建嵌套对象"><a href="#创建嵌套对象" class="headerlink" title="创建嵌套对象"></a>创建嵌套对象</h3><p>通常我们的实体中某个字段不是基本类型，而是另一个数据对象，即所谓的嵌套对象。此时可以使用 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/room/Embedded?hl=zh-cn"><code>@Embedded</code></a> 注释表示要分解为表格中的子字段的对象，数据库中会自动生成浅谈字段的列。然后，您可以像查询其他各个列一样查询嵌套字段。</p>
+<p>如下：数据库会自动生成  street、city 两列。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Address</span>(<br>    <span class="hljs-keyword">val</span> street: String?,<br>    <span class="hljs-keyword">val</span> city: String?,<br>)<br><br><span class="hljs-meta">@Entity</span><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>(<br>    <span class="hljs-meta">@PrimaryKey</span> <span class="hljs-keyword">val</span> id: <span class="hljs-built_in">Int</span>,<br>    <span class="hljs-keyword">val</span> firstName: String?,<br>    <span class="hljs-meta">@Embedded</span> <span class="hljs-keyword">val</span> address: Address?<br>)<br></code></pre></td></tr></table></figure>
+
+<p>如果某个实体具有相同类型的多个嵌套字段，您可以通过设置 <a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/androidx/room/Embedded?hl=zh-cn#getPrefix()"><code>prefix</code></a> 属性确保每个列的唯一性。然后，Room 会将提供的值添加到嵌套对象中每个列名称的开头。</p>
+<p>如下：数据库会自动生成 address_street、address_city、home_street、home_city 四列。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Embedded(prefix = <span class="hljs-string">&quot;address_&quot;</span>)</span><br><span class="hljs-keyword">var</span> address: Address? = <span class="hljs-literal">null</span>,<br><span class="hljs-meta">@Embedded(prefix = <span class="hljs-string">&quot;home_&quot;</span>)</span><br><span class="hljs-keyword">var</span> home: Address? = <span class="hljs-literal">null</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="类型转换器-TypeConverters"><a href="#类型转换器-TypeConverters" class="headerlink" title="类型转换器 @TypeConverters"></a>类型转换器 @TypeConverters</h3><p>有时候可能需要在Room中保存不支持的字段类型，如保存一个Date对象或者一个字符串数组对象，这时就像需要配合类型转换器来实现。</p>
+<p><code>@TypeConverter</code>定义类型转换器，如下定义了一个 数组对象和string对象互相转换的转换器：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">StringListConverter</span> &#123;<br>    <span class="hljs-meta">@TypeConverter</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">listToString</span><span class="hljs-params">(list: <span class="hljs-type">List</span>&lt;<span class="hljs-type">String</span>&gt;)</span></span>: String &#123;<br>        <span class="hljs-keyword">var</span> sb = java.lang.StringBuilder()<br>        list.forEachIndexed &#123; indext, s -&gt;<br>            <span class="hljs-keyword">if</span> (indext != list.count() - <span class="hljs-number">1</span>) &#123;<br>                sb.append(<span class="hljs-string">&quot;<span class="hljs-subst">$&#123;s&#125;</span><span class="hljs-subst">$&#123;SPLITE&#125;</span>&quot;</span>)<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                sb.append(s)<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> sb.toString()<br>    &#125;<br><br>    <span class="hljs-meta">@TypeConverter</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">stringToList</span><span class="hljs-params">(s: <span class="hljs-type">String</span>)</span></span>: List&lt;String&gt; &#123;<br>        <span class="hljs-keyword">return</span> s.split(SPLITE).toList()<br>    &#125;<br><br>    <span class="hljs-keyword">companion</span> <span class="hljs-keyword">object</span> &#123;<br>        <span class="hljs-keyword">const</span> <span class="hljs-keyword">val</span> SPLITE = <span class="hljs-string">&quot;, &quot;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>添加<code>@TypeConverters</code>注解。在<code>Database</code>中添加注解， Room 可以在所有位置使用定义的类型转换器，在<code>@Entity</code> 或 <code>@Dao</code> 类添加注解，以便将类型转换器的范围限定为特定的实体或 DAO。</p>
+<p>在<code>Database</code>中添加注解：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Database(entities = [Player::class,Game::class], version = 1)</span><br><span class="hljs-meta">@TypeConverters(StringListConverter::class)</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataBase</span> : <span class="hljs-type">RoomDatabase</span>() &#123;<br>    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">playersDao</span><span class="hljs-params">()</span></span>: PlayerDao<br>    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">gamesDao</span><span class="hljs-params">()</span></span>: GamesDao<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此时，Player对象和Game对象中可以添加<code>List&lt;String&gt;</code>类型的字段，并在数据库中自动转换为 string类型。</p>
+<p>在<code>@Entity</code>中添加注解：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Entity(tableName = <span class="hljs-string">&quot;games&quot;</span>)</span><br><span class="hljs-meta">@TypeConverters(StringListConverter::class)</span><br><span class="hljs-keyword">data</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Game</span>(<br>    <span class="hljs-meta">@PrimaryKey(autoGenerate = true)</span><br>    <span class="hljs-keyword">var</span> id: <span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span>,<br>    <span class="hljs-keyword">var</span> type :List&lt;String&gt; = emptyList(),<br>    <span class="hljs-keyword">var</span> language :List&lt;String&gt; = emptyList()<br>)<br></code></pre></td></tr></table></figure>
+
+<p>此时Game 中的所有<code>List&lt;String&gt;</code>字段将会被StringListConverter解析转换。</p>
+<p><strong>看TypeConverters源码可以在 字段上 和@Dao类使用此注解，但暂不理解怎么用！！特别是在字段上增加注解后不能编译，可能用的不对吧！</strong></p>
+<h3 id="预填充数据库"><a href="#预填充数据库" class="headerlink" title="预填充数据库"></a>预填充数据库</h3><p>有时，您可能希望应用启动时数据库中就已经加载了一组特定的数据。这称为预填充数据库。</p>
+<p>assert文件预填充：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Room.databaseBuilder(appContext, AppDatabase::<span class="hljs-keyword">class</span>.java, <span class="hljs-string">&quot;Sample.db&quot;</span>)<br>    .createFromAsset(<span class="hljs-string">&quot;database/myapp.db&quot;</span>)<br>    .build()<br></code></pre></td></tr></table></figure>
+
+<p>文件系统预填充：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">Room.databaseBuilder(appContext, AppDatabase::<span class="hljs-keyword">class</span>.java, <span class="hljs-string">&quot;Sample.db&quot;</span>)<br>    .createFromFile(File(<span class="hljs-string">&quot;mypath&quot;</span>))<br>    .build()<br></code></pre></td></tr></table></figure>
+
+<h3 id="配合Flow使用"><a href="#配合Flow使用" class="headerlink" title="配合Flow使用"></a>配合Flow使用</h3><p>Room查询支持返回flow对象，通过flow我们可以监听整个数据表的变化。如下代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Dao</span><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">GamesDao</span> &#123;<br>    <span class="hljs-meta">@Query(<span class="hljs-string">&quot;SELECT * FROM games&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryAll</span><span class="hljs-params">()</span></span>:Flow&lt;List&lt;Game&gt;&gt;<br>    <br>    <span class="hljs-meta">@Query(<span class="hljs-string">&quot;SELECT * FROM games WHERE position LIKE &#x27;%Eng%&#x27;&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">queryByName</span><span class="hljs-params">()</span></span>:Flow&lt;List&lt;Game&gt;&gt;<br>&#125;<br><br>lifecycleScope.launch &#123;<br>    gamesDao.queryAll().collect&#123;<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;queryAll count = <span class="hljs-subst">$&#123;it.count()&#125;</span>&quot;</span>)<br>    &#125;<br>&#125;<br><br>lifecycleScope.launch&#123;<br>    gamesDao.queryByName().&#123; old, new -&gt;<br>        old.count() != new.count()<br>    &#125;.collect&#123;<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;queryByName count = <span class="hljs-subst">$&#123;it.count()&#125;</span>&quot;</span>)<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>当我们对表中的数据增删改查操作时，就会立马打印日志。而且只要是数据库中的任意一个数据有更新，无论是哪一行数据的更改，那就重新执行 query 操作并再次派发 Flow，这是因为 SQLite 数据库的内容更新通知功能是以表 (Table) 数据为单位，而不是以行 (Row) 数据为单位，因此只要是表中的数据有更新，它就触发内容更新通知。</p>
+<p>对于上例中的<code>queryByName()</code>，我们并不需要每次都去触发监听，因为有些数据的改动对其来说是无关的，这时就需要用<code>distinctUntilChanged()</code>来过滤，如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">lifecycleScope.launch&#123;<br>    gamesDao.queryByName().distinctUntilChanged &#123; old, new -&gt;<br>        old.count() != new.count()<br>    &#125;.collect&#123;<br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;queryByName count = <span class="hljs-subst">$&#123;it.count()&#125;</span>&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="数据库升级"><a href="#数据库升级" class="headerlink" title="数据库升级"></a>数据库升级</h2><p>Room 通过<code>Migration</code>类来执行升级的操作，我们只要告诉<code>Migration</code>类改了什么就行，比如<code>新增</code>字段或表。大致流程为：修改版本号 -&gt; 添加 Migration -&gt;修改实体-&gt; 添加给 databaseBuilder。</p>
+<p><strong>注意：<code>Migration</code>的实现中SQL语句必须和@entity注解的实体相对应，包括字段名，是否自增，是否为null等约束。</strong></p>
+<h4 id="升级步骤"><a href="#升级步骤" class="headerlink" title="升级步骤"></a>升级步骤</h4><ol>
+<li><p>修改database新的版本号：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Database(entities = [Player::class, Game::class], version = 2)</span><br><span class="hljs-comment">//@TypeConverters(StringListConverter::class)</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataBase</span> : <span class="hljs-type">RoomDatabase</span>() &#123;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在database中定义Migration，并实现本次升级需要的操作,其中Migration接收两个参数（旧版本、新版本）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> MIGRATION_1_2: Migration = <span class="hljs-keyword">object</span> : Migration(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) &#123;<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">migrate</span><span class="hljs-params">(database: <span class="hljs-type">SupportSQLiteDatabase</span>)</span></span> &#123;<br>        <span class="hljs-comment">//增加表 student</span><br>        Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;增加表 student&quot;</span>)<br>        database.execSQL(<span class="hljs-string">&quot;CREATE TABLE IF NOT EXISTS `student` (`id` INTEGER PRIMARY KEY autoincrement NOT NULL, `name` TEXT NOT NULL,&#x27;age&#x27; INTEGER NOT NULL)&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改对应的实体与升级后相匹配，比如新增实体或者更改实体字段等；</p>
+<p><strong>注意：<code>Migration</code>的实现中SQL语句必须和@entity注解的实体相对应，包括字段名，是否自增，是否为null等约束</strong>。</p>
+</li>
+<li><p>将Migration添加给databaseBuilder</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">init</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>    instance = Room.databaseBuilder(context, MyDataBase::<span class="hljs-keyword">class</span>.java, <span class="hljs-string">&quot;app_db&quot;</span>)<br>        .allowMainThreadQueries()<br>        .addMigrations(MIGRATION_1_2)<br>        .build()<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="常见升级操作"><a href="#常见升级操作" class="headerlink" title="常见升级操作"></a>常见升级操作</h4><h5 id="增加表table"><a href="#增加表table" class="headerlink" title="增加表table"></a>增加表table</h5><p>如新增student的表，字段有id（主键 自增 不为null）、name(String类型 不为null)、age(int 类型不为null)：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">database.execSQL(<span class="hljs-string">&quot;CREATE TABLE IF NOT EXISTS `student` (`id` INTEGER PRIMARY KEY autoincrement NOT NULL, `name` TEXT NOT NULL,&#x27;age&#x27; INTEGER NOT NULL)&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="增加字段"><a href="#增加字段" class="headerlink" title="增加字段"></a>增加字段</h5><p>给student表增加字段 gender(String类型 不为null)：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">database.execSQL(<span class="hljs-string">&quot;ALTER TABLE student ADD COLUMN gender TEXT NOT NULL DEFAULT &#x27;女&#x27;&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="删除字段"><a href="#删除字段" class="headerlink" title="删除字段"></a>删除字段</h5><p>删除student表的age字段：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//重新创建一个临时表</span><br>database.execSQL(<span class="hljs-string">&quot;CREATE TABLE student_temp(id INTEGER PRIMARY KEY autoincrement NOT NULL, name TEXT NOT NULL,gender TEXT NOT NULL)&quot;</span>)<br><span class="hljs-comment">//将student表中的数据 赋值到新表中</span><br>database.execSQL(<span class="hljs-string">&quot;INSERT INTO student_temp (id,name,gender)&quot;</span> + <span class="hljs-string">&quot;SELECT id,name,gender FROM student&quot;</span>)<br><span class="hljs-comment">//删除旧表student</span><br>database.execSQL(<span class="hljs-string">&quot;DROP TABLE student&quot;</span>)<br><span class="hljs-comment">//将新表名该为原来的student表名</span><br>database.execSQL(<span class="hljs-string">&quot;ALTER TABLE student_temp RENAME to student&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h5><p>删除student表：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">database.execSQL(<span class="hljs-string">&quot;DROP TABLE student&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="修改字段名或者表名"><a href="#修改字段名或者表名" class="headerlink" title="修改字段名或者表名"></a>修改字段名或者表名</h5><p>类似删除字段的操作，需要一个临时表进行配合即可。</p>
+<h4 id="完整升级demo代码"><a href="#完整升级demo代码" class="headerlink" title="完整升级demo代码"></a>完整升级demo代码</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Database(entities = [Player::class, Game::class], version = 5)</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataBase</span> : <span class="hljs-type">RoomDatabase</span>() &#123;<br>    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">playersDao</span><span class="hljs-params">()</span></span>: PlayerDao<br>    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">gamesDao</span><span class="hljs-params">()</span></span>: GamesDao<br><br>    <span class="hljs-keyword">companion</span> <span class="hljs-keyword">object</span> &#123;<br>        <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> instance: MyDataBase<br><br>        <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">init</span><span class="hljs-params">(context: <span class="hljs-type">Context</span>)</span></span> &#123;<br>            instance = Room.databaseBuilder(context, MyDataBase::<span class="hljs-keyword">class</span>.java, <span class="hljs-string">&quot;app_db&quot;</span>)<br>                .allowMainThreadQueries()<br>                .addMigrations(MIGRATION_1_2)<br>                .addMigrations(MIGRATION_2_3)<br>                .addMigrations(MIGRATION_3_4)<br>                .addMigrations(MIGRATION_4_5)<br>                .build()<br>        &#125;<br><br>        <span class="hljs-keyword">val</span> MIGRATION_1_2: Migration = <span class="hljs-keyword">object</span> : Migration(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) &#123;<br>            <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">migrate</span><span class="hljs-params">(database: <span class="hljs-type">SupportSQLiteDatabase</span>)</span></span> &#123;<br>                <span class="hljs-comment">//增加表 student</span><br>                Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;增加表 student&quot;</span>)<br>                database.execSQL(<span class="hljs-string">&quot;CREATE TABLE IF NOT EXISTS `student` (`id` INTEGER PRIMARY KEY autoincrement NOT NULL, `name` TEXT NOT NULL,&#x27;age&#x27; INTEGER NOT NULL)&quot;</span>)<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">val</span> MIGRATION_2_3: Migration = <span class="hljs-keyword">object</span> : Migration(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>) &#123;<br>            <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">migrate</span><span class="hljs-params">(database: <span class="hljs-type">SupportSQLiteDatabase</span>)</span></span> &#123;<br>                <span class="hljs-comment">//增加字段</span><br>                Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;增加表 student 字段 gender&quot;</span>)<br>                database.execSQL(<span class="hljs-string">&quot;ALTER TABLE student ADD COLUMN gender TEXT NOT NULL DEFAULT &#x27;女&#x27;&quot;</span>)<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">val</span> MIGRATION_3_4: Migration = <span class="hljs-keyword">object</span> : Migration(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>) &#123;<br>            <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">migrate</span><span class="hljs-params">(database: <span class="hljs-type">SupportSQLiteDatabase</span>)</span></span> &#123;<br>                <span class="hljs-comment">//删除字段</span><br>                Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;删除表 age 字段&quot;</span>)<br>                <span class="hljs-comment">//重新创建一个临时表</span><br>                database.execSQL(<span class="hljs-string">&quot;CREATE TABLE student_temp(id INTEGER PRIMARY KEY autoincrement NOT NULL, name TEXT NOT NULL,gender TEXT NOT NULL)&quot;</span>)<br>                <span class="hljs-comment">//将word表中的数据 赋值到新表中</span><br>                database.execSQL(<span class="hljs-string">&quot;INSERT INTO student_temp (id,name,gender)&quot;</span> + <span class="hljs-string">&quot;SELECT id,name,gender FROM student&quot;</span>)<br>                <span class="hljs-comment">//删除旧表word</span><br>                database.execSQL(<span class="hljs-string">&quot;DROP TABLE student&quot;</span>)<br>                <span class="hljs-comment">//将新表名该为原来的word表名</span><br>                database.execSQL(<span class="hljs-string">&quot;ALTER TABLE student_temp RENAME to student&quot;</span>)<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">val</span> MIGRATION_4_5: Migration = <span class="hljs-keyword">object</span> : Migration(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>) &#123;<br>            <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">migrate</span><span class="hljs-params">(database: <span class="hljs-type">SupportSQLiteDatabase</span>)</span></span> &#123;<br>                <span class="hljs-comment">//删除表</span><br>                Log.e(<span class="hljs-string">&quot;tj24&quot;</span>,<span class="hljs-string">&quot;删除表 student &quot;</span>)<br>                database.execSQL(<span class="hljs-string">&quot;DROP TABLE student&quot;</span>)<br>            &#125;<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/training/data-storage/room?hl=zh-cn"><code>room数据库官方文档</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&mid=2652058452&idx=2&sn=2ba868c5bc443d2ad185fed8c39ade41&chksm=808c9311b7fb1a07ba59ef3cf21c7ee137eeea20ec2542529a007cb97b0daf56145fe9cb5c31&scene=178&cur_album_id=1355322955810799617#rd"><code>实战 | 在 Room 中使用 Flow</code></a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/">#Android</a>
+      
+        <a href="/tags/Jetpack/">#Jetpack</a>
+      
+        <a href="/tags/room/">#room</a>
+      
+        <a href="/tags/sql/">#sql</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>room基本使用</div>
+      <div>http://example.com/2023/08/28/Android/jetpack/room基本使用 K8B24 [Android,Jetpack,room,sql,数据库] K8B24 2023-8-28 21;24;05/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>煤炭黄帽</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用">
+                        <span class="hidden-mobile">flow基本使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.17/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"ELr9UvQ0CKkFmPjl3MbFM0wp-gzGzoHsz","appKey":"6PBJlR78sNXdrY332SJH6Mtf","path":"window.location.pathname","placeholder":"来喷我啊","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"https://elr9uvq0.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
