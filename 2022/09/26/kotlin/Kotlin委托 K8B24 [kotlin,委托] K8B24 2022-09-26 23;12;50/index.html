@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          7.6k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          88 分钟
+          96 分钟
         
       </span>
     
@@ -537,6 +537,22 @@
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">KobeBy</span> &#123;<br>    <span class="hljs-keyword">val</span> name <span class="hljs-keyword">by</span> lazy &#123;<br>        println(<span class="hljs-string">&quot;Kobe Bryant&quot;</span>)<br>        <span class="hljs-string">&quot;kobe&quot;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">val</span> kobeBy = KobeBy()<br>    println(<span class="hljs-string">&quot;kobeBy.name = <span class="hljs-subst">$&#123;kobeBy.name&#125;</span>&quot;</span>)<br>    println(<span class="hljs-string">&quot;kobeBy.name = <span class="hljs-subst">$&#123;kobeBy.name&#125;</span>&quot;</span>)<br>&#125;<br> <span class="hljs-comment">//输出：</span><br>		<span class="hljs-comment">//Kobe Bryant</span><br>	    <span class="hljs-comment">//kobeBy.name = kobe</span><br>	    <span class="hljs-comment">//kobeBy.name = kobe</span><br></code></pre></td></tr></table></figure>
 
+<p>这里<code>lazy</code>还可以增加参数来指定模式，默认为：<code>LazyThreadSafetyMode.SYNCHRONIZED</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> name <span class="hljs-keyword">by</span> lazy(LazyThreadSafetyMode.SYNCHRONIZED) [<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>模式分类及使用场景如下：</p>
+<ul>
+<li><strong>SYNCHRONIZED</strong></li>
+</ul>
+<p>线程安全 比如有某个变量，可能会被多个线程同时调用，而且你不接受初始化函数可能会调用多次，所以可以使用此方法，但需要注意的是，因为get时其内部使用了对象锁，所以在多线程情况下 第一次 调用时，很可能会阻塞我们的其他线程，比如子线程和主线程同时调用，此时子线程先调用到，那主线程此时就会被阻塞，虽然这个时机其实一般而言很短(主要取决于内部逻辑)，但也仍需要注意。</p>
+<ul>
+<li><strong>PUBLICATION</strong></li>
+</ul>
+<p>线程安全 但是相比前者，你可以接受 你的初始化函数可能被调用多次 ，但并不影响你最终的使用，因为只有第一个初始化结果的才会被返回，并不影响你的逻辑，所以一般情况下，如果不在意上述问题，我们可以尽量采用这种方式去编写线程安全代码。以避免调用get加锁导致初始化性能损耗。</p>
+<ul>
+<li><strong>NONE</strong></li>
+</ul>
+<p>非线程安全 使用此方式，需要注意在线程安全的情况下调用，否则多线程下很可能造成多个初始化变量，导致不同的线程初始时调用的对象甚至不一致，造成逻辑问题。但其实对于 Android 开发而言，这种反而是比较常见的用途，与我们打交道的往往都是主线程，比如我们可以用在Activity 或者 Fragment 中去 lazy 一些字段等。</p>
 <h4 id="非空-notNull"><a href="#非空-notNull" class="headerlink" title="非空 notNull()"></a>非空 <code>notNull()</code></h4><p>非空委托，必须初始化赋值方可使用，否则会报错。有以下优点：</p>
 <ul>
 <li>后续使用无需步步判空处理及初始值隐晦问题，如 <code>var  s  : String? = &quot; &quot;</code>;</li>

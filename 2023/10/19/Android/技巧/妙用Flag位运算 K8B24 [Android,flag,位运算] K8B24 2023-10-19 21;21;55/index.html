@@ -16,26 +16,26 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ViewBinding基本使用[TOC] 前言 ViewBinding主要用于查找控件id，相比于dataBinding更加轻量化，且不需要额外的引入其他第三方库（butterknife）,使用过程中不像kotlin-android-extensions不注意会引错包造成空指针。  配置模块build.gradle文件中 android 闭包中配置如下： 12345android &amp;#123;">
+    <meta name="description" content="妙用BuildConifg前言在Android中，能看到大量flag位运算，比如： 12345678910111213141516171819202122232425int mGroupFlags;  ---&gt;默认为0int FLAG_CLIP_CHILDREN &#x3D; 0x1;     ---&gt; 2^0 &#x3D; 1  1&lt;&lt;0int FLAG_CLIP_TO_PADDING &#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ViewBinding基本使用">
-<meta property="og:url" content="http://example.com/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20[Android,Jetpack,viewBinding]%20K8B24%202023-4-14%2022;31;11/index.html">
+<meta property="og:title" content="妙用Flag位运算">
+<meta property="og:url" content="http://example.com/2023/10/19/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8Flag%E4%BD%8D%E8%BF%90%E7%AE%97%20K8B24%20[Android,flag,%E4%BD%8D%E8%BF%90%E7%AE%97]%20K8B24%202023-10-19%2021;21;55/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="ViewBinding基本使用[TOC] 前言 ViewBinding主要用于查找控件id，相比于dataBinding更加轻量化，且不需要额外的引入其他第三方库（butterknife）,使用过程中不像kotlin-android-extensions不注意会引错包造成空指针。  配置模块build.gradle文件中 android 闭包中配置如下： 12345android &amp;#123;">
+<meta property="og:description" content="妙用BuildConifg前言在Android中，能看到大量flag位运算，比如： 12345678910111213141516171819202122232425int mGroupFlags;  ---&gt;默认为0int FLAG_CLIP_CHILDREN &#x3D; 0x1;     ---&gt; 2^0 &#x3D; 1  1&lt;&lt;0int FLAG_CLIP_TO_PADDING &#x3D;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-14T14:31:11.000Z">
-<meta property="article:modified_time" content="2023-04-14T14:31:11.000Z">
+<meta property="article:published_time" content="2023-10-19T13:21:55.000Z">
+<meta property="article:modified_time" content="2023-10-19T13:21:55.000Z">
 <meta property="article:author" content="煤炭黄帽">
 <meta property="article:tag" content="Android">
-<meta property="article:tag" content="Jetpack">
-<meta property="article:tag" content="viewBinding">
+<meta property="article:tag" content="flag">
+<meta property="article:tag" content="位运算">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ViewBinding基本使用 - 煤炭黄帽</title>
+  <title>妙用Flag位运算 - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">ViewBinding基本使用</span>
+            <span id="subtitle">妙用Flag位运算</span>
           
         </div>
 
@@ -216,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-14 22:31" pubdate>
-          2023年4月14日 晚上
+        <time datetime="2023-10-19 21:21" pubdate>
+          2023年10月19日 晚上
         </time>
       </span>
     
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          1.5k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          45 分钟
+          19 分钟
         
       </span>
     
@@ -318,17 +318,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
+      <a class="category-subitem collapsed
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
         id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
-        aria-expanded="true"
+        aria-expanded="false"
       >
         jetpack
         <span class="list-group-count">(7)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
+      <div class="category-collapse collapse " id="collapse-388f3517eda5bf26174654c89c9d201f"
            role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
         
         
@@ -349,7 +349,7 @@
       
         <a href="/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">ViewBinding基本使用</span>
         </a>
       
@@ -501,17 +501,17 @@
     
     
     <div class="category-sub row nomargin-x">
-      <a class="category-subitem collapsed
+      <a class="category-subitem 
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
         id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         技巧
         <span class="list-group-count">(2)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse " id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+      <div class="category-collapse collapse show" id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
            role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
         
         
@@ -532,7 +532,7 @@
       
         <a href="/2023/10/19/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8Flag%E4%BD%8D%E8%BF%90%E7%AE%97%20K8B24%20%5BAndroid,flag,%E4%BD%8D%E8%BF%90%E7%AE%97%5D%20K8B24%202023-10-19%2021;21;55/" title="妙用Flag位运算"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">妙用Flag位运算</span>
         </a>
       
@@ -625,17 +625,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="jetpack"
-        id="heading-388f3517eda5bf26174654c89c9d201f" role="tab" data-toggle="collapse" href="#collapse-388f3517eda5bf26174654c89c9d201f"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="技巧"
+        id="heading-952d012fcbf9d533dab2eae0ca3ca41f" role="tab" data-toggle="collapse" href="#collapse-952d012fcbf9d533dab2eae0ca3ca41f"
         aria-expanded="true"
       >
-        jetpack
-        <span class="list-group-count">(7)</span>
+        技巧
+        <span class="list-group-count">(2)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-388f3517eda5bf26174654c89c9d201f"
-           role="tabpanel" aria-labelledby="heading-388f3517eda5bf26174654c89c9d201f">
+      <div class="category-collapse collapse show" id="collapse-952d012fcbf9d533dab2eae0ca3ca41f"
+           role="tabpanel" aria-labelledby="heading-952d012fcbf9d533dab2eae0ca3ca41f">
         
         
           
@@ -644,64 +644,19 @@
     
       
       
-        <a href="/2022/10/18/Android/jetpack/StartUp%20%E4%BB%8B%E7%BB%8D%20K8B24%20%5BAndroid,Jetpack,startUp%5D%20K8B24%202022-10-18%2021;36;14/" title="StartUp 介绍"
+        <a href="/2022/12/07/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8BuildConifg%20K8B24%20%5BAndroid,BuildConifg%5D%20K8B24%202022-12-07%2021;25;05/" title="妙用BuildConifg"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">StartUp 介绍</span>
+          <span class="category-post">妙用BuildConifg</span>
         </a>
       
     
       
       
-        <a href="/2023/04/14/Android/jetpack/ViewBinding%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewBinding%5D%20K8B24%202023-4-14%2022;31;11/" title="ViewBinding基本使用"
+        <a href="/2023/10/19/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8Flag%E4%BD%8D%E8%BF%90%E7%AE%97%20K8B24%20%5BAndroid,flag,%E4%BD%8D%E8%BF%90%E7%AE%97%5D%20K8B24%202023-10-19%2021;21;55/" title="妙用Flag位运算"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">ViewBinding基本使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/08/23/Android/jetpack/flow%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,flowl%5D%20K8B24%202023-8-23%2019;31;11/" title="flow基本使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">flow基本使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/04/16/Android/jetpack/lifeCycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,lifeCycle%5D%20K8B24%202023-4-16%2016;16;16/" title="lifeCycle基本使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">lifeCycle基本使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/04/16/Android/jetpack/liveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,liveData%5D%20K8B24%202023-4-16%2011;12;12/" title="liveData基本使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">liveData基本使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/08/28/Android/jetpack/room%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,room,sql,%E6%95%B0%E6%8D%AE%E5%BA%93%5D%20K8B24%202023-8-28%2021;24;05/" title="room基本使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">room基本使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">viewModel基本使用</span>
+          <span class="category-post">妙用Flag位运算</span>
         </a>
       
     
@@ -724,48 +679,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ViewBinding基本使用</h1>
+            <h1 style="display: none">妙用Flag位运算</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ViewBinding基本使用"><a href="#ViewBinding基本使用" class="headerlink" title="ViewBinding基本使用"></a>ViewBinding基本使用</h1><p>[TOC]</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p><code>ViewBinding</code>主要用于查找控件id，相比于<code>dataBinding</code>更加轻量化，且不需要额外的引入其他第三方库（<code>butterknife</code>）,使用过程中不像<code>kotlin-android-extensions</code>不注意会引错包造成空指针。</p>
-</blockquote>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>模块build.gradle文件中 android 闭包中配置如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">android &#123;<br>    buildFeatures &#123;<br>        viewBinding = <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="妙用BuildConifg"><a href="#妙用BuildConifg" class="headerlink" title="妙用BuildConifg"></a>妙用BuildConifg</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在Android中，能看到大量flag位运算，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> mGroupFlags;  ---&gt;默认为<span class="hljs-number">0</span><br><br><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_CLIP_CHILDREN</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x1</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">0</span> = <span class="hljs-number">1</span>  <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">0</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_CLIP_TO_PADDING</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x2</span>;      ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">1</span> = <span class="hljs-number">2</span>   <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">1</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_INVALIDATE_REQUIRED</span>  <span class="hljs-operator">=</span> <span class="hljs-number">0x4</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">2</span> = <span class="hljs-number">4</span>   <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">2</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_RUN_ANIMATION</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x8</span>;      ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">3</span> = <span class="hljs-number">8</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_ANIMATION_DONE</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x10</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">4</span> = <span class="hljs-number">16</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_PADDING_NOT_NULL</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x20</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">5</span> = <span class="hljs-number">32</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_ANIMATION_CACHE</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x40</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">6</span> = <span class="hljs-number">64</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_OPTIMIZE_INVALIDATE</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x80</span>;      ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">7</span> = <span class="hljs-number">128</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_CLEAR_TRANSFORMATION</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x100</span>;      ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">7</span> = <span class="hljs-number">256</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_NOTIFY_ANIMATION_LISTENER</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x200</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">7</span> = <span class="hljs-number">512</span><br><br><span class="hljs-type">int</span> <span class="hljs-variable">FLAG_USE_CHILD_DRAWING_ORDER</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x400</span>;     ---&gt; <span class="hljs-number">2</span>^<span class="hljs-number">8</span> = <span class="hljs-number">1024</span><br></code></pre></td></tr></table></figure>
 
-<p>如果你的AndroidStudio版本低于4.0，则配置如下：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs groovy">android &#123;<br>    viewBinding &#123;<br>        enabled = <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>位运算主要是直接操控二进制时使用，优点为节约内存。如果你的代码中某个对象具有多种不同状态位时，那么请使用位运算吧。</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><h3 id="位运算规则"><a href="#位运算规则" class="headerlink" title="位运算规则"></a>位运算规则</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">&lt;&lt; 左移 可以方便实现 <span class="hljs-number">2</span>^运算<br>&gt;&gt; 右移<br><br><span class="hljs-number">1</span> &amp; 任何数都是那个数本身<br><span class="hljs-number">0</span> &amp; 任何数都是 <span class="hljs-number">0</span><br><span class="hljs-number">0</span> | 任何数都是那个数本身<br><span class="hljs-number">1</span> | 任何数都是 <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
-<p>开启后，会为每个layout文件生成对应的绑定类，形如XXXBingding</p>
-<p>如果不想要某个布局文件生成binding，需要添加tools:viewBindingIgnore&#x3D;”true”属性</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">RelativeLayout</span></span><br><span class="hljs-tag"><span class="hljs-attr">...</span></span><br><span class="hljs-tag"><span class="hljs-attr">tools:viewBindingIgnore</span>=<span class="hljs-string">&quot;true&quot;</span> &gt;</span><br>...<br><span class="hljs-tag">&lt;/<span class="hljs-name">RelativeLayout</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="状态表示及运算"><a href="#状态表示及运算" class="headerlink" title="状态表示及运算"></a>状态表示及运算</h3><p>在用位运算表示状态时，通常每个状态只有一位是1，其余位都是0:</p>
+<p>A状态： ——1 ： 0001</p>
+<p>B状态： ——2 ： 0010</p>
+<p>C状态： ——4 ： 0100</p>
+<p>D状态： ——8 ： 1000</p>
+<p>如果给定基准状态 flags&#x3D; 0，根据上面位运算规则可以得出以下结论：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">//添加标记</span><br>flags |= a  --<span class="hljs-punctuation">-&gt;</span>  添加标记 a<br><span class="hljs-comment">//移除标记</span><br>flags &amp;= ~a  --<span class="hljs-punctuation">-&gt;</span>  移除标记 a<br><span class="hljs-comment">//取出标记</span><br>flags &amp; a  --<span class="hljs-punctuation">-&gt;</span>  取出标记 a   ---<span class="hljs-punctuation">-&gt;</span> 取出结果：a本身    或者 <span class="hljs-number">0</span><br>				 因此可以用来判断是否存在a标记：flags &amp; a ！= <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h3 id="Activity中使用"><a href="#Activity中使用" class="headerlink" title="Activity中使用"></a>Activity中使用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> binding <span class="hljs-keyword">by</span> lazy &#123; ActivityViewBindingBinding.inflate(layoutInflater) &#125;<br><br><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>    <span class="hljs-keyword">super</span>.onCreate(savedInstanceState)<br>    setContentView(binding.root)<br>    binding.tvKobe.text = <span class="hljs-string">&quot;Kobe Bryant 24&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Fragment中使用"><a href="#Fragment中使用" class="headerlink" title="Fragment中使用"></a>Fragment中使用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span>  <span class="hljs-keyword">var</span> binding : FragmentViewmodelBinding? = <span class="hljs-literal">null</span><br><br>   <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreateView</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">       inflater: <span class="hljs-type">LayoutInflater</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">       container: <span class="hljs-type">ViewGroup</span>?,</span></span><br><span class="hljs-params"><span class="hljs-function">       savedInstanceState: <span class="hljs-type">Bundle</span>?</span></span><br><span class="hljs-params"><span class="hljs-function">   )</span></span>: View? &#123;<br>       binding = FragmentViewmodelBinding.inflate(inflater,container,<span class="hljs-literal">false</span>)<br>       <span class="hljs-keyword">val</span> root = binding!!.root<br>       initView()<br>       <span class="hljs-keyword">return</span> root<br>   &#125;<br><br>   <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onDestroyView</span><span class="hljs-params">()</span></span> &#123;<br>       <span class="hljs-keyword">super</span>.onDestroyView()<br>       binding = <span class="hljs-literal">null</span><br>   &#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Adapter中使用"><a href="#Adapter中使用" class="headerlink" title="Adapter中使用"></a>Adapter中使用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ViewBindingAdapter</span>(<span class="hljs-keyword">val</span> datas:List&lt;String&gt;) :RecyclerView.Adapter&lt;ViewBindingAdapter.BindingViewHolder&gt;() &#123;<br><br>    <span class="hljs-keyword">inner</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BindingViewHolder</span>(binding: ItemStudyMenuBinding) : RecyclerView.ViewHolder(binding.root) &#123;<br>        <span class="hljs-keyword">val</span> tvName = binding.tvName<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreateViewHolder</span><span class="hljs-params">(parent: <span class="hljs-type">ViewGroup</span>, viewType: <span class="hljs-type">Int</span>)</span></span>: BindingViewHolder &#123;<br>        <span class="hljs-keyword">val</span> binding = ItemStudyMenuBinding.inflate(LayoutInflater.from(parent.context),parent,<span class="hljs-literal">false</span>)<br>        <span class="hljs-keyword">return</span> BindingViewHolder(binding)<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getItemCount</span><span class="hljs-params">()</span></span>: <span class="hljs-built_in">Int</span> &#123;<br>        <span class="hljs-keyword">return</span> datas.size<br>    &#125;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onBindViewHolder</span><span class="hljs-params">(holder: <span class="hljs-type">BindingViewHolder</span>, position: <span class="hljs-type">Int</span>)</span></span> &#123;<br>        holder.tvName.text = datas[position]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Dialog中使用"><a href="#Dialog中使用" class="headerlink" title="Dialog中使用"></a>Dialog中使用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ViewBindingDialog</span>(context: Context):Dialog(context) &#123;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">lateinit</span> <span class="hljs-keyword">var</span> binding : ViewbindingDialogBinding<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState)<br>        binding = ViewbindingDialogBinding.inflate(LayoutInflater.from(context))<br>        setContentView(binding.root)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="自定义View中使用"><a href="#自定义View中使用" class="headerlink" title="自定义View中使用"></a>自定义View中使用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ViewBindingView</span> <span class="hljs-meta">@JvmOverloads</span> <span class="hljs-keyword">constructor</span>(<br>    context: Context,<br>    attributeSet: AttributeSet? = <span class="hljs-literal">null</span>,<br>    defStyle: <span class="hljs-built_in">Int</span> = <span class="hljs-number">0</span><br>) : FrameLayout(context, attributeSet, defStyle) &#123;<br>    <span class="hljs-keyword">init</span> &#123;<br>       <span class="hljs-keyword">val</span> binding = ItemStudyBinding.inflate(LayoutInflater.from(context), <span class="hljs-keyword">this</span>，<span class="hljs-literal">true</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="配合include和merge标签使用"><a href="#配合include和merge标签使用" class="headerlink" title="配合include和merge标签使用"></a>配合include和merge标签使用</h3><p>如果引入布局是merge，则include必须带有id才能查找其引入布局中的id，此时可以通过连续点的方式查找：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">include</span></span><br><span class="hljs-tag">  <span class="hljs-attr">android:id</span>=<span class="hljs-string">&quot;@+id/include&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">layout</span>=<span class="hljs-string">&quot;@layout/common_bar&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;0dp&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;wrap_content&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">android:layout_marginTop</span>=<span class="hljs-string">&quot;20dp&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">app:layout_constraintEnd_toEndOf</span>=<span class="hljs-string">&quot;parent&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">app:layout_constraintStart_toStartOf</span>=<span class="hljs-string">&quot;parent&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">app:layout_constraintTop_toBottomOf</span>=<span class="hljs-string">&quot;@+id/tv_kobe&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>查找 common_bar中的元素id：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">binding.include.tvTitle.text = <span class="hljs-string">&quot;include title&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>如果为了提高效率，减少层级，common_bar中是以merge为根布局，那么引入时include就不能带 id属性:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">include</span></span><br><span class="hljs-tag">    <span class="hljs-attr">layout</span>=<span class="hljs-string">&quot;@layout/viewbinding_merge&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>此时要查找common_bar中的元素id方法如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> binding <span class="hljs-keyword">by</span> lazy &#123; ActivityViewBindingBinding.inflate(layoutInflater) &#125;<br><br><span class="hljs-keyword">val</span> mergeBinding <span class="hljs-keyword">by</span> lazy &#123; ViewbindingMergeBinding.bind(binding.root) &#125;<br><br><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>    <span class="hljs-keyword">super</span>.onCreate(savedInstanceState)<br>    setContentView(binding.root)<br>    <br>    <span class="hljs-comment">//merge 使用viewBinding</span><br>    mergeBinding.tvMerge.setOnClickListener &#123;<br>        <span class="hljs-comment">//dialog 使用</span><br>        <span class="hljs-keyword">val</span> dialog = ViewBindingDialog(<span class="hljs-keyword">this</span>)<br>        dialog.show()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>可以看到我们通过定义mergeBinding这个变量来查找。</p>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>实际使用时，可以根据需要进行必要的封装：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">object</span> ButtonFlag &#123;<br>    <span class="hljs-comment">//初始位</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> mFlags = <span class="hljs-number">0</span><br><br>    <span class="hljs-comment">//可连接</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">val</span> FlAG_CONNECTED = <span class="hljs-number">1</span> shl <span class="hljs-number">0</span><br><br>    <span class="hljs-comment">//可使用</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">val</span> FlAG_ENABLE = <span class="hljs-number">1</span> shl <span class="hljs-number">1</span><br><br>    <span class="hljs-comment">//按下</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">val</span> FlAG_PRESS = <span class="hljs-number">1</span> shl <span class="hljs-number">2</span><br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">hasFlag</span><span class="hljs-params">(state: <span class="hljs-type">Int</span>)</span></span>: <span class="hljs-built_in">Boolean</span> &#123;<br>        <span class="hljs-keyword">return</span> mFlags and state != <span class="hljs-number">0</span><br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">addFlag</span><span class="hljs-params">(state: <span class="hljs-type">Int</span>)</span></span> &#123;<br>        mFlags = mFlags or state<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">clearFlag</span><span class="hljs-params">(state: <span class="hljs-type">Int</span>)</span></span> &#123;<br>        mFlags = mFlags and state.inv()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -789,7 +723,7 @@
   
     <span>></span>
     
-  <a href="/categories/Android/jetpack/" class="category-chain-item">jetpack</a>
+  <a href="/categories/Android/%E6%8A%80%E5%B7%A7/" class="category-chain-item">技巧</a>
   
   
 
@@ -808,9 +742,9 @@
       
         <a href="/tags/Android/">#Android</a>
       
-        <a href="/tags/Jetpack/">#Jetpack</a>
+        <a href="/tags/flag/">#flag</a>
       
-        <a href="/tags/viewBinding/">#viewBinding</a>
+        <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
       
     </div>
   
@@ -822,8 +756,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ViewBinding基本使用</div>
-      <div>http://example.com/2023/04/14/Android/jetpack/ViewBinding基本使用 K8B24 [Android,Jetpack,viewBinding] K8B24 2023-4-14 22;31;11/</div>
+      <div>妙用Flag位运算</div>
+      <div>http://example.com/2023/10/19/Android/技巧/妙用Flag位运算 K8B24 [Android,flag,位运算] K8B24 2023-10-19 21;21;55/</div>
     </div>
     <div class="license-meta">
       
@@ -835,7 +769,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月14日</div>
+          <div>2023年10月19日</div>
         </div>
       
       
@@ -865,18 +799,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/15/Android/jetpack/viewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5BAndroid,Jetpack,viewModel%5D%20K8B24%202023-4-15%2012;31;11/" title="viewModel基本使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">viewModel基本使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/30/kotlin/Kotlin%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%20K8B24%20%5Bkotlin,%E6%96%87%E4%BB%B6,use%5D%20K8B24%202023-03-30%2021;36;05/" title="Kotlin文件操作">
-                        <span class="hidden-mobile">Kotlin文件操作</span>
+                      <a href="/2023/10/18/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E4%B8%80%E7%A7%8D%E6%8F%90%E5%8D%87%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E7%9A%84%E7%BC%93%E5%AD%98%E6%96%B9%E6%A1%88%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E7%BC%93%E5%AD%98%EF%BC%8C%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%5D%20K8B24%202023-10-18%2022;10;23/" title="一种提升用户体验的缓存方案">
+                        <span class="hidden-mobile">一种提升用户体验的缓存方案</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
