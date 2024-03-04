@@ -16,28 +16,25 @@
   <meta name="author" content="煤炭黄帽">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Android代码阅读器–YHCodeViewYHCodeView 是什么？YHCodeView是专门用来显示代码的一个自定义view，你可以在Android程序中向用户展示一段样例代码。其出色的阅读体验犹如在Android Studio中阅读代码一般。效果图如下：  支持的特性 支持双指拖动放大缩小； 设置需要高亮显示的行号及高亮的颜色； 设置需要显示的代码语言（如kotlin、java、xml">
+    <meta name="description" content="[TOC] permissionX基本使用前言PermissonX作为一个运行时权限申请库，使用简单，定制性强，十分优秀，值得一试！ 项目地址 ：https:&#x2F;&#x2F;github.com&#x2F;guolindev&#x2F;PermissionX 中文文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;guolin_blog&#x2F;category_10108528.html 依赖1234dependencies &amp;#123">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android代码阅读器--YHCodeView">
-<meta property="og:url" content="http://example.com/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView%20K8B24%20[codeview,Android,%E8%87%AA%E5%AE%9A%E4%B9%89view%EF%BC%8Cmylib]%20K8B24%202023-2-17%2023;01;25/index.html">
+<meta property="og:title" content="permissionX基本使用">
+<meta property="og:url" content="http://example.com/2024/03/04/mylibs/permissionX%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20[permission,%E6%9D%83%E9%99%90%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93]%20K8B24%202024-3-4%2019;53;25/index.html">
 <meta property="og:site_name" content="煤炭黄帽">
-<meta property="og:description" content="Android代码阅读器–YHCodeViewYHCodeView 是什么？YHCodeView是专门用来显示代码的一个自定义view，你可以在Android程序中向用户展示一段样例代码。其出色的阅读体验犹如在Android Studio中阅读代码一般。效果图如下：  支持的特性 支持双指拖动放大缩小； 设置需要高亮显示的行号及高亮的颜色； 设置需要显示的代码语言（如kotlin、java、xml">
+<meta property="og:description" content="[TOC] permissionX基本使用前言PermissonX作为一个运行时权限申请库，使用简单，定制性强，十分优秀，值得一试！ 项目地址 ：https:&#x2F;&#x2F;github.com&#x2F;guolindev&#x2F;PermissionX 中文文档：https:&#x2F;&#x2F;blog.csdn.net&#x2F;guolin_blog&#x2F;category_10108528.html 依赖1234dependencies &amp;#123">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/mylibs_yhcodeview_sample.png">
-<meta property="article:published_time" content="2023-02-17T15:01:25.000Z">
-<meta property="article:modified_time" content="2023-02-17T15:01:25.000Z">
+<meta property="article:published_time" content="2024-03-04T11:53:25.000Z">
+<meta property="article:modified_time" content="2024-03-04T11:53:25.000Z">
 <meta property="article:author" content="煤炭黄帽">
-<meta property="article:tag" content="Android">
-<meta property="article:tag" content="codeview">
-<meta property="article:tag" content="自定义view，mylib">
+<meta property="article:tag" content="permission">
+<meta property="article:tag" content="权限，三方库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/tj24/tj24/raw/master/picbed/blog/mylibs_yhcodeview_sample.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Android代码阅读器--YHCodeView - 煤炭黄帽</title>
+  <title>permissionX基本使用 - 煤炭黄帽</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -202,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Android代码阅读器--YHCodeView</span>
+            <span id="subtitle">permissionX基本使用</span>
           
         </div>
 
@@ -218,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-17 23:01" pubdate>
-          2023年2月17日 晚上
+        <time datetime="2024-03-04 19:53" pubdate>
+          2024年3月4日 晚上
         </time>
       </span>
     
@@ -230,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          3k 字
         
       </span>
     
@@ -241,7 +238,7 @@
         
         
         
-          29 分钟
+          37 分钟
         
       </span>
     
@@ -315,7 +312,7 @@
       
         <a href="/2023/02/17/mylibs/Android%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB%E5%99%A8--YHCodeView%20K8B24%20%5Bcodeview,Android,%E8%87%AA%E5%AE%9A%E4%B9%89view%EF%BC%8Cmylib%5D%20K8B24%202023-2-17%2023;01;25/" title="Android代码阅读器--YHCodeView"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Android代码阅读器--YHCodeView</span>
         </a>
       
@@ -342,7 +339,7 @@
       
         <a href="/2024/03/04/mylibs/permissionX%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5Bpermission,%E6%9D%83%E9%99%90%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93%5D%20K8B24%202024-3-4%2019;53;25/" title="permissionX基本使用"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">permissionX基本使用</span>
         </a>
       
@@ -375,30 +372,37 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Android代码阅读器--YHCodeView</h1>
+            <h1 style="display: none">permissionX基本使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Android代码阅读器–YHCodeView"><a href="#Android代码阅读器–YHCodeView" class="headerlink" title="Android代码阅读器–YHCodeView"></a>Android代码阅读器–YHCodeView</h1><h2 id="YHCodeView-是什么？"><a href="#YHCodeView-是什么？" class="headerlink" title="YHCodeView 是什么？"></a>YHCodeView 是什么？</h2><p>YHCodeView是专门用来显示代码的一个自定义view，你可以在Android程序中向用户展示一段样例代码。其出色的阅读体验犹如在<code>Android Studio</code>中阅读代码一般。效果图如下：</p>
-<p><img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/mylibs_yhcodeview_sample.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="支持的特性"><a href="#支持的特性" class="headerlink" title="支持的特性"></a>支持的特性</h2><ul>
-<li>支持双指拖动放大缩小；</li>
-<li>设置需要高亮显示的行号及高亮的颜色；</li>
-<li>设置需要显示的代码语言（如kotlin、java、xml、python等）；</li>
-<li>设置你喜欢的主题（如暗黑主题、GitHub主题、Android studio主题等）；</li>
-<li>设置是否自动折行；</li>
-<li>动态显示隐藏行号及起始行号；</li>
+                <p>[TOC]</p>
+<h1 id="permissionX基本使用"><a href="#permissionX基本使用" class="headerlink" title="permissionX基本使用"></a>permissionX基本使用</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>PermissonX作为一个运行时权限申请库，使用简单，定制性强，十分优秀，值得一试！</p>
+<p>项目地址 ：<a target="_blank" rel="noopener" href="https://github.com/guolindev/PermissionX">https://github.com/guolindev/PermissionX</a></p>
+<p>中文文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/category_10108528.html">https://blog.csdn.net/guolin_blog/category_10108528.html</a></p>
+<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">dependencies &#123;<br>	...<br>	implementation <span class="hljs-string">&#x27;com.permissionx.guolindev:permissionx:1.7.1&#x27;</span><br>&#125; <br></code></pre></td></tr></table></figure>
+
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>Android自6.0开始就强制动态权限申请，一般没什么难度，但是考虑到以下几个疑问，那么复杂度就指数提升：</p>
+<ul>
+<li>如果用户拒绝了某个权限，如何给用户解释这个权限的重要性，进一步引导用户去申请？</li>
+<li>如果用户点击了不再询问，如何引导用户去引用详情去授权，保证应用正常使用？</li>
+<li>如何在权限申请前就向用户贯彻这些权限的重要性，提高用户信任？</li>
+<li>如何在<code>fragment</code>中申请权限？</li>
 </ul>
-<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation project(<span class="hljs-attr">path:</span> <span class="hljs-string">&#x27;:assembly:YHCodeView&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><code>permissonX</code>可以方便的处理以上疑问，直接上代码，注释很清楚：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">  <span class="hljs-keyword">val</span> permissions = mutableListOf(<br>        Manifest.permission.CAMERA,<br>        Manifest.permission.READ_CONTACTS,<br>        Manifest.permission.CALL_PHONE<br>    )<br>    <br><span class="hljs-comment">//可传递 activity  或者 fragment 对象</span><br>            PermissionX.<span class="hljs-keyword">init</span>(<span class="hljs-keyword">this</span>)<br>                    <span class="hljs-comment">//需要申请的权限</span><br>                .permissions(permissions)<br>                    <span class="hljs-comment">//设置dialog 图标及按钮颜色</span><br>                .setDialogTintColor(Color.RED,Color.BLUE)<br>                <span class="hljs-comment">//是否在申请权限之前就弹出 向用户解释的弹窗。必须配合onExplainRequestReason才能生效</span><br>                .explainReasonBeforeRequest()<br>                    <span class="hljs-comment">//向用户解释为什么要申请这些权限。 beforeRequest 为true 表示在申请权限之前的解释弹窗， false 为申请权限但被用户拒绝后的解释弹窗</span><br>                .onExplainRequestReason&#123; scope,deniedList,beforeRequest -&gt;<br>                    <span class="hljs-keyword">if</span> (beforeRequest)&#123;<br>                        scope.showRequestReasonDialog(deniedList,<span class="hljs-string">&quot;为了更好使用体验，请申请以下权限&quot;</span>,<span class="hljs-string">&quot;申请&quot;</span>,<span class="hljs-string">&quot;取消&quot;</span>)<br>                    &#125;<span class="hljs-keyword">else</span>&#123;<br>                        scope.showRequestReasonDialog(deniedList.filter &#123; it == Manifest.permission.CAMERA &#125;,<span class="hljs-string">&quot;camera为必须的权限，必须申请&quot;</span>,<span class="hljs-string">&quot;申请&quot;</span>,<span class="hljs-string">&quot;取消&quot;</span>)<br>                    &#125;<br>                &#125;<br>                    <span class="hljs-comment">//如果用户点击了不在提示，那么会引导用户去应用详情页面开启对应权限</span><br>                .onForwardToSettings&#123; scope,deniedList -&gt;<br>                    scope.showForwardToSettingsDialog(deniedList,<span class="hljs-string">&quot;去详情授权！&quot;</span>,<span class="hljs-string">&quot;再次申请&quot;</span>,<span class="hljs-string">&quot;取消&quot;</span>)<br>                &#125;<br>                .request &#123; allGranted, grantedList, deniedList -&gt;<br>                    <span class="hljs-keyword">if</span> (allGranted) &#123;<br>                        Toast.makeText(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;所有申请的权限都已通过&quot;</span>, Toast.LENGTH_SHORT).show()<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        Toast.makeText(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;您拒绝了如下权限：<span class="hljs-variable">$deniedList</span>&quot;</span>, Toast.LENGTH_SHORT).show()<br>                    &#125;<br>                &#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="添加到xml"><a href="#添加到xml" class="headerlink" title="添加到xml"></a>添加到xml</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">com.yellowhat.codeview.YHCodeView</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:id</span>=<span class="hljs-string">&quot;@+id/codeView&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_start_hightLight_color</span>=<span class="hljs-string">&quot;@color/sample_color_primary&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_press_hightLight_color</span>=<span class="hljs-string">&quot;@color/sample_color_primary&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_font_size</span>=<span class="hljs-string">&quot;16&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_show_line_number</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_start_line_number</span>=<span class="hljs-string">&quot;1&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_wrap_line</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">app:cv_zoom_enable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">com.yellowhat.codeview.YHCodeView</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><input disabled="" type="checkbox"> 注意: 要申请的权限必须在当前版本中存在，否则会返回申请失败。比如 <code>ACCESS_BACKGROUND_LOCATION</code>是在<code>Android 10</code>系统中引入的新权限，那么在低版本中就不应该申请这个权限</li>
+</ul>
+<h2 id="自定义弹窗"><a href="#自定义弹窗" class="headerlink" title="自定义弹窗"></a>自定义弹窗</h2><p>对于向用户解释的弹窗UI，提供了默认的样式，当然也可以定制适合你APP风格的样式。</p>
+<p>第一步：需要继承**<code>RationaleDialog</code><strong>或者</strong><code>RationaleDialogFragment</code>**并实现相应方法；</p>
+<p>第二步：弹窗地方替换即可，如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">PermissionX.<span class="hljs-keyword">init</span>(<span class="hljs-keyword">this</span>)<br>    .permissions(permissions)<br>    .setDialogTintColor(Color.RED,Color.BLUE)<br>    .explainReasonBeforeRequest()<br>    .onExplainRequestReason&#123; scope,deniedList,beforeRequest -&gt;<br>        <span class="hljs-keyword">if</span> (beforeRequest)&#123;<br>            <span class="hljs-comment">//这里传入了自定以的解释弹窗</span><br>            <span class="hljs-comment">//自定义弹窗必须继承RationaleDialog 或者RationaleDialogFragment</span><br>            scope.showRequestReasonDialog(ExplainDialog(<span class="hljs-keyword">this</span>,deniedList))<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<p>可以看到xml中可以使用多种自定义属性，这些属性语义很明确大家应该能猜得到。</p>
-<h3 id="代码中调用"><a href="#代码中调用" class="headerlink" title="代码中调用"></a>代码中调用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//codes 为需要加载的一段代码，lambda表达式中可以设置样式等其他参数</span><br>mBinding.codeView.load(<span class="hljs-string">&quot;codes&quot;</span>) &#123;<br>    <span class="hljs-comment">//设置需要高亮显示的行号</span><br>   it.highlightLineNumbers = intArrayOf(<span class="hljs-number">8</span>,<span class="hljs-number">24</span>)<br> &#125;<br></code></pre></td></tr></table></figure>
-
-<p>这样我们就完成了显示代码的一般需求。当然我们可以在代码中同时设置多种参数来定制我们的阅读体验，代码及对应注释如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">mBinding.codeView.load(getString(R.string.sample_view_code)) &#123;<br>    		<span class="hljs-comment">//设置显示主题  内置有100多种，总有一款适合你</span><br>            it.theme = CodeTheme.ATELIER_SAVANNA_LIGHT<br>    		<span class="hljs-comment">//根据屏幕大小是否自动折行</span><br>            it.wrapline = <span class="hljs-literal">false</span><br>    		<span class="hljs-comment">//是否显示行号</span><br>            it.showLineNumber = <span class="hljs-literal">true</span><br>    		<span class="hljs-comment">//展示的代码语言 支持几乎所有计算机语言，可根据所选语言自动调整代码颜色</span><br>            it.codeLanguage = CodeLanguage.KOTLIN<br>    		<span class="hljs-comment">//展示的代码字体大小</span><br>            it.fontSize = <span class="hljs-number">12f</span><br>    		<span class="hljs-comment">//是否支持双指放大缩小</span><br>            it.zoomEnabled = <span class="hljs-literal">true</span><br>    		<span class="hljs-comment">//起始行号 ，一般都为1</span><br>            it.startLineNumber = <span class="hljs-number">1</span><br>    		<span class="hljs-comment">//需要高亮显示的代码行</span><br>            it.highlightLineNumbers = intArrayOf(<span class="hljs-number">8</span>,<span class="hljs-number">24</span>)<br>    		<span class="hljs-comment">//所设置代码高亮的颜色</span><br>            it.startHighLightColor = Color.RED<br>    		<span class="hljs-comment">//按下某行后 的高亮颜色</span><br>            it.pressHighLightColor = Color.BLUE<br>    <br>    		<span class="hljs-comment">//下面都是一些监听可自行体验</span><br>    <br>            it.onStartCodeHighlight = &#123;<br>                Log.e(TAG, <span class="hljs-string">&quot;onStartCodeHighlight&quot;</span>)<br>            &#125;<br>            it.onFinishCodeHighlight = &#123;<br>                Log.e(TAG, <span class="hljs-string">&quot;onFinishCodeHighlight&quot;</span>)<br>            &#125;<br>            it.onFontSizeChanged = &#123;<br>                Log.e(TAG, <span class="hljs-string">&quot;onFontSizeChanged size = <span class="hljs-variable">$it</span>&quot;</span>)<br>            &#125;<br>            it.onLineClicked = &#123; lineNumber, content -&gt;<br>                Log.e(TAG, <span class="hljs-string">&quot;onLineClicked lineNumber = <span class="hljs-subst">$&#123;lineNumber&#125;</span> content = <span class="hljs-subst">$&#123;content&#125;</span>&quot;</span>)<br>            &#125;<br>            it.onLanguageDetected = &#123; name, relevance -&gt;<br>                Log.e(TAG, <span class="hljs-string">&quot;onLanguageDetected name = <span class="hljs-subst">$&#123;name&#125;</span> relevance = <span class="hljs-subst">$&#123;relevance&#125;</span>&quot;</span>)<br>            &#125;<br>        &#125;<br></code></pre></td></tr></table></figure>
+<h2 id="特殊权限的申请"><a href="#特殊权限的申请" class="headerlink" title="特殊权限的申请"></a>特殊权限的申请</h2><p>特殊权限，即必须在对应的界面去授权的权限，比如悬浮窗。<code>permissionX</code>作为一个权限相关的库，可以用同一套API来帮助用户去申请特殊权限。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">PermissionX.<span class="hljs-keyword">init</span>(<span class="hljs-keyword">this</span>)<br>        <span class="hljs-comment">//只需传入对应的特殊权限名称即可 。</span><br>    .permissions(Manifest.permission.SYSTEM_ALERT_WINDOW)<br>    .onExplainRequestReason &#123; scope, deniedList -&gt;<br>        <span class="hljs-keyword">val</span> message = <span class="hljs-string">&quot;PermissionX需要您同意以下权限才能正常使用&quot;</span><br>        scope.showRequestReasonDialog(deniedList, message, <span class="hljs-string">&quot;Allow&quot;</span>, <span class="hljs-string">&quot;Deny&quot;</span>)<br>    &#125;<br>    .request &#123; allGranted, grantedList, deniedList -&gt;<br>        <span class="hljs-keyword">if</span> (allGranted) &#123;<br>            Toast.makeText(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;所有申请的权限都已通过&quot;</span>, Toast.LENGTH_SHORT).show()<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            Toast.makeText(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;您拒绝了如下权限：<span class="hljs-variable">$deniedList</span>&quot;</span>, Toast.LENGTH_SHORT).show()<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -432,11 +436,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Android/">#Android</a>
+        <a href="/tags/permission/">#permission</a>
       
-        <a href="/tags/codeview/">#codeview</a>
-      
-        <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89view%EF%BC%8Cmylib/">#自定义view，mylib</a>
+        <a href="/tags/%E6%9D%83%E9%99%90%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93/">#权限，三方库</a>
       
     </div>
   
@@ -448,8 +450,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Android代码阅读器--YHCodeView</div>
-      <div>http://example.com/2023/02/17/mylibs/Android代码阅读器--YHCodeView K8B24 [codeview,Android,自定义view，mylib] K8B24 2023-2-17 23;01;25/</div>
+      <div>permissionX基本使用</div>
+      <div>http://example.com/2024/03/04/mylibs/permissionX基本使用 K8B24 [permission,权限，三方库] K8B24 2024-3-4 19;53;25/</div>
     </div>
     <div class="license-meta">
       
@@ -461,7 +463,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月17日</div>
+          <div>2024年3月4日</div>
         </div>
       
       
@@ -491,18 +493,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/26/mylibs/material-dialogs%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%20K8B24%20%5Bmaterial,dialog%EF%BC%8C%E4%B8%89%E6%96%B9%E5%BA%93%5D%20K8B24%202023-2-26%2017;23;25/" title="material-dialogs基本使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">material-dialogs基本使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/13/Android/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%90%AF%E5%8A%A8%EF%BC%88%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%89%20K8B24%20%5B%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96%5D%20K8B24%202023-01-13%2021;58;20/" title="性能优化之页面启动（实战一）">
-                        <span class="hidden-mobile">性能优化之页面启动（实战一）</span>
+                      <a href="/2023/10/19/Android/%E6%8A%80%E5%B7%A7/%E5%A6%99%E7%94%A8Flag%E4%BD%8D%E8%BF%90%E7%AE%97%20K8B24%20%5BAndroid,flag,%E4%BD%8D%E8%BF%90%E7%AE%97%5D%20K8B24%202023-10-19%2021;21;55/" title="妙用Flag位运算">
+                        <span class="hidden-mobile">妙用Flag位运算</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
