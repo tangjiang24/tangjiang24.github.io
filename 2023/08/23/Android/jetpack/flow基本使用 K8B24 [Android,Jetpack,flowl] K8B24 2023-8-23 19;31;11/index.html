@@ -241,7 +241,7 @@
         
         
         
-          126 分钟
+          128 分钟
         
       </span>
     
@@ -764,6 +764,9 @@
 
 <p>上例中明显数据处理速度跟不上发送速度，但collectLatest会始终去处理新的数据而放弃未处理完的数据。因此定时器会正常计时。</p>
 <h2 id="stateFlow"><a href="#stateFlow" class="headerlink" title="stateFlow"></a>stateFlow</h2><p>接近LiveData，同LiveData的用法保持了高度一致性，方便玩家低成本对接。</p>
+<blockquote>
+<p><strong>注意：stateFlow天然具有防抖作用，即前后两次发射的值若相等，则后一次不会被collect。注意比较的是值，而不是对象，哪怕是不同的对象，若值相等，也不会被收集。</strong></p>
+</blockquote>
 <h3 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h3><p>viewmodel中创建：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> _stateFlow = MutableStateFlow(<span class="hljs-number">100</span>)<br><span class="hljs-keyword">val</span> stateFlow = _stateFlow.asStateFlow()<br><br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">startTimmer</span><span class="hljs-params">()</span></span> &#123;<br>        viewModelScope.launch &#123;<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                _stateFlow.value += <span class="hljs-number">2</span><br>                delay(<span class="hljs-number">2000</span>)<br>            &#125;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 

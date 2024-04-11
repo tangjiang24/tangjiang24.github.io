@@ -225,6 +225,77 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/09/29/kotlin/Kotlin%E4%B8%AD%E7%BC%80%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E4%B8%AD%E7%BC%80,infix%5D%20K8B24%202022-09-29%2023;58;20/" target="_blank">
+          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="Kotlin中缀函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/29/kotlin/Kotlin%E4%B8%AD%E7%BC%80%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E4%B8%AD%E7%BC%80,infix%5D%20K8B24%202022-09-29%2023;58;20/" target="_blank">
+          Kotlin中缀函数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/09/29/kotlin/Kotlin%E4%B8%AD%E7%BC%80%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E4%B8%AD%E7%BC%80,infix%5D%20K8B24%202022-09-29%2023;58;20/" target="_blank">
+        <div>
+          Kotlin中缀函数简介中缀函数可以使得代码更加语义化，提高可读性。它允许我们函数调用时省略.以及（）。以Kobe喜欢篮球为例编写代码如下： 1234567class Kobe &amp;#123;    fun like(ball: BasketBall)&amp;#123;    &amp;#125;        infix fun love(ball:BasketBall) &#x3D; like(ball)&amp;#125;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-29 23:58" pubdate>
+              2022-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/kotlin/" class="category-chain-item">kotlin</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/kotlin/">#kotlin</a>
+            
+              <a href="/tags/%E4%B8%AD%E7%BC%80/">#中缀</a>
+            
+              <a href="/tags/infix/">#infix</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/09/29/kotlin/kotlin%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%20K8B24%20%5Bkotlin,%E5%86%85%E8%81%94,inline,noinline,crosssinline%5D%20K8B24%202022-09-29%2023;28;58/" target="_blank">
           <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="kotlin内联函数">
         </a>
@@ -853,77 +924,6 @@
               <a href="/tags/kotlin/">#kotlin</a>
             
               <a href="/tags/%E6%89%A9%E5%B1%95/">#扩展</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9B%9E%E8%B0%83%20K8B24%20%5BAndroid,errors,liveData%5D%20K8B24%202022-09-20%2022;11;24/" target="_blank">
-          <img src="https://gitee.com/tj24/tj24/raw/master/picbed/blog/kobe_打进.webp.jpg" srcset="/img/loading.gif" lazyload alt="liveData仅第一次回调">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/09/20/errorlist/liveData%E4%BB%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9B%9E%E8%B0%83%20K8B24%20%5BAndroid,errors,liveData%5D%20K8B24%202022-09-20%2022;11;24/" target="_blank">
-          liveData仅第一次回调
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2022/09/20/errorlist/liveData%E4%BB%85%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9B%9E%E8%B0%83%20K8B24%20%5BAndroid,errors,liveData%5D%20K8B24%202022-09-20%2022;11;24/" target="_blank">
-        <div>
-          问题现象：项目中采用 监听liveData的变化来更新UI,奇怪的是进入页面后viewModel第一次获取到数据并改变触发liveData回调后，后续再次改变liveData都不回调：即LiveData.observe（）只响应一次。 分析：首先想到的原因有以下：  LiveData.observe（）所在页面处于后台； viewModel获取数据接口出现问题，根本就没有setValue()；
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-09-20 22:11" pubdate>
-              2022-09-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/errorlist/" class="category-chain-item">errorlist</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/errors/">#errors</a>
-            
-              <a href="/tags/liveData/">#liveData</a>
             
           </div>
         
